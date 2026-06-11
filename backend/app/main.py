@@ -94,7 +94,7 @@ app.add_middleware(
 
 import os
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 # Include API routers
 from app.api.auth import router as auth_router
@@ -113,33 +113,55 @@ async def health():
     """API health check."""
     return {"status": "healthy"}
 
-
 # Mount frontend static files in production mode
-frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../frontend/dist"))
+# In Docker: FRONTEND_DIST_PATH=/frontend/dist (set in Dockerfile)
+# Locally:   falls back to relative path from this file
+_default_dist = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../frontend/dist")
+)
+frontend_path = os.environ.get("FRONTEND_DIST_PATH", _default_dist)
 
 if os.path.exists(frontend_path):
-    # Mount the assets folder
+    # Mount the assets folder with long-term caching (hashed filenames)
     assets_path = os.path.join(frontend_path, "assets")
     if os.path.exists(assets_path):
         app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
 
-    # Serve index.html or other assets on root /
+    @app.get("/favicon.svg", include_in_schema=False)
+    async def favicon():
+        f = os.path.join(frontend_path, "favicon.svg")
+        if os.path.exists(f):
+            return FileResponse(f)
+        return Response(status_code=404)
+
+    # Serve index.html for all SPA routes
     @app.get("/{catchall:path}", include_in_schema=False)
     async def serve_spa(catchall: str):
-        # Prevent intercepting API routes
-        if catchall.startswith("api/") or catchall.startswith("docs") or catchall.startswith("redoc") or catchall.startswith("openapi.json"):
-            return {"detail": "Not Found"}
-        
+        # Do not intercept API/docs routes
+        for prefix in ("api/", "docs", "redoc", "openapi.json"):
+            if catchall.startswith(prefix):
+                return Response(content="Not Found", status_code=404)
+
         # Check if requested file exists inside dist
         file_path = os.path.join(frontend_path, catchall)
         if catchall and os.path.exists(file_path) and os.path.isfile(file_path):
             return FileResponse(file_path)
-            
-        # Fallback to index.html for React Router SPA
+
+        # Fallback to index.html for React Router SPA — no-cache so browser always fetches fresh HTML
         index_file = os.path.join(frontend_path, "index.html")
         if os.path.exists(index_file):
-            return FileResponse(index_file)
-        return {"detail": "Frontend index.html not found"}
+            with open(index_file, "rb") as f:
+                content = f.read()
+            return Response(
+                content=content,
+                media_type="text/html",
+                headers={
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                },
+            )
+        return Response(content="Frontend not found", status_code=404)
 else:
     @app.get("/", tags=["Health"])
     async def root():

@@ -1,4 +1,21 @@
 @import "tailwindcss";
+@source "../src/**/*.{js,jsx,ts,tsx}";
+
+/* Safelist — classes used in dynamic/conditional expressions */
+@layer utilities {
+  .space-y-1 > * + * { margin-top: 0.25rem; }
+  .space-y-2 > * + * { margin-top: 0.5rem; }
+  .space-y-3 > * + * { margin-top: 0.75rem; }
+  .space-y-4 > * + * { margin-top: 1rem; }
+  .space-y-5 > * + * { margin-top: 1.25rem; }
+  .space-y-6 > * + * { margin-top: 1.5rem; }
+  .space-y-8 > * + * { margin-top: 2rem; }
+  .space-x-1 > * + * { margin-left: 0.25rem; }
+  .space-x-2 > * + * { margin-left: 0.5rem; }
+  .space-x-3 > * + * { margin-left: 0.75rem; }
+  .space-x-4 > * + * { margin-left: 1rem; }
+}
+
 
 /* Custom Premium Light Design Tokens */
 :root {
