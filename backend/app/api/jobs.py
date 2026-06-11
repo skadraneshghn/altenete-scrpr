@@ -226,14 +226,26 @@ async def delete_job(
 
 @router.get("/queue/status")
 async def get_job_queue(
+    db: AsyncSession = Depends(get_db),
     _: User = Depends(get_current_user),
 ):
-    """Get the current job scheduler state and queued jobs."""
-    from app.scheduler.scheduler import scheduler
+    """
+    Get the current job scheduler state and queued/running jobs.
+
+    APScheduler removes a job from its internal queue the moment it starts
+    executing. To show currently running jobs we merge two sources:
+      1. scheduler.get_jobs()  — pending/future scheduled entries
+      2. _running_tasks        — asyncio Tasks for jobs actively executing now
+    """
+    from app.scheduler.scheduler import scheduler as aps_scheduler
     from app.scheduler.handlers import _running_tasks
 
     jobs_list = []
-    for job in scheduler.get_jobs():
+    seen_aps_ids = set()
+
+    # ── Source 1: APScheduler pending queue ──────────────────────────────────
+    for job in aps_scheduler.get_jobs():
+        seen_aps_ids.add(job.id)
         db_job_id = None
         if job.id.startswith("job_"):
             try:
@@ -247,26 +259,59 @@ async def get_job_queue(
             "name": job.name,
             "next_run_time": job.next_run_time.isoformat() if job.next_run_time else None,
             "trigger": str(job.trigger),
-            "is_running": db_job_id in _running_tasks if db_job_id else False,
+            "is_running": False,   # still pending, not executing yet
             "is_paused": job.next_run_time is None,
+            "phase": None,
+            "job_type": None,
+            "status": "pending",
         })
 
-    from app.scheduler.scheduler import scheduler as aps_scheduler
-    # In APScheduler, the scheduler state can be checked with .state (0 = STATE_STOPPED, 1 = STATE_RUNNING, 2 = STATE_PAUSED)
-    # scheduler.running returns True if the scheduler thread/loop is active.
-    # We want to check if the scheduler is paused vs running.
+    # ── Source 2: Currently executing asyncio tasks ──────────────────────────
+    for job_id, task in list(_running_tasks.items()):
+        if task.done():
+            continue  # already finished, will be cleaned up
+
+        aps_id = f"job_{job_id}"
+        if aps_id in seen_aps_ids:
+            continue  # already represented above
+
+        # Load live job info from the database
+        result = await db.execute(select(Job).where(Job.id == job_id))
+        db_job = result.scalar_one_or_none()
+        if not db_job:
+            continue
+
+        job_type_label = db_job.job_type.replace("_", " ").title()
+        phase_label = db_job.phase or job_type_label
+
+        jobs_list.append({
+            "id": aps_id,
+            "db_job_id": job_id,
+            "name": f"{job_type_label} #{job_id}",
+            "next_run_time": None,
+            "trigger": "⚡ executing",
+            "is_running": True,
+            "is_paused": False,
+            "phase": db_job.phase,
+            "job_type": db_job.job_type,
+            "status": "running",
+            "progress": round((db_job.processed_items / db_job.total_items) * 100, 1)
+                        if db_job.total_items > 0 else 0,
+            "processed_items": db_job.processed_items,
+            "total_items": db_job.total_items,
+            "config_id": db_job.config_id,
+            "parent_job_id": db_job.parent_job_id,
+        })
+
+    # ── Scheduler engine state ────────────────────────────────────────────────
     scheduler_state = "stopped"
     if aps_scheduler.running:
-        # Check if paused
-        if hasattr(aps_scheduler, "_paused") and aps_scheduler._paused:
-            scheduler_state = "paused"
-        else:
-            scheduler_state = "running"
+        scheduler_state = "paused" if (hasattr(aps_scheduler, "_paused") and aps_scheduler._paused) else "running"
 
     return {
         "scheduler_running": aps_scheduler.running,
         "scheduler_state": scheduler_state,
-        "active_tasks_count": len(_running_tasks),
+        "active_tasks_count": len([t for t in _running_tasks.values() if not t.done()]),
         "queue": jobs_list,
     }
 
