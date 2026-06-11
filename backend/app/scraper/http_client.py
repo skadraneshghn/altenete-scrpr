@@ -80,8 +80,6 @@ class AntiBotAsyncClient:
             # Impersonate Chrome 120 (spoofs TLS JA3, HTTP2 frames)
             self.session = AsyncSession(
                 impersonate="chrome120",
-                follow_redirects=True,
-                timeout=30.0,
             )
         else:
             self.session = httpx.AsyncClient(

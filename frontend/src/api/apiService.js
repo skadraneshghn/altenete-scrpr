@@ -55,6 +55,31 @@ const apiService = {
     return res.data;
   },
 
+  async pauseScheduler() {
+    const res = await client.post('/api/jobs/scheduler/pause');
+    return res.data;
+  },
+
+  async resumeScheduler() {
+    const res = await client.post('/api/jobs/scheduler/resume');
+    return res.data;
+  },
+
+  async pauseSchedulerJob(jobId) {
+    const res = await client.post(`/api/jobs/scheduler/jobs/${jobId}/pause`);
+    return res.data;
+  },
+
+  async resumeSchedulerJob(jobId) {
+    const res = await client.post(`/api/jobs/scheduler/jobs/${jobId}/resume`);
+    return res.data;
+  },
+
+  async runSchedulerJobNow(jobId) {
+    const res = await client.post(`/api/jobs/scheduler/jobs/${jobId}/run`);
+    return res.data;
+  },
+
   // Dashboard Metrics
   async getDashboardStats() {
     const res = await client.get('/api/dashboard/stats');

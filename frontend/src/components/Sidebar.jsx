@@ -9,6 +9,7 @@ import {
   Zap,
   Activity,
   Terminal,
+  Calendar,
 } from 'lucide-react';
 import useStore from '../store/useStore';
 
@@ -19,6 +20,7 @@ export default function Sidebar() {
   const links = [
     { name: 'Dashboard',       path: '/',         icon: LayoutDashboard },
     { name: 'Operations',      path: '/jobs',      icon: Play },
+    { name: 'Job Scheduler',   path: '/scheduler', icon: Calendar },
     { name: 'Scraped Threads', path: '/threads',   icon: FileText },
     { name: 'Health Check',     path: '/health',   icon: Activity },
     { name: 'Admin Logs',      path: '/logs',     icon: Terminal },

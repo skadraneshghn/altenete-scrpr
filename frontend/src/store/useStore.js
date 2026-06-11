@@ -139,6 +139,7 @@ const useStore = create((set, get) => ({
   // Job Queue / Scheduler State
   jobQueue: [],
   schedulerRunning: false,
+  schedulerState: 'stopped',
   activeTasksCount: 0,
   fetchJobQueue: async () => {
     try {
@@ -146,10 +147,66 @@ const useStore = create((set, get) => ({
       set({
         jobQueue: data.queue || [],
         schedulerRunning: data.scheduler_running || false,
+        schedulerState: data.scheduler_state || 'stopped',
         activeTasksCount: data.active_tasks_count || 0,
       });
     } catch (err) {
       console.error('Error fetching job queue:', err);
+    }
+  },
+
+  pauseScheduler: async () => {
+    try {
+      await apiService.pauseScheduler();
+      get().fetchJobQueue();
+      return true;
+    } catch (err) {
+      console.error('Error pausing scheduler:', err);
+      return false;
+    }
+  },
+
+  resumeScheduler: async () => {
+    try {
+      await apiService.resumeScheduler();
+      get().fetchJobQueue();
+      return true;
+    } catch (err) {
+      console.error('Error resuming scheduler:', err);
+      return false;
+    }
+  },
+
+  pauseSchedulerJob: async (jobId) => {
+    try {
+      await apiService.pauseSchedulerJob(jobId);
+      get().fetchJobQueue();
+      return true;
+    } catch (err) {
+      console.error('Error pausing scheduler job:', err);
+      return false;
+    }
+  },
+
+  resumeSchedulerJob: async (jobId) => {
+    try {
+      await apiService.resumeSchedulerJob(jobId);
+      get().fetchJobQueue();
+      return true;
+    } catch (err) {
+      console.error('Error resuming scheduler job:', err);
+      return false;
+    }
+  },
+
+  runSchedulerJobNow: async (jobId) => {
+    try {
+      await apiService.runSchedulerJobNow(jobId);
+      get().fetchJobQueue();
+      return true;
+    } catch (err) {
+      console.error('Error running scheduler job now:', err);
+      return false;
     }
   },
 

@@ -229,11 +229,94 @@ async def get_job_queue(
             "next_run_time": job.next_run_time.isoformat() if job.next_run_time else None,
             "trigger": str(job.trigger),
             "is_running": db_job_id in _running_tasks if db_job_id else False,
+            "is_paused": job.next_run_time is None,
         })
 
+    from app.scheduler.scheduler import scheduler as aps_scheduler
+    # In APScheduler, the scheduler state can be checked with .state (0 = STATE_STOPPED, 1 = STATE_RUNNING, 2 = STATE_PAUSED)
+    # scheduler.running returns True if the scheduler thread/loop is active.
+    # We want to check if the scheduler is paused vs running.
+    scheduler_state = "stopped"
+    if aps_scheduler.running:
+        # Check if paused
+        if hasattr(aps_scheduler, "_paused") and aps_scheduler._paused:
+            scheduler_state = "paused"
+        else:
+            scheduler_state = "running"
+
     return {
-        "scheduler_running": scheduler.running,
+        "scheduler_running": aps_scheduler.running,
+        "scheduler_state": scheduler_state,
         "active_tasks_count": len(_running_tasks),
         "queue": jobs_list,
     }
+
+
+@router.post("/scheduler/pause")
+async def pause_scheduler(
+    _: User = Depends(get_current_user),
+):
+    """Pause the scheduler (stops executing scheduled runs)."""
+    from app.scheduler.scheduler import scheduler
+    if scheduler.running:
+        scheduler.pause()
+    return {"status": "paused", "scheduler_running": scheduler.running}
+
+
+@router.post("/scheduler/resume")
+async def resume_scheduler(
+    _: User = Depends(get_current_user),
+):
+    """Resume the scheduler (resumes executing scheduled runs)."""
+    from app.scheduler.scheduler import scheduler
+    if scheduler.running:
+        scheduler.resume()
+    else:
+        scheduler.start()
+    return {"status": "resumed", "scheduler_running": scheduler.running}
+
+
+@router.post("/scheduler/jobs/{job_id}/pause")
+async def pause_scheduler_job(
+    job_id: str,
+    _: User = Depends(get_current_user),
+):
+    """Pause a specific job in the scheduler."""
+    from app.scheduler.scheduler import scheduler
+    job = scheduler.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Scheduled job not found")
+    job.pause()
+    return {"status": "paused", "job_id": job_id}
+
+
+@router.post("/scheduler/jobs/{job_id}/resume")
+async def resume_scheduler_job(
+    job_id: str,
+    _: User = Depends(get_current_user),
+):
+    """Resume a specific job in the scheduler."""
+    from app.scheduler.scheduler import scheduler
+    job = scheduler.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Scheduled job not found")
+    job.resume()
+    return {"status": "resumed", "job_id": job_id}
+
+
+@router.post("/scheduler/jobs/{job_id}/run")
+async def run_scheduler_job_now(
+    job_id: str,
+    _: User = Depends(get_current_user),
+):
+    """Run a scheduled job immediately."""
+    from app.scheduler.scheduler import scheduler
+    from datetime import datetime, timezone
+    job = scheduler.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Scheduled job not found")
+    
+    # Set next run time to now to trigger immediately
+    job.modify(next_run_time=datetime.now(timezone.utc))
+    return {"status": "triggered_now", "job_id": job_id}
 

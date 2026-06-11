@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import Login from './pages/Login';
 import HealthCheck from './pages/HealthCheck';
 import AdminLogs from './pages/AdminLogs';
+import Scheduler from './pages/Scheduler';
 import useStore from './store/useStore';
 
 function PrivateRoute({ children }) {
@@ -114,6 +115,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <AdminLogs />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/scheduler" 
+          element={
+            <PrivateRoute>
+              <Scheduler />
             </PrivateRoute>
           } 
         />
