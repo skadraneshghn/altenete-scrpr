@@ -6,6 +6,7 @@ Uses httpx for fetching — no browser/native binaries required.
 import asyncio
 import logging
 from app.scraper.http_client import get_client
+from app.scraper.xenforo_auth import XenForoAuth, is_logged_in
 from app.scraper.parsers import parse_threads_from_page, parse_total_pages, ThreadData
 
 logger = logging.getLogger(__name__)
@@ -20,13 +21,15 @@ class ForumCrawler:
         forum_section_url: str,
         max_pages: int = 0,
         delay: float = 2.0,
+        auth: XenForoAuth | None = None,
         cookies: dict | None = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.forum_section_url = forum_section_url.rstrip("/")
         self.max_pages = max_pages  # 0 = all pages
         self.delay = delay
-        self.cookies = cookies or {}
+        self.auth = auth
+        self.cookies = cookies or (auth._cookies if auth else {})
         self._cancelled = False
 
     def cancel(self):
@@ -40,9 +43,12 @@ class ForumCrawler:
         return f"{self.forum_section_url}/page-{page_num}"
 
     async def _fetch_html(self, url: str) -> str | None:
-        """Fetch raw HTML for a URL."""
-        client = get_client()
+        """Fetch raw HTML for a URL, using self-healing authenticated session if available."""
         try:
+            if self.auth:
+                return await self.auth.fetch_with_retry(url)
+
+            client = get_client()
             resp = await client.get(url, cookies=self.cookies)
             resp.raise_for_status()
             return resp.text

@@ -1,7 +1,6 @@
 """
 XenForo authentication handler using httpx.
-Handles login flow with CSRF token extraction and session management.
-No browser/Playwright/curl_cffi required.
+Handles login flow with CSRF token extraction and self-healing session management.
 """
 
 import re
@@ -12,13 +11,36 @@ from app.scraper.http_client import get_client
 logger = logging.getLogger(__name__)
 
 
+def is_logged_in(html: str) -> bool:
+    """Detect if the current HTML content indicates a logged-in XenForo session."""
+    if not html:
+        return False
+    # If the page explicitly states logged in is true
+    if 'data-logged-in="true"' in html:
+        return True
+    # If the page template is login, or logged-in status is false
+    if 'data-logged-in="false"' in html or 'data-template="login"' in html:
+        return False
+    # If XenForo config sets userId to 0
+    if 'userId: 0' in html or '"userId":0' in html or '"userId": 0' in html:
+        return False
+    # Explicit error message text check
+    if 'must be logged-in' in html.lower() or 'must be logged in' in html.lower():
+        return False
+    # Check if a log out button or account details exist
+    if '/logout/' in html or 'data-menu="menu"' in html:
+        return True
+    return True
+
+
 class XenForoAuth:
     """Handle XenForo forum authentication using httpx."""
 
-    def __init__(self, base_url: str, username: str, password: str):
+    def __init__(self, base_url: str, username: str, password: str, on_session_refreshed=None):
         self.base_url = base_url.rstrip("/")
         self.username = username
         self.password = password
+        self.on_session_refreshed = on_session_refreshed
         self._cookies: dict = {}
         self._is_authenticated = False
 
@@ -33,9 +55,9 @@ class XenForoAuth:
         Flow:
         1. GET /login/ to fetch the login page and extract _xfToken
         2. POST /login/login with credentials and CSRF token
-        3. Verify login success by checking response cookies
+        3. Verify login success by checking response cookies and HTML state
         """
-        logger.info(f"Attempting to login to {self.base_url} as {self.username}")
+        logger.info(f"Attempting login to {self.base_url} as {self.username}")
         client = get_client()
 
         try:
@@ -70,25 +92,35 @@ class XenForoAuth:
                 cookies=cookies,
             )
 
-            # XenForo redirects to homepage on successful login
+            if login_resp.status_code >= 400:
+                raise Exception(f"HTTP error {login_resp.status_code} during POST login")
+
+            # Combine initial page cookies with response cookies
             all_cookies = dict(login_resp.cookies)
             self._cookies = {**cookies, **all_cookies}
 
-            # Check for xf_user cookie (sign of success)
-            if "xf_user" in self._cookies:
+            # Check if login was successful
+            if "xf_user" in self._cookies or is_logged_in(login_resp.text):
                 self._is_authenticated = True
-                logger.info("Login successful — xf_user cookie found")
+                logger.info("XenForo login successful!")
+                
+                # Fire the callback to save cookies to the database
+                if self.on_session_refreshed:
+                    try:
+                        await self.on_session_refreshed(self._cookies)
+                    except Exception as cb_err:
+                        logger.error(f"Error executing session refresh callback: {cb_err}")
             else:
                 # Try to detect error message
                 err_soup = BeautifulSoup(login_resp.text, "lxml")
                 error_el = err_soup.select_one(".blockMessage--error, .p-body-pageContent .error")
-                error_msg = error_el.get_text(strip=True) if error_el else "Unknown login error"
+                error_msg = error_el.get_text(strip=True) if error_el else "Unknown login credentials error"
                 raise Exception(f"Login failed: {error_msg}")
 
             return {"status": "authenticated", "cookies": self._cookies}
 
         except Exception as e:
-            logger.error(f"Login failed: {str(e)}")
+            logger.error(f"XenForo authentication failed: {str(e)}")
             self._is_authenticated = False
             raise
 
@@ -111,12 +143,38 @@ class XenForoAuth:
 
         return None
 
-    async def fetch_authenticated(self, url: str) -> str:
-        """Fetch a page using the authenticated session cookies."""
-        if not self._is_authenticated:
-            await self.login()
-
+    async def fetch_with_retry(self, url: str) -> str:
+        """
+        Fetch page using authenticated session.
+        If not authenticated or session has expired (e.g. data-logged-in="false"),
+        automatically log in and retry.
+        """
         client = get_client()
+
+        # Perform initial fetch
+        logger.info(f"Fetching authenticated URL: {url}")
         resp = await client.get(url, cookies=self._cookies)
         resp.raise_for_status()
-        return resp.text
+        html = resp.text
+
+        # Validate session state
+        if is_logged_in(html):
+            return html
+
+        logger.warning(f"Session expired or guest access returned for {url}. Initiating auto-login...")
+        await self.login()
+
+        # Retry request with new cookies
+        logger.info(f"Retrying fetch with updated cookies for: {url}")
+        resp = await client.get(url, cookies=self._cookies)
+        resp.raise_for_status()
+        html = resp.text
+
+        if not is_logged_in(html):
+            raise Exception("Session expired and auto-login retry did not restore authenticated session.")
+
+        return html
+
+    async def fetch_authenticated(self, url: str) -> str:
+        """Backward compatibility helper."""
+        return await self.fetch_with_retry(url)

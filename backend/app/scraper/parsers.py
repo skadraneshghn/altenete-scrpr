@@ -173,10 +173,20 @@ def parse_first_post(html: str) -> PostData | None:
         content_html = str(content_el) if content_el else ""
         content_text = content_el.get_text(separator="\n", strip=True) if content_el else ""
 
-        author_el = first_post.select_one(".message-name a.username")
-        author = author_el.get_text(strip=True) if author_el else ""
+        # Extract author with backup options
+        author = ""
+        if first_post.get("data-author"):
+            author = first_post.get("data-author")
+        else:
+            author_el = first_post.select_one(".message-name a.username") or \
+                        first_post.select_one(".message-name")
+            author = author_el.get_text(strip=True) if author_el else ""
 
-        date_el = first_post.select_one(".message-date time")
+        # Extract post date with backup selectors
+        date_el = first_post.select_one(".message-date time") or \
+                  first_post.select_one(".message-attribution time") or \
+                  first_post.select_one("time.u-dt") or \
+                  first_post.select_one("time")
         post_date = parse_timestamp(date_el) if date_el else None
 
         return PostData(

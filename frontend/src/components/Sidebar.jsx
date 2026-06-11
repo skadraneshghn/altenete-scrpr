@@ -7,6 +7,7 @@ import {
   Settings as SettingsIcon,
   LogOut,
   Zap,
+  Activity,
 } from 'lucide-react';
 import useStore from '../store/useStore';
 
@@ -18,6 +19,7 @@ export default function Sidebar() {
     { name: 'Dashboard',       path: '/',         icon: LayoutDashboard },
     { name: 'Operations',      path: '/jobs',      icon: Play },
     { name: 'Scraped Threads', path: '/threads',   icon: FileText },
+    { name: 'Health Check',     path: '/health',   icon: Activity },
     { name: 'Settings',        path: '/settings',  icon: SettingsIcon },
   ];
 

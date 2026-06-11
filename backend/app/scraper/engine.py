@@ -5,6 +5,7 @@ Main scraper engine - orchestrates authentication, crawling, and scraping.
 import asyncio
 import logging
 from datetime import datetime, timezone
+import json
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -54,15 +55,67 @@ class ScraperEngine:
                 )
                 await db.commit()
 
+                # Initialize auth handler with session cookies persistence callback
+                async def on_session_refreshed(new_cookies):
+                    logger.info("Session cookies updated, persisting to database...")
+                    cfg_res = await db.execute(select(ForumConfig).where(ForumConfig.id == config.id))
+                    cfg = cfg_res.scalar_one()
+                    cfg.session_cookies = json.dumps(new_cookies)
+                    await db.flush()
+                    await db.commit()
+
+                auth = XenForoAuth(
+                    base_url=config.forum_url,
+                    username=config.xf_username,
+                    password=config.xf_password_encrypted,
+                    on_session_refreshed=on_session_refreshed
+                )
+
+                # Load existing cookies from DB
+                if config.session_cookies:
+                    try:
+                        auth._cookies = json.loads(config.session_cookies)
+                        auth._is_authenticated = True
+                        await job_service.add_log(
+                            self.job_id, LogLevel.INFO,
+                            "Loaded existing forum session cookies from database."
+                        )
+                    except Exception as e:
+                        logger.warning(f"Failed to parse saved session cookies: {e}")
+
+                # If no valid session cookies, perform login with retries
+                if not auth.is_authenticated:
+                    max_retries = 3
+                    login_success = False
+                    for attempt in range(1, max_retries + 1):
+                        try:
+                            await job_service.add_log(
+                                self.job_id, LogLevel.INFO,
+                                f"No active session. Attempting forum login (Attempt {attempt}/{max_retries})...."
+                            )
+                            await auth.login()
+                            login_success = True
+                            break
+                        except Exception as login_err:
+                            await job_service.add_log(
+                                self.job_id, LogLevel.WARNING,
+                                f"Login attempt {attempt} failed: {login_err}"
+                            )
+                            if attempt < max_retries:
+                                await asyncio.sleep(5)
+                    
+                    if not login_success:
+                        raise Exception("Failed to authenticate with XenForo after multiple attempts.")
+
                 # Determine job type
                 result = await db.execute(select(Job).where(Job.id == self.job_id))
                 job = result.scalar_one()
 
                 if job.job_type in ("crawl_forum", "full_run"):
-                    await self._crawl_forum(db, config, job_service)
+                    await self._crawl_forum(db, config, job_service, auth)
 
                 if job.job_type in ("scrape_threads", "full_run"):
-                    await self._scrape_threads(db, config, job_service)
+                    await self._scrape_threads(db, config, job_service, auth)
 
                 # Check if cancelled
                 if await job_service.is_cancelled(self.job_id):
@@ -87,7 +140,7 @@ class ScraperEngine:
                 )
                 await db.commit()
 
-    async def _crawl_forum(self, db: AsyncSession, config: ForumConfig, job_service: JobService):
+    async def _crawl_forum(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth):
         """Phase 1: Crawl forum pages to discover threads."""
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
@@ -100,6 +153,7 @@ class ScraperEngine:
             forum_section_url=config.forum_section_url,
             max_pages=config.max_pages,
             delay=config.scrape_delay,
+            auth=auth,
         )
 
         total_threads_found = 0
@@ -171,7 +225,7 @@ class ScraperEngine:
         )
         await db.commit()
 
-    async def _scrape_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService):
+    async def _scrape_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth):
         """Phase 2: Scrape first post from each thread."""
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
@@ -195,6 +249,7 @@ class ScraperEngine:
         scraper = ThreadScraper(
             base_url=config.forum_url,
             delay=config.scrape_delay,
+            auth=auth,
         )
 
         processed = 0

@@ -26,6 +26,7 @@ class ForumConfig(Base):
     max_pages: Mapped[int] = mapped_column(Integer, default=0)  # 0 = all pages
     scrape_delay: Mapped[float] = mapped_column(default=2.0)
     is_active: Mapped[bool] = mapped_column(default=True)
+    session_cookies: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )

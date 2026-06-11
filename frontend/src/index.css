@@ -295,3 +295,111 @@ tbody tr:last-child { border-bottom: none; }
 .animate-shake {
   animation: shake 0.4s ease-in-out;
 }
+
+/* ============================================================
+   Login Page Custom Styles (Overrides all library conflicts)
+   ============================================================ */
+.login-container {
+  min-height: 100vh !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
+              radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
+              #0f172a !important; /* slate-900 */
+  padding: 1.5rem !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+.login-card {
+  width: 100% !important;
+  max-width: 420px !important;
+  background-color: rgba(30, 41, 59, 0.45) !important; /* slate-800/45 */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(71, 85, 105, 0.4) !important; /* slate-600/40 */
+  border-radius: 20px !important;
+  padding: 2.5rem 2rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.login-input-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  margin-top: 6px !important;
+}
+
+.login-input-icon {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #64748b !important; /* slate-500 */
+  width: 20px !important;
+  height: 20px !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+
+.login-input {
+  width: 100% !important;
+  height: 50px !important;
+  padding-left: 48px !important;
+  padding-right: 16px !important;
+  background-color: rgba(15, 23, 42, 0.8) !important; /* slate-900 */
+  border: 1px solid rgba(71, 85, 105, 0.5) !important; /* slate-600 */
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease-in-out !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+.login-input:focus {
+  border-color: #6366f1 !important; /* indigo-500 */
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2) !important;
+  background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+.login-input::placeholder {
+  color: rgba(148, 163, 184, 0.6) !important; /* slate-400 */
+}
+
+.login-btn {
+  width: 100% !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important; /* indigo-500 to violet-600 */
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.login-btn:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  box-shadow: 0 15px 20px -3px rgba(99, 102, 241, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+.login-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 5px 10px -3px rgba(99, 102, 241, 0.3) !important;
+}
+
+.login-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}

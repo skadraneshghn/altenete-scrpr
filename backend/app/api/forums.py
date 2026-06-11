@@ -3,8 +3,12 @@ Forum data API endpoints: threads, posts, forum configs.
 """
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, desc, or_
+from sqlalchemy import select, func, desc, or_, asc
+import csv
+from io import StringIO
+import json
 
 from app.database import get_db
 from app.models.user import User
@@ -101,13 +105,17 @@ async def list_threads(
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=100),
     search: str | None = Query(None),
+    config_id: int | None = Query(None),
+    sort_by: str = Query("scraped_at"),
+    sort_dir: str = Query("desc"),
     db: AsyncSession = Depends(get_db),
     _: User = Depends(get_current_user),
 ):
-    """List scraped threads with pagination and search."""
+    """List scraped threads with pagination, search, source filtering, and sorting."""
     query = select(Thread)
     count_query = select(func.count(Thread.id))
 
+    # Apply search filter
     if search:
         search_filter = or_(
             Thread.title.ilike(f"%{search}%"),
@@ -116,10 +124,31 @@ async def list_threads(
         query = query.where(search_filter)
         count_query = count_query.where(search_filter)
 
+    # Apply config filter
+    if config_id:
+        query = query.where(Thread.config_id == config_id)
+        count_query = count_query.where(Thread.config_id == config_id)
+
     total = (await db.execute(count_query)).scalar() or 0
     total_pages = (total + per_page - 1) // per_page
 
-    query = query.order_by(desc(Thread.scraped_at)).offset((page - 1) * per_page).limit(per_page)
+    # Determine sorting column
+    sort_column = Thread.scraped_at
+    if sort_by == "thread_date":
+        sort_column = Thread.thread_date
+    elif sort_by == "replies":
+        sort_column = Thread.replies
+    elif sort_by == "views":
+        sort_column = Thread.views
+    elif sort_by == "title":
+        sort_column = Thread.title
+
+    if sort_dir == "asc":
+        query = query.order_by(asc(sort_column))
+    else:
+        query = query.order_by(desc(sort_column))
+
+    query = query.offset((page - 1) * per_page).limit(per_page)
     result = await db.execute(query)
     threads = result.scalars().all()
 
@@ -138,6 +167,80 @@ async def list_threads(
         per_page=per_page,
         total_pages=total_pages,
     )
+
+
+@router.get("/threads/export")
+async def export_threads(
+    search: str | None = Query(None),
+    config_id: int | None = Query(None),
+    format: str = Query("csv"),
+    db: AsyncSession = Depends(get_db),
+    _: User = Depends(get_current_user),
+):
+    """Export all scraped threads and posts as CSV or JSON."""
+    query = select(Thread)
+    if search:
+        search_filter = or_(
+            Thread.title.ilike(f"%{search}%"),
+            Thread.author.ilike(f"%{search}%"),
+        )
+        query = query.where(search_filter)
+    
+    if config_id:
+        query = query.where(Thread.config_id == config_id)
+        
+    query = query.order_by(desc(Thread.scraped_at))
+    result = await db.execute(query)
+    threads = result.scalars().all()
+    
+    if format == "json":
+        data = []
+        for t in threads:
+            post_result = await db.execute(select(Post).where(Post.thread_id == t.id))
+            post = post_result.scalar_one_or_none()
+            data.append({
+                "id": t.id,
+                "thread_xf_id": t.thread_xf_id,
+                "title": t.title,
+                "author": t.author,
+                "url": t.url,
+                "replies": t.replies,
+                "views": t.views,
+                "is_sticky": t.is_sticky,
+                "thread_date": t.thread_date.isoformat() if t.thread_date else None,
+                "scraped_at": t.scraped_at.isoformat(),
+                "post_content": post.content_text if post else None
+            })
+        
+        json_str = json.dumps(data, indent=2)
+        return StreamingResponse(
+            iter([json_str]),
+            media_type="application/json",
+            headers={"Content-Disposition": "attachment; filename=scraped_data.json"}
+        )
+        
+    else:
+        output = StringIO()
+        writer = csv.writer(output)
+        writer.writerow([
+            "ID", "XenForo ID", "Title", "Author", "URL", 
+            "Replies", "Views", "Is Sticky", "Thread Date", "Scraped At"
+        ])
+        
+        for t in threads:
+            writer.writerow([
+                t.id, t.thread_xf_id, t.title, t.author, t.url,
+                t.replies, t.views, t.is_sticky,
+                t.thread_date.isoformat() if t.thread_date else "",
+                t.scraped_at.isoformat()
+            ])
+            
+        output.seek(0)
+        return StreamingResponse(
+            iter([output.getvalue()]),
+            media_type="text/csv",
+            headers={"Content-Disposition": "attachment; filename=scraped_data.csv"}
+        )
 
 
 @router.get("/threads/{thread_id}", response_model=ThreadDetailResponse)

@@ -70,10 +70,18 @@ async def get_db():
             await session.close()
 
 
+from sqlalchemy import text
+
 async def init_db():
-    """Create all tables in the database."""
+    """Create all tables in the database and run any hotfixes."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        
+        # Add session_cookies column dynamically if it doesn't exist
+        try:
+            await conn.execute(text("ALTER TABLE forum_configs ADD COLUMN session_cookies TEXT"))
+        except Exception:
+            pass
 
 
 async def close_db():

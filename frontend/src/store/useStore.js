@@ -129,6 +129,12 @@ const useStore = create((set, get) => ({
   dashboardStats: null,
   dashboardActivity: [],
   recentJobs: [],
+  healthCheckData: null,
+  healthCheckLoading: false,
+  healthCheckError: null,
+  screenshotUrl: null,
+  screenshotLoading: false,
+
   fetchDashboardData: async () => {
     try {
       const [stats, activity, recent] = await Promise.all([
@@ -146,14 +152,35 @@ const useStore = create((set, get) => ({
     }
   },
 
+  fetchHealthCheck: async () => {
+    set({ healthCheckLoading: true, healthCheckError: null });
+    try {
+      const data = await apiService.getHealthCheck();
+      set({ healthCheckData: data, healthCheckLoading: false });
+    } catch (err) {
+      set({ healthCheckError: err.response?.data?.detail || 'Failed to run health checks', healthCheckLoading: false });
+    }
+  },
+
+  fetchScreenshot: async () => {
+    set({ screenshotLoading: true });
+    try {
+      const url = await apiService.getScreenshotUrl();
+      set({ screenshotUrl: url, screenshotLoading: false });
+    } catch (err) {
+      console.error('Failed to capture screenshot:', err);
+      set({ screenshotLoading: false });
+    }
+  },
+
   // Threads State
   threads: [],
   totalThreads: 0,
   totalPages: 0,
   activeThread: null,
-  fetchThreads: async (page = 1, search = '') => {
+  fetchThreads: async (page = 1, search = '', configId = '', sortBy = 'scraped_at', sortDir = 'desc') => {
     try {
-      const data = await apiService.getThreads(page, search);
+      const data = await apiService.getThreads(page, search, configId, sortBy, sortDir);
       set({
         threads: data.items,
         totalThreads: data.total,
@@ -170,6 +197,15 @@ const useStore = create((set, get) => ({
       set({ activeThread: data });
     } catch (err) {
       console.error('Error fetching thread details:', err);
+    }
+  },
+
+  exportThreads: async (search = '', configId = '', format = 'csv') => {
+    try {
+      return await apiService.exportThreads(search, configId, format);
+    } catch (err) {
+      console.error('Error exporting threads:', err);
+      return null;
     }
   },
 }));

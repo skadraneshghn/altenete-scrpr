@@ -9,6 +9,7 @@ import JobDetail from './pages/JobDetail';
 import Threads from './pages/Threads';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import HealthCheck from './pages/HealthCheck';
 import useStore from './store/useStore';
 
 function PrivateRoute({ children }) {
@@ -96,6 +97,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <Settings />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/health" 
+          element={
+            <PrivateRoute>
+              <HealthCheck />
             </PrivateRoute>
           } 
         />

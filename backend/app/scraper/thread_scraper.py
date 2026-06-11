@@ -7,6 +7,7 @@ import asyncio
 import logging
 from app.scraper.http_client import get_client
 from app.scraper.parsers import parse_first_post, PostData
+from app.scraper.xenforo_auth import XenForoAuth
 
 logger = logging.getLogger(__name__)
 
@@ -14,10 +15,11 @@ logger = logging.getLogger(__name__)
 class ThreadScraper:
     """Scrape first post content from individual thread pages."""
 
-    def __init__(self, base_url: str, delay: float = 2.0, cookies: dict | None = None):
+    def __init__(self, base_url: str, delay: float = 2.0, auth: XenForoAuth | None = None, cookies: dict | None = None):
         self.base_url = base_url.rstrip("/")
         self.delay = delay
-        self.cookies = cookies or {}
+        self.auth = auth
+        self.cookies = cookies or (auth._cookies if auth else {})
 
     def _build_thread_url(self, thread_url: str) -> str:
         """Build full thread URL."""
@@ -39,10 +41,13 @@ class ThreadScraper:
         logger.info(f"Scraping thread: {full_url}")
 
         try:
-            client = get_client()
-            resp = await client.get(full_url, cookies=self.cookies)
-            resp.raise_for_status()
-            html = resp.text
+            if self.auth:
+                html = await self.auth.fetch_with_retry(full_url)
+            else:
+                client = get_client()
+                resp = await client.get(full_url, cookies=self.cookies)
+                resp.raise_for_status()
+                html = resp.text
 
             post_data = parse_first_post(html)
             if post_data:

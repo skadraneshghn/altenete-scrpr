@@ -61,16 +61,38 @@ const apiService = {
     return res.data;
   },
 
+  async getHealthCheck() {
+    const res = await client.get('/api/dashboard/health-check');
+    return res.data;
+  },
+
+  async getScreenshotUrl() {
+    const res = await client.get('/api/dashboard/screenshot', { responseType: 'blob' });
+    return URL.createObjectURL(res.data);
+  },
+
   // Scraped Content & Threads
-  async getThreads(page = 1, search = '') {
-    const params = { page, per_page: 15 };
+  async getThreads(page = 1, search = '', configId = '', sortBy = 'scraped_at', sortDir = 'desc') {
+    const params = { page, per_page: 15, sort_by: sortBy, sort_dir: sortDir };
     if (search) params.search = search;
+    if (configId) params.config_id = configId;
     const res = await client.get('/api/forums/threads', { params });
     return res.data;
   },
 
   async getThreadDetails(id) {
     const res = await client.get(`/api/forums/threads/${id}`);
+    return res.data;
+  },
+
+  async exportThreads(search = '', configId = '', format = 'csv') {
+    const params = { format };
+    if (search) params.search = search;
+    if (configId) params.config_id = configId;
+    const res = await client.get('/api/forums/threads/export', { 
+      params,
+      responseType: 'blob'
+    });
     return res.data;
   }
 };
