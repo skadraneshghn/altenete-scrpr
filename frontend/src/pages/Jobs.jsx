@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Play, Plus, X, RotateCcw, Ban, Eye, Loader2, Trash2 } from 'lucide-react';
+import { Play, Plus, X, RotateCcw, Ban, Eye, Loader2, Trash2, Activity, Cpu, Layers } from 'lucide-react';
 import useStore from '../store/useStore';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,11 @@ export default function Jobs() {
     createJob, 
     cancelJob, 
     retryJob,
-    deleteJob
+    deleteJob,
+    jobQueue,
+    schedulerRunning,
+    activeTasksCount,
+    fetchJobQueue
   } = useStore();
 
   const [page, setPage] = useState(1);
@@ -28,8 +32,10 @@ export default function Jobs() {
   useEffect(() => {
     fetchJobs(page, statusFilter);
     fetchConfigs();
+    fetchJobQueue();
     const interval = setInterval(() => {
       fetchJobs(page, statusFilter);
+      fetchJobQueue();
     }, 5000);
     return () => clearInterval(interval);
   }, [page, statusFilter]);
@@ -84,6 +90,79 @@ export default function Jobs() {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Scheduler Queue and Status Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* Card 1: Scheduler State */}
+        <div className="glass-card p-5 flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Scheduler Engine</p>
+            <div className="flex items-center gap-2">
+              <span className={`h-2.5 w-2.5 rounded-full ${schedulerRunning ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
+              <p className="text-lg font-bold text-slate-800">{schedulerRunning ? 'Running' : 'Stopped'}</p>
+            </div>
+          </div>
+          <div className={`p-3 rounded-2xl ${schedulerRunning ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
+            <Activity className="h-6 w-6" />
+          </div>
+        </div>
+
+        {/* Card 2: Active Tasks */}
+        <div className="glass-card p-5 flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Executing Tasks</p>
+            <p className="text-2xl font-black text-slate-800">{activeTasksCount}</p>
+          </div>
+          <div className={`p-3 rounded-2xl ${activeTasksCount > 0 ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-400'}`}>
+            <Cpu className="h-6 w-6" />
+          </div>
+        </div>
+
+        {/* Card 3: Queued Tasks */}
+        <div className="glass-card p-5 flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Job Queue Size</p>
+            <p className="text-2xl font-black text-slate-800">{jobQueue.length}</p>
+          </div>
+          <div className={`p-3 rounded-2xl ${jobQueue.length > 0 ? 'bg-amber-50 text-amber-600' : 'bg-slate-100 text-slate-400'}`}>
+            <Layers className="h-6 w-6" />
+          </div>
+        </div>
+      </div>
+
+      {/* If queue has elements, show a mini queue viewer */}
+      {jobQueue.length > 0 && (
+        <div className="glass-card p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-slate-800">Background Job Queue</h3>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-500 border border-amber-500/10">Pending Runs</span>
+          </div>
+          <div className="space-y-2">
+            {jobQueue.map((q) => (
+              <div key={q.id} className="flex items-center justify-between p-3 bg-slate-50/50 hover:bg-slate-50 border border-slate-100/80 rounded-xl text-xs transition-all">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono font-bold text-slate-400">#{q.id}</span>
+                  <span className="font-bold text-slate-700 capitalize">{q.name.replace('_', ' ')}</span>
+                  {q.db_job_id && (
+                    <span className="px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-bold font-mono">Job #{q.db_job_id}</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-4 text-slate-500 font-medium">
+                  {q.is_running ? (
+                    <span className="flex items-center gap-1.5 text-indigo-600 font-bold animate-pulse">
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Executing
+                    </span>
+                  ) : (
+                    <span>Next run: {q.next_run_time ? new Date(q.next_run_time).toLocaleString() : 'Immediate'}</span>
+                  )}
+                  <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold font-mono bg-slate-100 px-2 py-0.5 rounded">{q.trigger}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Action Toolbar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 glass-card p-5">
         <select

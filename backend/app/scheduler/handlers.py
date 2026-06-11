@@ -22,6 +22,7 @@ async def execute_job(job_id: int):
     Loads the job config and runs the scraper engine.
     """
     logger.info(f"Executing job {job_id}")
+    _running_tasks[job_id] = asyncio.current_task()
 
     async with AsyncSessionLocal() as db:
         result = await db.execute(select(Job).where(Job.id == job_id))

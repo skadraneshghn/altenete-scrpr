@@ -136,6 +136,23 @@ const useStore = create((set, get) => ({
     }
   },
 
+  // Job Queue / Scheduler State
+  jobQueue: [],
+  schedulerRunning: false,
+  activeTasksCount: 0,
+  fetchJobQueue: async () => {
+    try {
+      const data = await apiService.getJobQueue();
+      set({
+        jobQueue: data.queue || [],
+        schedulerRunning: data.scheduler_running || false,
+        activeTasksCount: data.active_tasks_count || 0,
+      });
+    } catch (err) {
+      console.error('Error fetching job queue:', err);
+    }
+  },
+
   // Dashboard Stats
   dashboardStats: null,
   dashboardActivity: [],

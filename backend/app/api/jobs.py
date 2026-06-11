@@ -203,3 +203,37 @@ async def delete_job(
         raise HTTPException(status_code=400, detail="Cannot delete a running job")
 
     await db.delete(job)
+
+
+@router.get("/queue/status")
+async def get_job_queue(
+    _: User = Depends(get_current_user),
+):
+    """Get the current job scheduler state and queued jobs."""
+    from app.scheduler.scheduler import scheduler
+    from app.scheduler.handlers import _running_tasks
+
+    jobs_list = []
+    for job in scheduler.get_jobs():
+        db_job_id = None
+        if job.id.startswith("job_"):
+            try:
+                db_job_id = int(job.id.split("_")[1])
+            except Exception:
+                pass
+
+        jobs_list.append({
+            "id": job.id,
+            "db_job_id": db_job_id,
+            "name": job.name,
+            "next_run_time": job.next_run_time.isoformat() if job.next_run_time else None,
+            "trigger": str(job.trigger),
+            "is_running": db_job_id in _running_tasks if db_job_id else False,
+        })
+
+    return {
+        "scheduler_running": scheduler.running,
+        "active_tasks_count": len(_running_tasks),
+        "queue": jobs_list,
+    }
+

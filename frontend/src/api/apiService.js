@@ -50,6 +50,11 @@ const apiService = {
     return res.data;
   },
 
+  async getJobQueue() {
+    const res = await client.get('/api/jobs/queue/status');
+    return res.data;
+  },
+
   // Dashboard Metrics
   async getDashboardStats() {
     const res = await client.get('/api/dashboard/stats');
