@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Shield } from 'lucide-react';
+import { Shield, Lock, User, ArrowRight } from 'lucide-react';
 import useStore from '../store/useStore';
 import toast from 'react-hot-toast';
-import { TEInput, TERipple } from 'tw-elements-react';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -29,64 +28,80 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-neutral-100 dark:bg-neutral-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Background gradients */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div className="min-h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
+      {/* Dynamic Background Blob Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/20 rounded-full blur-[120px] animate-pulse pointer-events-none duration-10000"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[120px] animate-pulse pointer-events-none duration-10000"></div>
 
-      <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-lg p-8 animate-fade-in relative z-10 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.05),0_8px_18px_0_rgba(51,45,45,0.02),0_4px_18px_0_rgba(51,45,45,0.02)]">
-        {/* Brand header */}
+      <div className="w-full max-w-[440px] bg-slate-800/40 backdrop-blur-md border border-slate-700/30 rounded-3xl p-8 md:p-10 animate-fade-in relative z-10 shadow-2xl">
+        {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
-          <div className="p-3 bg-primary-100 rounded-2xl mb-4 text-primary-700">
-            <Shield className="h-8 w-8" />
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
+            <Shield className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-neutral-800 dark:text-neutral-200 tracking-tight">Admin Console</h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 font-medium">Sign in to manage scraping jobs</p>
+          <h2 className="text-2xl font-extrabold text-white tracking-tight">Altenen Scraper</h2>
+          <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest mt-1.5">Administrative Console</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-danger-100 border border-danger-200 text-danger-700 text-sm rounded-lg">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl font-medium animate-shake">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="relative mb-6">
-            <TEInput
-              type="text"
-              label="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="mb-6"
-            />
+          {/* Username Input */}
+          <div className="space-y-2">
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
+            <div className="relative">
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-500" />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full pl-11 pr-4 py-3 bg-slate-900/60 border border-slate-700/50 focus:border-indigo-500 rounded-xl text-white text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder-slate-600"
+                placeholder="Enter username"
+              />
+            </div>
           </div>
 
-          <div className="relative mb-6">
-            <TEInput
-              type="password"
-              label="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mb-6"
-            />
+          {/* Password Input */}
+          <div className="space-y-2">
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-500" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full pl-11 pr-4 py-3 bg-slate-900/60 border border-slate-700/50 focus:border-indigo-500 rounded-xl text-white text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder-slate-600"
+                placeholder="Enter password"
+              />
+            </div>
           </div>
 
-          <TERipple rippleColor="light" className="w-full">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full inline-block rounded bg-primary px-6 pb-2.5 pt-3 text-sm font-semibold uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] disabled:opacity-50"
-            >
-              {loading ? (
-                <div className="h-5 w-5 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto"></div>
-              ) : (
-                'Access Dashboard'
-              )}
-            </button>
-          </TERipple>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-[0.98] text-white text-sm font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-indigo-500/20 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          >
+            {loading ? (
+              <div className="h-5 w-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+            ) : (
+              <>
+                <span>Sign In</span>
+                <ArrowRight className="h-4 w-4" />
+              </>
+            )}
+          </button>
         </form>
+      </div>
+
+      <div className="absolute bottom-4 text-center z-10">
+        <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Protected Environment &copy; {new Date().getFullYear()}</p>
       </div>
     </div>
   );

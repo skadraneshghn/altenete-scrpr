@@ -72,7 +72,7 @@ export default function Jobs() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Action Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-100 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 glass-card p-5">
         <select
           value={statusFilter}
           onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
@@ -102,31 +102,31 @@ export default function Jobs() {
       </div>
 
       {/* Jobs Table */}
-      <div className="glass-card p-6">
+      <div className="glass-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                <th className="pb-4">Job ID</th>
-                <th className="pb-4">Operation Type</th>
-                <th className="pb-4">Status</th>
-                <th className="pb-4">Progress / Pages</th>
-                <th className="pb-4">Failed Items</th>
-                <th className="pb-4">Started At</th>
-                <th className="pb-4 text-right">Actions</th>
+              <tr className="bg-slate-50/75 border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                <th className="px-6 py-4">Job ID</th>
+                <th className="px-6 py-4">Operation Type</th>
+                <th className="px-6 py-4">Status</th>
+                <th className="px-6 py-4">Progress / Pages</th>
+                <th className="px-6 py-4">Failed Items</th>
+                <th className="px-6 py-4">Started At</th>
+                <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
               {jobs.map((job) => (
                 <tr key={job.id} className="hover:bg-slate-50/50 transition-all duration-200">
-                  <td className="py-4 font-mono font-bold text-slate-800">#{job.id}</td>
-                  <td className="py-4 capitalize font-semibold">{job.job_type.replace('_', ' ')}</td>
-                  <td className="py-4">
+                  <td className="px-6 py-4 font-mono font-bold text-slate-800">#{job.id}</td>
+                  <td className="px-6 py-4 capitalize font-semibold">{job.job_type.replace('_', ' ')}</td>
+                  <td className="px-6 py-4">
                     <span className={`status-badge status-${job.status}`}>
                       {job.status}
                     </span>
                   </td>
-                  <td className="py-4">
+                  <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-slate-700">
                         {job.processed_items} / {job.total_items}
@@ -141,11 +141,11 @@ export default function Jobs() {
                       )}
                     </div>
                   </td>
-                  <td className="py-4 text-red-500 font-bold">{job.failed_items}</td>
-                  <td className="py-4 text-slate-400">
+                  <td className="px-6 py-4 text-red-500 font-bold">{job.failed_items}</td>
+                  <td className="px-6 py-4 text-slate-400">
                     {job.started_at ? new Date(job.started_at).toLocaleString() : '-'}
                   </td>
-                  <td className="py-4 text-right space-x-2">
+                  <td className="px-6 py-4 text-right space-x-2">
                     <button
                       onClick={() => navigate(`/jobs/${job.id}`)}
                       className="p-2.5 hover:bg-slate-50 text-slate-500 hover:text-slate-800 rounded-xl transition-all duration-200 cursor-pointer"
@@ -187,7 +187,7 @@ export default function Jobs() {
 
         {/* Pagination */}
         {totalJobs > 10 && (
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between px-6 pb-6 pt-4 border-t border-slate-100/80">
             <span className="text-xs text-slate-400">Showing {jobs.length} of {totalJobs} entries</span>
             <div className="flex items-center gap-2">
               <button

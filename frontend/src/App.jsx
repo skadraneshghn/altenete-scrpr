@@ -21,12 +21,16 @@ function PrivateRoute({ children }) {
   }, [isAuthenticated]);
 
   return isAuthenticated ? (
-    <div className="flex min-h-screen" style={{ background: '#f1f5f9' }}>
+    <div className="flex min-h-screen relative overflow-hidden" style={{ background: '#f8fafc' }}>
+      {/* Background Glows for Modern Glassmorphism Accent */}
+      <div className="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-200/10 to-purple-200/15 blur-[120px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-blue-200/10 to-pink-200/15 blur-[120px] pointer-events-none z-0"></div>
+
       <Sidebar />
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden relative z-10">
         <Header />
         <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="w-full space-y-8">
             {children}
           </div>
         </main>

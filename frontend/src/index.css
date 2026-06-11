@@ -85,48 +85,53 @@ body {
    Cards
    ============================================================ */
 /* ============================================================
-   Cards (TW-Elements styled)
+   Cards (Premium TW-Elements inspired Design)
    ============================================================ */
 .card {
   background: var(--bg-card);
-  border: none;
-  border-radius: 0.5rem; /* 8px rounded as in TW-Elements */
-  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
-  transition: all 0.2s ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
-  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transform: translateY(-2px);
 }
 
 /* Legacy alias — keeps existing JSX working */
 .glass-card {
-  background: var(--bg-card);
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
-  transition: all 0.2s ease-in-out;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transform: translateY(-2px);
 }
 
 /* Stat card with left accent border */
 .stat-card {
-  background: var(--bg-card);
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
-  padding: 1.5rem;
-  transition: all 0.2s ease-in-out;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  padding: 1.75rem 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
 .stat-card:hover {
-  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
-  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transform: translateY(-3px);
 }
 
 /* ============================================================
@@ -281,4 +286,14 @@ tbody tr:last-child { border-bottom: none; }
   .space-x-2 > * + * { margin-left: 0.5rem; }
   .space-x-3 > * + * { margin-left: 0.75rem; }
   .space-x-4 > * + * { margin-left: 1rem; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
 }

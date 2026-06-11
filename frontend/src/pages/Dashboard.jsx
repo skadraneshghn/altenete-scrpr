@@ -172,31 +172,30 @@ export default function Dashboard() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left" style={{ borderCollapse: 'collapse' }}>
+          <table className="w-full text-left border-collapse">
             <thead>
-              <tr style={{ background: '#f8fafc' }}>
+              <tr className="bg-slate-50/75 border-b border-slate-100/80">
                 {['Job ID', 'Type', 'Status', 'Progress', 'Started At'].map(h => (
-                  <th key={h} className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{h}</th>
+                  <th key={h} className="px-6 py-4 text-[11px] font-bold uppercase tracking-wider text-slate-400">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {recentJobs.map((job, i) => (
+            <tbody className="divide-y divide-slate-100/80">
+              {recentJobs.map((job) => (
                 <tr
                   key={job.id}
-                  style={{ borderTop: '1px solid #f1f5f9' }}
-                  className="hover:bg-slate-50 transition-colors"
+                  className="hover:bg-slate-50/60 transition-colors"
                 >
-                  <td className="font-mono font-bold text-slate-700 text-sm">#{job.id}</td>
-                  <td className="capitalize font-medium text-slate-600 text-sm">{job.job_type.replace(/_/g, ' ')}</td>
-                  <td><span className={`status-badge status-${job.status}`}>{job.status}</span></td>
-                  <td className="text-sm font-semibold text-slate-700">{job.processed_items} / {job.total_items}</td>
-                  <td className="text-sm text-slate-400">{new Date(job.created_at).toLocaleString()}</td>
+                  <td className="px-6 py-4 font-mono font-bold text-slate-700 text-sm">#{job.id}</td>
+                  <td className="px-6 py-4 capitalize font-semibold text-slate-600 text-sm">{job.job_type.replace(/_/g, ' ')}</td>
+                  <td className="px-6 py-4"><span className={`status-badge status-${job.status}`}>{job.status}</span></td>
+                  <td className="px-6 py-4 text-sm font-semibold text-slate-700">{job.processed_items} / {job.total_items}</td>
+                  <td className="px-6 py-4 text-sm text-slate-400 font-medium">{new Date(job.created_at).toLocaleString()}</td>
                 </tr>
               ))}
               {recentJobs.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="text-center py-10 text-slate-400 text-sm">
+                  <td colSpan="5" className="text-center py-10 text-slate-400 text-sm italic">
                     No jobs recorded yet — launch your first scraping operation.
                   </td>
                 </tr>

@@ -34,7 +34,7 @@ export default function Threads() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Action Toolbar */}
-      <div className="flex bg-white p-4 rounded-2xl border border-slate-100 shadow-xs">
+      <div className="flex glass-card p-5">
         <div className="relative w-full max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
           <input
@@ -48,34 +48,34 @@ export default function Threads() {
       </div>
 
       {/* Threads Table */}
-      <div className="glass-card p-6">
+      <div className="glass-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                <th className="pb-4">XenForo ID</th>
-                <th className="pb-4">Thread Title</th>
-                <th className="pb-4">Author</th>
-                <th className="pb-4 text-center">Replies</th>
-                <th className="pb-4 text-center">Views</th>
-                <th className="pb-4">Scraped Date</th>
-                <th className="pb-4 text-right">View</th>
+              <tr className="bg-slate-50/75 border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                <th className="px-6 py-4">XenForo ID</th>
+                <th className="px-6 py-4">Thread Title</th>
+                <th className="px-6 py-4">Author</th>
+                <th className="px-6 py-4 text-center">Replies</th>
+                <th className="px-6 py-4 text-center">Views</th>
+                <th className="px-6 py-4">Scraped Date</th>
+                <th className="px-6 py-4 text-right">View</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
               {threads.map((thread) => (
                 <tr key={thread.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 font-mono text-slate-400">#{thread.thread_xf_id}</td>
-                  <td className="py-4 font-bold text-slate-800 max-w-sm truncate" title={thread.title}>
+                  <td className="px-6 py-4 font-mono text-slate-400">#{thread.thread_xf_id}</td>
+                  <td className="px-6 py-4 font-bold text-slate-800 max-w-sm truncate" title={thread.title}>
                     {thread.title}
                   </td>
-                  <td className="py-4 font-medium">{thread.author || 'Anonymous'}</td>
-                  <td className="py-4 text-center font-bold text-slate-700">{thread.replies}</td>
-                  <td className="py-4 text-center font-bold text-slate-700">{thread.views}</td>
-                  <td className="py-4 text-slate-400">
+                  <td className="px-6 py-4 font-medium">{thread.author || 'Anonymous'}</td>
+                  <td className="px-6 py-4 text-center font-bold text-slate-700">{thread.replies}</td>
+                  <td className="px-6 py-4 text-center font-bold text-slate-700">{thread.views}</td>
+                  <td className="px-6 py-4 text-slate-400">
                     {new Date(thread.scraped_at).toLocaleDateString()}
                   </td>
-                  <td className="py-4 text-right">
+                  <td className="px-6 py-4 text-right">
                     <button
                       onClick={() => handleViewDetails(thread.id)}
                       className="p-2 hover:bg-slate-50 text-indigo-600 hover:text-indigo-800 rounded-xl transition-colors cursor-pointer"
@@ -87,7 +87,7 @@ export default function Threads() {
               ))}
               {threads.length === 0 && (
                 <tr>
-                  <td colSpan="7" className="text-center py-12 text-slate-400">
+                  <td colSpan="7" className="text-center py-12 text-slate-400 italic">
                     No scraped forum content found matching criteria.
                   </td>
                 </tr>
@@ -98,7 +98,7 @@ export default function Threads() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between px-6 pb-6 pt-4 border-t border-slate-100">
             <span className="text-xs text-slate-400">Showing page {page} of {totalPages}</span>
             <div className="flex items-center gap-2">
               <button

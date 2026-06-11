@@ -60,9 +60,9 @@ export default function Settings() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Create Settings Form */}
-        <div className="glass-card p-6 lg:col-span-1 h-fit">
+        <div className="glass-card p-8 w-full lg:w-[450px] shrink-0 h-fit">
           <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
             <Sliders className="h-5 w-5 text-indigo-600" />
             <span>New Target Configuration</span>
@@ -167,7 +167,7 @@ export default function Settings() {
         </div>
 
         {/* Existing Configs List */}
-        <div className="glass-card p-6 lg:col-span-2">
+        <div className="glass-card p-8 flex-1 w-full">
           <h2 className="text-lg font-bold text-slate-800 mb-6">Target Configurations</h2>
           <div className="space-y-4">
             {configs.map((c) => (
