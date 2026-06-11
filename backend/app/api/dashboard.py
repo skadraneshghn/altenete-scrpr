@@ -233,15 +233,28 @@ async def get_screenshot(
     db: AsyncSession = Depends(get_db),
     _: User = Depends(get_current_user),
 ):
-    """Capture and return a real-time PNG screenshot of the forum section page (authenticated)."""
+    """
+    Capture an authenticated screenshot of the forum section page.
+
+    Flow:
+      1. Load saved cookies from DB → inject into Playwright context
+      2. Navigate to the forum section; check if logged in via page content
+      3. If NOT logged in → use Playwright to do a real browser login
+         (handles JS challenges / Cloudflare that trip up plain httpx)
+      4. After login, collect ALL browser cookies → save to DB
+      5. Take and return the screenshot
+    """
     import json
+    import logging
     from fastapi import HTTPException, Response
     from app.models.forum import ForumConfig
-    from app.scraper.xenforo_auth import XenForoAuth, is_logged_in
+    from app.scraper.xenforo_auth import is_logged_in
 
-    # Guard against Playwright not being installed in this environment
+    _log = logging.getLogger(__name__)
+
+    # Guard: Playwright must be installed
     try:
-        from playwright.async_api import async_playwright
+        from playwright.async_api import async_playwright, TimeoutError as PWTimeout
     except ImportError:
         raise HTTPException(
             status_code=501,
@@ -254,87 +267,166 @@ async def get_screenshot(
     # Load forum config
     result = await db.execute(select(ForumConfig).limit(1))
     config = result.scalar_one_or_none()
-
     if not config:
         raise HTTPException(
             status_code=404,
             detail="No forum configuration found. Please add one in Settings first.",
         )
 
-    url = config.forum_section_url or config.forum_url or "https://altenens.is/forums/accounts-and-database-dumps.45/"
-    domain = url.split("/")[2]          # e.g. "altenens.is"
+    if not config.xf_username or not config.xf_password_encrypted:
+        raise HTTPException(
+            status_code=400,
+            detail="No forum credentials configured. Please set username and password in Settings.",
+        )
+
+    target_url = (
+        config.forum_section_url
+        or config.forum_url
+        or "https://altenens.is/forums/accounts-and-database-dumps.45/"
+    )
+    base_url = config.forum_url.rstrip("/")
+    domain = target_url.split("/")[2]        # e.g. "altenens.is"
     cookie_domain = f".{domain}"
 
-    # ── Step 1: try to reuse saved session cookies ─────────────────────────
-    cookies_dict: dict = {}
-    if config.session_cookies:
-        try:
-            cookies_dict = json.loads(config.session_cookies) or {}
-        except Exception:
-            cookies_dict = {}
+    # ── Helper: persist browser cookies back to the DB ─────────────────────
+    async def _save_browser_cookies(context):
+        """Collect all cookies from a Playwright context and save to DB."""
+        raw_cookies = await context.cookies()
+        # Convert Playwright cookie list → simple {name: value} dict for storage
+        cookie_map = {c["name"]: c["value"] for c in raw_cookies if c.get("name")}
+        config.session_cookies = json.dumps(cookie_map)
+        await db.commit()
+        _log.info(f"Saved {len(cookie_map)} cookies to DB after Playwright session.")
+        return cookie_map
 
-    # ── Step 2: validate saved cookies; re-login if stale/missing ──────────
-    need_login = not cookies_dict
-
-    if not need_login:
-        # Quick httpx check to confirm the session is still active
-        try:
-            import httpx
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                check_resp = await client.get(url, cookies=cookies_dict)
-                if not is_logged_in(check_resp.text):
-                    need_login = True
-        except Exception:
-            need_login = True  # network error → attempt fresh login anyway
-
-    if need_login:
-        if not config.xf_username or not config.xf_password_encrypted:
-            raise HTTPException(
-                status_code=400,
-                detail="No login credentials found in forum configuration. Please configure username and password in Settings.",
-            )
-
-        # Fresh login via the existing XenForo auth module
-        async def _save_cookies(new_cookies: dict):
-            config.session_cookies = json.dumps(new_cookies)
-            await db.commit()
-
-        auth = XenForoAuth(
-            base_url=config.forum_url,
-            username=config.xf_username,
-            password=config.xf_password_encrypted,
-            on_session_refreshed=_save_cookies,
-        )
-        try:
-            await auth.login()
-            cookies_dict = auth._cookies
-        except Exception as login_err:
-            raise HTTPException(
-                status_code=502,
-                detail=f"Forum login failed: {str(login_err)}",
-            )
-
-    # ── Step 3: inject cookies into Playwright and take screenshot ──────────
-    cookies_list = [
-        {"name": k, "value": v, "domain": cookie_domain, "path": "/"}
-        for k, v in cookies_dict.items()
-        if k and v
-    ]
+    # ── Helper: build Playwright cookie list from stored dict ───────────────
+    def _build_cookie_list(cookie_map: dict) -> list:
+        return [
+            {"name": k, "value": v, "domain": cookie_domain, "path": "/"}
+            for k, v in cookie_map.items()
+            if k and v
+        ]
 
     try:
         async with async_playwright() as p:
             browser = await p.chromium.launch(
                 headless=True,
-                args=["--no-sandbox", "--disable-setuid-sandbox"],
+                args=[
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--disable-blink-features=AutomationControlled",
+                ],
             )
-            context = await browser.new_context(viewport={"width": 1280, "height": 800})
-            if cookies_list:
-                await context.add_cookies(cookies_list)
+            context = await browser.new_context(
+                viewport={"width": 1280, "height": 800},
+                user_agent=(
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/125.0.0.0 Safari/537.36"
+                ),
+            )
+
+            # ── Step 1: inject saved cookies (if any) ──────────────────────
+            saved_cookies: dict = {}
+            if config.session_cookies:
+                try:
+                    saved_cookies = json.loads(config.session_cookies) or {}
+                except Exception:
+                    saved_cookies = {}
+
+            if saved_cookies:
+                await context.add_cookies(_build_cookie_list(saved_cookies))
+                _log.info(f"Injected {len(saved_cookies)} saved cookies into Playwright context.")
+
             page = await context.new_page()
-            await page.goto(url, timeout=30000, wait_until="load")
+
+            # ── Step 2: navigate to target and check login state ───────────
+            await page.goto(target_url, timeout=40000, wait_until="domcontentloaded")
+            page_html = await page.content()
+            already_logged_in = is_logged_in(page_html)
+
+            # ── Step 3: Playwright-based login if needed ───────────────────
+            if not already_logged_in:
+                _log.info("Session stale or missing — performing Playwright browser login.")
+
+                # Go to login page
+                await page.goto(f"{base_url}/login/", timeout=30000, wait_until="domcontentloaded")
+
+                # Wait for the login form to appear
+                try:
+                    await page.wait_for_selector("input[name='login']", timeout=10000)
+                except PWTimeout:
+                    # Dump a debug screenshot to logs and fail
+                    _log.error("Login form did not appear — forum may be serving a challenge page.")
+                    raise HTTPException(
+                        status_code=502,
+                        detail="Login form did not load. The forum may be blocking automated access.",
+                    )
+
+                # Fill credentials
+                await page.fill("input[name='login']", config.xf_username)
+                await page.fill("input[name='password']", config.xf_password_encrypted)
+
+                # Tick "Stay logged in" if it's there
+                try:
+                    remember_cb = page.locator("input[name='remember']")
+                    if await remember_cb.count() > 0:
+                        await remember_cb.check()
+                except Exception:
+                    pass
+
+                # Submit the form
+                await page.click("button[type='submit']")
+
+                # Wait for redirect away from /login/ (success) or stay (failure)
+                try:
+                    await page.wait_for_url(
+                        lambda u: "/login/" not in u,
+                        timeout=15000,
+                    )
+                except PWTimeout:
+                    # Could be 2FA, CAPTCHA, or wrong credentials
+                    error_el = await page.query_selector(".blockMessage--error, .p-body-pageContent .error")
+                    error_text = (await error_el.inner_text()).strip() if error_el else "Unknown error"
+                    _log.error(f"Login did not redirect — possible bad credentials or 2FA: {error_text}")
+                    raise HTTPException(
+                        status_code=401,
+                        detail=f"Forum login failed: {error_text}",
+                    )
+
+                # Verify we are now logged in
+                post_login_html = await page.content()
+                if not is_logged_in(post_login_html):
+                    raise HTTPException(
+                        status_code=401,
+                        detail="Login appeared to succeed but the forum still shows guest view.",
+                    )
+
+                _log.info("Playwright login successful!")
+
+                # ── Step 4: save ALL cookies from this authenticated session ──
+                await _save_browser_cookies(context)
+
+                # Navigate to the actual target page now
+                await page.goto(target_url, timeout=40000, wait_until="domcontentloaded")
+
+            else:
+                # Already logged in with saved cookies — refresh them anyway
+                _log.info("Session still valid (using saved cookies).")
+                await _save_browser_cookies(context)
+
+            # ── Step 5: take the screenshot ────────────────────────────────
+            # Wait briefly for any lazy-loaded content
+            await page.wait_for_timeout(1500)
             screenshot = await page.screenshot(full_page=False)
             await browser.close()
+
             return Response(content=screenshot, media_type="image/png")
+
+    except HTTPException:
+        raise
     except Exception as e:
+        _log.error(f"Screenshot failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to capture screenshot: {str(e)}")
+
 
