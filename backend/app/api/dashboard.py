@@ -233,10 +233,11 @@ async def get_screenshot(
     db: AsyncSession = Depends(get_db),
     _: User = Depends(get_current_user),
 ):
-    """Capture and return a real-time PNG screenshot of the forum section page."""
+    """Capture and return a real-time PNG screenshot of the forum section page (authenticated)."""
     import json
     from fastapi import HTTPException, Response
     from app.models.forum import ForumConfig
+    from app.scraper.xenforo_auth import XenForoAuth, is_logged_in
 
     # Guard against Playwright not being installed in this environment
     try:
@@ -250,33 +251,81 @@ async def get_screenshot(
             ),
         )
 
-    # Find the active configuration
+    # Load forum config
     result = await db.execute(select(ForumConfig).limit(1))
     config = result.scalar_one_or_none()
+
     if not config:
-        url = "https://altenens.is/forums/accounts-and-database-dumps.45/"
-        cookies_list = []
-    else:
-        url = config.forum_section_url or "https://altenens.is/forums/accounts-and-database-dumps.45/"
-        cookies_list = []
-        if config.session_cookies:
-            try:
-                cookies_dict = json.loads(config.session_cookies)
-                for name, value in cookies_dict.items():
-                    cookies_list.append({
-                        "name": name,
-                        "value": value,
-                        "domain": ".altenens.is" if "altenens.is" in url else "localhost",
-                        "path": "/"
-                    })
-            except Exception:
-                pass
+        raise HTTPException(
+            status_code=404,
+            detail="No forum configuration found. Please add one in Settings first.",
+        )
+
+    url = config.forum_section_url or config.forum_url or "https://altenens.is/forums/accounts-and-database-dumps.45/"
+    domain = url.split("/")[2]          # e.g. "altenens.is"
+    cookie_domain = f".{domain}"
+
+    # ── Step 1: try to reuse saved session cookies ─────────────────────────
+    cookies_dict: dict = {}
+    if config.session_cookies:
+        try:
+            cookies_dict = json.loads(config.session_cookies) or {}
+        except Exception:
+            cookies_dict = {}
+
+    # ── Step 2: validate saved cookies; re-login if stale/missing ──────────
+    need_login = not cookies_dict
+
+    if not need_login:
+        # Quick httpx check to confirm the session is still active
+        try:
+            import httpx
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                check_resp = await client.get(url, cookies=cookies_dict)
+                if not is_logged_in(check_resp.text):
+                    need_login = True
+        except Exception:
+            need_login = True  # network error → attempt fresh login anyway
+
+    if need_login:
+        if not config.xf_username or not config.xf_password_encrypted:
+            raise HTTPException(
+                status_code=400,
+                detail="No login credentials found in forum configuration. Please configure username and password in Settings.",
+            )
+
+        # Fresh login via the existing XenForo auth module
+        async def _save_cookies(new_cookies: dict):
+            config.session_cookies = json.dumps(new_cookies)
+            await db.commit()
+
+        auth = XenForoAuth(
+            base_url=config.forum_url,
+            username=config.xf_username,
+            password=config.xf_password_encrypted,
+            on_session_refreshed=_save_cookies,
+        )
+        try:
+            await auth.login()
+            cookies_dict = auth._cookies
+        except Exception as login_err:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Forum login failed: {str(login_err)}",
+            )
+
+    # ── Step 3: inject cookies into Playwright and take screenshot ──────────
+    cookies_list = [
+        {"name": k, "value": v, "domain": cookie_domain, "path": "/"}
+        for k, v in cookies_dict.items()
+        if k and v
+    ]
 
     try:
         async with async_playwright() as p:
             browser = await p.chromium.launch(
                 headless=True,
-                args=["--no-sandbox", "--disable-setuid-sandbox"]
+                args=["--no-sandbox", "--disable-setuid-sandbox"],
             )
             context = await browser.new_context(viewport={"width": 1280, "height": 800})
             if cookies_list:
@@ -288,3 +337,4 @@ async def get_screenshot(
             return Response(content=screenshot, media_type="image/png")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to capture screenshot: {str(e)}")
+
