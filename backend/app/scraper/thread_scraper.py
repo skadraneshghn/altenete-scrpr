@@ -1,10 +1,11 @@
 """
 Thread scraper - extracts the first post content from individual threads.
+Uses httpx for fetching — no browser/native binaries required.
 """
 
 import asyncio
 import logging
-from scrapling.fetchers import StealthyFetcher
+from app.scraper.http_client import get_client
 from app.scraper.parsers import parse_first_post, PostData
 
 logger = logging.getLogger(__name__)
@@ -13,9 +14,10 @@ logger = logging.getLogger(__name__)
 class ThreadScraper:
     """Scrape first post content from individual thread pages."""
 
-    def __init__(self, base_url: str, delay: float = 2.0):
+    def __init__(self, base_url: str, delay: float = 2.0, cookies: dict | None = None):
         self.base_url = base_url.rstrip("/")
         self.delay = delay
+        self.cookies = cookies or {}
 
     def _build_thread_url(self, thread_url: str) -> str:
         """Build full thread URL."""
@@ -37,17 +39,12 @@ class ThreadScraper:
         logger.info(f"Scraping thread: {full_url}")
 
         try:
-            page = StealthyFetcher.fetch(
-                full_url,
-                headless=True,
-                network_idle=True,
-            )
+            client = get_client()
+            resp = await client.get(full_url, cookies=self.cookies)
+            resp.raise_for_status()
+            html = resp.text
 
-            if not page:
-                logger.error(f"Failed to fetch thread: {full_url}")
-                return None
-
-            post_data = parse_first_post(page)
+            post_data = parse_first_post(html)
             if post_data:
                 logger.info(f"Successfully scraped first post from {full_url}")
             else:
@@ -67,11 +64,11 @@ class ThreadScraper:
         check_cancelled=None,
     ) -> dict[str, PostData | None]:
         """
-        Scrape multiple threads with concurrency control.
+        Scrape multiple threads sequentially (or with concurrency limit) respecting rate limits.
 
         Args:
             thread_urls: List of thread URLs to scrape
-            max_concurrent: Max parallel scrapes
+            max_concurrent: Max parallel scrapes (unused since we do sequential to respect delay)
             on_thread_complete: Callback(url, success, index, total)
             check_cancelled: Async callback returning True if should stop
 
@@ -79,27 +76,21 @@ class ThreadScraper:
             Dict mapping thread_url -> PostData or None
         """
         results = {}
-        semaphore = asyncio.Semaphore(max_concurrent)
         total = len(thread_urls)
 
-        async def _scrape_with_semaphore(url: str, index: int):
-            async with semaphore:
-                if check_cancelled and await check_cancelled():
-                    return
-
-                post = await self.scrape_thread(url)
-                results[url] = post
-
-                if on_thread_complete:
-                    await on_thread_complete(url, post is not None, index, total)
-
-                # Rate limiting
-                await asyncio.sleep(self.delay)
-
-        # Process sequentially to respect rate limits
         for i, url in enumerate(thread_urls):
             if check_cancelled and await check_cancelled():
+                logger.info("Batch scraping cancelled")
                 break
-            await _scrape_with_semaphore(url, i)
+
+            post = await self.scrape_thread(url)
+            results[url] = post
+
+            if on_thread_complete:
+                await on_thread_complete(url, post is not None, i, total)
+
+            # Rate limiting
+            if i < total - 1:
+                await asyncio.sleep(self.delay)
 
         return results

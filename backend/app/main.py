@@ -61,6 +61,8 @@ async def lifespan(app: FastAPI):
     logger.info("Shutting down application...")
     shutdown_scheduler()
     await close_db()
+    from app.scraper.http_client import close_client
+    await close_client()
     logger.info("Application shut down")
 
 

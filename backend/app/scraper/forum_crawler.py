@@ -1,10 +1,11 @@
 """
 Forum page crawler - crawls forum listing pages and discovers thread URLs.
+Uses httpx for fetching — no browser/native binaries required.
 """
 
 import asyncio
 import logging
-from scrapling.fetchers import StealthyFetcher
+from app.scraper.http_client import get_client
 from app.scraper.parsers import parse_threads_from_page, parse_total_pages, ThreadData
 
 logger = logging.getLogger(__name__)
@@ -19,11 +20,13 @@ class ForumCrawler:
         forum_section_url: str,
         max_pages: int = 0,
         delay: float = 2.0,
+        cookies: dict | None = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.forum_section_url = forum_section_url.rstrip("/")
         self.max_pages = max_pages  # 0 = all pages
         self.delay = delay
+        self.cookies = cookies or {}
         self._cancelled = False
 
     def cancel(self):
@@ -36,12 +39,20 @@ class ForumCrawler:
             return self.forum_section_url
         return f"{self.forum_section_url}/page-{page_num}"
 
+    async def _fetch_html(self, url: str) -> str | None:
+        """Fetch raw HTML for a URL."""
+        client = get_client()
+        try:
+            resp = await client.get(url, cookies=self.cookies)
+            resp.raise_for_status()
+            return resp.text
+        except Exception as e:
+            logger.error(f"Error fetching {url}: {e}")
+            return None
+
     async def crawl_page(self, page_num: int) -> list[ThreadData]:
         """
         Crawl a single forum listing page.
-
-        Args:
-            page_num: Page number to crawl
 
         Returns:
             List of ThreadData from that page
@@ -49,38 +60,19 @@ class ForumCrawler:
         url = self._build_page_url(page_num)
         logger.info(f"Crawling page {page_num}: {url}")
 
-        try:
-            page = StealthyFetcher.fetch(
-                url,
-                headless=True,
-                network_idle=True,
-            )
-
-            if not page:
-                logger.error(f"Failed to fetch page {page_num}")
-                return []
-
-            threads = parse_threads_from_page(page)
-            return threads
-
-        except Exception as e:
-            logger.error(f"Error crawling page {page_num}: {e}")
+        html = await self._fetch_html(url)
+        if not html:
             return []
+
+        threads = parse_threads_from_page(html)
+        return threads
 
     async def get_total_pages(self) -> int:
         """Get the total number of pages in the forum section."""
-        try:
-            page = StealthyFetcher.fetch(
-                self.forum_section_url,
-                headless=True,
-                network_idle=True,
-            )
-            if page:
-                return parse_total_pages(page)
-            return 1
-        except Exception as e:
-            logger.error(f"Error getting total pages: {e}")
-            return 1
+        html = await self._fetch_html(self.forum_section_url)
+        if html:
+            return parse_total_pages(html)
+        return 1
 
     async def crawl_all(
         self,
@@ -91,15 +83,14 @@ class ForumCrawler:
         Crawl all forum pages and collect thread data.
 
         Args:
-            on_page_complete: Callback(page_num, total_pages, threads_found)
-            check_cancelled: Async callback that returns True if crawling should stop
+            on_page_complete: async callback(page_num, total_pages, threads_found)
+            check_cancelled: async callback that returns True if should stop
 
         Returns:
             Complete list of all discovered threads
         """
-        all_threads = []
+        all_threads: list[ThreadData] = []
 
-        # Get total pages
         total_pages = await self.get_total_pages()
         if self.max_pages > 0:
             total_pages = min(total_pages, self.max_pages)
@@ -107,7 +98,6 @@ class ForumCrawler:
         logger.info(f"Starting crawl of {total_pages} pages from {self.forum_section_url}")
 
         for page_num in range(1, total_pages + 1):
-            # Check cancellation
             if self._cancelled:
                 logger.info("Crawling cancelled")
                 break
@@ -115,15 +105,12 @@ class ForumCrawler:
                 logger.info("Crawling cancelled by external check")
                 break
 
-            # Crawl page
             threads = await self.crawl_page(page_num)
             all_threads.extend(threads)
 
-            # Callback
             if on_page_complete:
                 await on_page_complete(page_num, total_pages, len(threads))
 
-            # Rate limiting delay
             if page_num < total_pages:
                 await asyncio.sleep(self.delay)
 
