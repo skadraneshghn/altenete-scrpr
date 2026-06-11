@@ -57,7 +57,6 @@ class XenForoAuth:
         return self._is_authenticated
 
     async def login(self) -> dict:
-    async def login(self) -> dict:
         """
         Login to XenForo forum.
 
