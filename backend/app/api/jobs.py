@@ -99,7 +99,7 @@ async def create_job(
         status=JobStatus.PENDING,
     )
     db.add(job)
-    await db.flush()
+    await db.commit()
     await db.refresh(job)
 
     # Trigger the job in background
@@ -197,7 +197,7 @@ async def retry_job(
         status=JobStatus.PENDING,
     )
     db.add(new_job)
-    await db.flush()
+    await db.commit()
     await db.refresh(new_job)
 
     from app.scheduler.handlers import trigger_job

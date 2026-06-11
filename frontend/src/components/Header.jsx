@@ -4,10 +4,13 @@ import { Database, Cpu } from 'lucide-react';
 import useStore from '../store/useStore';
 
 const PAGE_META = {
-  '/':        { title: 'Overview',         sub: 'Monitor your scraping engine' },
-  '/jobs':    { title: 'Operations',        sub: 'Manage and track scraping jobs' },
-  '/threads': { title: 'Scraped Threads',   sub: 'Browse all extracted forum content' },
-  '/settings':{ title: 'Configuration',    sub: 'Manage forum targets and credentials' },
+  '/':          { title: 'Overview',          sub: 'Monitor your scraping engine' },
+  '/jobs':      { title: 'Operations',         sub: 'Manage and track scraping jobs' },
+  '/scheduler': { title: 'Job Scheduler',     sub: 'Monitor and control scraping schedules' },
+  '/threads':   { title: 'Scraped Threads',    sub: 'Browse all extracted forum content' },
+  '/health':    { title: 'Health Check',      sub: 'System and API endpoint status' },
+  '/logs':      { title: 'Admin Logs',        sub: 'System activity and crawl logs' },
+  '/settings':  { title: 'Configuration',     sub: 'Manage forum targets and credentials' },
 };
 
 export default function Header() {
