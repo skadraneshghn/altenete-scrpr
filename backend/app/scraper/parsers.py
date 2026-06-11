@@ -102,6 +102,14 @@ def parse_threads_from_page(html: str) -> list[ThreadData]:
                 continue
 
             url = title_link.get("href", "")
+            if url:
+                url = url.split("#")[0].split("?")[0]
+                if url.endswith("/unread"):
+                    url = url[:-7]
+                elif url.endswith("/unread/"):
+                    url = url[:-8]
+                if not url.endswith("/"):
+                    url += "/"
             title = title_link.get_text(strip=True)
 
             thread_id = parse_thread_id_from_url(url) or parse_thread_id_from_element(element)

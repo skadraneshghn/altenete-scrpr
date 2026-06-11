@@ -146,8 +146,16 @@ class DuplicatePolice:
         PoliceVerdict
         """
         try:
+            clean_url = url.split("#")[0].split("?")[0]
+            if clean_url.endswith("/unread"):
+                clean_url = clean_url[:-7]
+            elif clean_url.endswith("/unread/"):
+                clean_url = clean_url[:-8]
+            if not clean_url.endswith("/"):
+                clean_url += "/"
+
             result = await self._db.execute(
-                select(Thread.id).where(Thread.url == url).limit(1)
+                select(Thread.id).where(Thread.url == clean_url).limit(1)
             )
             exists = result.scalar_one_or_none() is not None
         except Exception as exc:

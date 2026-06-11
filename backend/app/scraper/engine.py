@@ -178,10 +178,68 @@ class ScraperEngine:
         )
 
         total_threads_found = 0
+        saved_count = 0
+        skipped_count = 0
+        police = DuplicatePolice(db, log_callback)
 
-        async def on_page_complete(page_num, total_pages, threads_found):
-            nonlocal total_threads_found
-            total_threads_found += threads_found
+        async def on_page_complete(page_num, total_pages, threads):
+            nonlocal total_threads_found, saved_count, skipped_count
+            total_threads_found += len(threads)
+            
+            page_saved = 0
+            page_skipped = 0
+
+            for td in threads:
+                try:
+                    async def _save_thread(td=td):
+                        """Upsert one thread row (called only when Police says ALLOW)."""
+                        from app.utils import sanitize_mysql_string
+                        existing = await db.execute(
+                            select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
+                        )
+                        thread = existing.scalar_one_or_none()
+                        if thread:
+                            # Update existing metadata
+                            thread.title = sanitize_mysql_string(td.title)
+                            thread.author = sanitize_mysql_string(td.author)
+                            thread.replies = td.replies
+                            thread.views = td.views
+                            thread.is_sticky = td.is_sticky
+                            thread.is_multipage = td.is_multipage
+                            thread.max_pages = td.max_pages
+                        else:
+                            db.add(Thread(
+                                thread_xf_id=td.thread_xf_id,
+                                title=sanitize_mysql_string(td.title),
+                                url=td.url,
+                                author=sanitize_mysql_string(td.author),
+                                replies=td.replies,
+                                views=td.views,
+                                is_sticky=td.is_sticky,
+                                thread_date=td.thread_date,
+                                is_multipage=td.is_multipage,
+                                max_pages=td.max_pages,
+                                config_id=config.id,
+                                job_id=self.job_id,
+                            ))
+                        return True
+
+                    op = ThreadOperation(thread_xf_id=td.thread_xf_id, save_fn=_save_thread)
+                    result = await op.run(police)
+                    if result.skipped:
+                        page_skipped += 1
+                        skipped_count += 1
+                    elif result.success:
+                        page_saved += 1
+                        saved_count += 1
+                    else:
+                        logger.warning("Thread op failed: %s", result.message)
+                except Exception as e:
+                    logger.warning(f"Error saving thread {td.thread_xf_id} on page {page_num}: {e}")
+
+            await db.flush()
+            await db.commit()
+
             await job_service.update_progress(
                 self.job_id,
                 processed=page_num,
@@ -189,74 +247,25 @@ class ScraperEngine:
             )
             await job_service.add_log(
                 self.job_id, LogLevel.INFO,
-                f"Page {page_num}/{total_pages}: found {threads_found} threads"
+                f"Page {page_num}/{total_pages}: indexed {page_saved} new/updated threads, skipped {page_skipped} (already indexed)"
             )
             await db.commit()
 
         async def check_cancelled():
             return await job_service.is_cancelled(self.job_id)
 
-        # Run the crawl
-        threads_data = await crawler.crawl_all(
+        # Run the crawl - each page's threads are saved immediately in on_page_complete
+        await crawler.crawl_all(
             on_page_complete=on_page_complete,
             check_cancelled=check_cancelled,
         )
 
-        # Save threads to database — Police-guarded upsert
-        police = DuplicatePolice(db, log_callback)
-        saved_count = 0
-        skipped_count = 0
-        for td in threads_data:
-            try:
-                async def _save_thread(td=td):
-                    """Upsert one thread row (called only when Police says ALLOW)."""
-                    existing = await db.execute(
-                        select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
-                    )
-                    thread = existing.scalar_one_or_none()
-                    if thread:
-                        # Update existing metadata
-                        thread.title = td.title
-                        thread.author = td.author
-                        thread.replies = td.replies
-                        thread.views = td.views
-                        thread.is_sticky = td.is_sticky
-                        thread.is_multipage = td.is_multipage
-                        thread.max_pages = td.max_pages
-                    else:
-                        db.add(Thread(
-                            thread_xf_id=td.thread_xf_id,
-                            title=td.title,
-                            url=td.url,
-                            author=td.author,
-                            replies=td.replies,
-                            views=td.views,
-                            is_sticky=td.is_sticky,
-                            thread_date=td.thread_date,
-                            is_multipage=td.is_multipage,
-                            max_pages=td.max_pages,
-                            config_id=config.id,
-                            job_id=self.job_id,
-                        ))
-                    return True
-
-                op = ThreadOperation(thread_xf_id=td.thread_xf_id, save_fn=_save_thread)
-                result = await op.run(police)
-                if result.skipped:
-                    skipped_count += 1
-                elif result.success:
-                    saved_count += 1
-                else:
-                    logger.warning("Thread op failed: %s", result.message)
-            except Exception as e:
-                logger.warning(f"Error saving thread {td.thread_xf_id}: {e}")
-
-        await db.flush()
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
             f"Phase 1 complete: saved {saved_count} new/updated threads, {skipped_count} skipped (already indexed)"
         )
         await db.commit()
+
 
     async def _check_new_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth, log_callback):
         """Quick Check: Crawl page 1 of the forum section to find and index new threads."""
@@ -275,7 +284,7 @@ class ScraperEngine:
             logger_cb=log_callback,
         )
 
-        async def on_page_complete(page_num, total_pages, threads_found):
+        async def on_page_complete(page_num, total_pages, threads):
             await job_service.update_progress(
                 self.job_id,
                 processed=page_num,
@@ -300,11 +309,12 @@ class ScraperEngine:
             try:
                 async def _save_new_thread(td=td):
                     """Insert a brand-new thread (called only when Police says ALLOW)."""
+                    from app.utils import sanitize_mysql_string
                     db.add(Thread(
                         thread_xf_id=td.thread_xf_id,
-                        title=td.title,
+                        title=sanitize_mysql_string(td.title),
                         url=td.url,
-                        author=td.author,
+                        author=sanitize_mysql_string(td.author),
                         replies=td.replies,
                         views=td.views,
                         is_sticky=td.is_sticky,
@@ -327,13 +337,14 @@ class ScraperEngine:
                     )
                 elif result.skipped:
                     # Still refresh the cached stats even though Police skipped the insert
+                    from app.utils import sanitize_mysql_string
                     existing = await db.execute(
                         select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
                     )
                     thread = existing.scalar_one_or_none()
                     if thread:
-                        thread.title = td.title
-                        thread.author = td.author
+                        thread.title = sanitize_mysql_string(td.title)
+                        thread.author = sanitize_mysql_string(td.author)
                         thread.replies = td.replies
                         thread.views = td.views
                         thread.is_sticky = td.is_sticky
@@ -396,6 +407,15 @@ class ScraperEngine:
         skipped = 0
         police = DuplicatePolice(db, log_callback)
 
+        # Check if card extractor is active
+        is_extractor_active = False
+        try:
+            from app.services.card_export_service import card_export_service
+            card_cfg = await card_export_service.get_settings()
+            is_extractor_active = card_cfg.extractor_enabled
+        except Exception as ce_err:
+            logger.error(f"Failed to check card extractor status: {ce_err}")
+
         for thread in threads:
             # Check cancellation
             if await job_service.is_cancelled(self.job_id):
@@ -412,11 +432,12 @@ class ScraperEngine:
                 )
                 if not post_data:
                     return False
+                from app.utils import sanitize_mysql_string
                 db.add(Post(
                     thread_id=thread.id,
-                    content_html=post_data.content_html,
-                    content_text=post_data.content_text,
-                    author=post_data.author,
+                    content_html=sanitize_mysql_string(post_data.content_html),
+                    content_text=sanitize_mysql_string(post_data.content_text),
+                    author=sanitize_mysql_string(post_data.author),
                     post_date=post_data.post_date,
                 ))
                 scraped_content = post_data.content_text
@@ -439,20 +460,20 @@ class ScraperEngine:
                     asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
                 except Exception as tg_err:
                     logger.error(f"Telegram notification error: {tg_err}")
-                # Card extraction (fire-and-forget, only if post content was scraped)
-                if scraped_content:
+                # Card extraction (processed in-place, only if post content was scraped and extractor is active)
+                if scraped_content and is_extractor_active:
                     try:
                         from app.extractor.card_service import process_post as _cp
-                        asyncio.create_task(_cp(
+                        await _cp(
                             thread_id=thread.id,
                             thread_xf_id=thread.thread_xf_id,
                             thread_title=thread.title,
                             thread_url=thread.url,
                             author=thread.author,
                             content_text=scraped_content,
-                        ))
+                        )
                     except Exception as ce:
-                        logger.error(f"Card extraction dispatch error: {ce}")
+                        logger.error(f"Card extraction error: {ce}")
             else:
                 failed += 1
                 await job_service.add_log(
@@ -531,6 +552,15 @@ class ScraperEngine:
         skipped = 0
         police = DuplicatePolice(db, log_callback)
 
+        # Check if card extractor is active
+        is_extractor_active = False
+        try:
+            from app.services.card_export_service import card_export_service
+            card_cfg = await card_export_service.get_settings()
+            is_extractor_active = card_cfg.extractor_enabled
+        except Exception as ce_err:
+            logger.error(f"Failed to check card extractor status: {ce_err}")
+
         for thread in threads:
             # Check cancellation
             if await job_service.is_cancelled(self.job_id):
@@ -555,11 +585,12 @@ class ScraperEngine:
                 )
                 if not post_data:
                     return False
+                from app.utils import sanitize_mysql_string
                 db.add(Post(
                     thread_id=thread.id,
-                    content_html=post_data.content_html,
-                    content_text=post_data.content_text,
-                    author=post_data.author,
+                    content_html=sanitize_mysql_string(post_data.content_html),
+                    content_text=sanitize_mysql_string(post_data.content_text),
+                    author=sanitize_mysql_string(post_data.author),
                     post_date=post_data.post_date,
                 ))
                 scraped_content = post_data.content_text
@@ -582,20 +613,20 @@ class ScraperEngine:
                     asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
                 except Exception as tg_err:
                     logger.error(f"Telegram notification error: {tg_err}")
-                # Card extraction (fire-and-forget)
-                if scraped_content:
+                # Card extraction (processed in-place, only if post content was scraped and extractor is active)
+                if scraped_content and is_extractor_active:
                     try:
                         from app.extractor.card_service import process_post as _cp
-                        asyncio.create_task(_cp(
+                        await _cp(
                             thread_id=thread.id,
                             thread_xf_id=thread.thread_xf_id,
                             thread_title=thread.title,
                             thread_url=thread.url,
                             author=thread.author,
                             content_text=scraped_content,
-                        ))
+                        )
                     except Exception as ce:
-                        logger.error(f"Card extraction dispatch error: {ce}")
+                        logger.error(f"Card extraction error: {ce}")
             else:
                 failed += 1
                 await job_service.add_log(

@@ -140,7 +140,7 @@ class ForumCrawler:
             all_threads.extend(threads)
 
             if on_page_complete:
-                await on_page_complete(page_num, total_pages, len(threads))
+                await on_page_complete(page_num, total_pages, threads)
 
             if page_num < total_pages:
                 # Add random jitter between 75% and 125% of self.delay to bypass CDN bot detection

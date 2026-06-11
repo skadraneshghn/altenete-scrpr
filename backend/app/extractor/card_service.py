@@ -65,7 +65,7 @@ async def process_post(
                 raw.content_text = content_text
                 raw.thread_title = thread_title or raw.thread_title
 
-            raw.processed_at = datetime.now(timezone.utc)
+            raw.processed_at = datetime.now(timezone.utc).replace(tzinfo=None)
 
             # ── Extract cards ────────────────────────────────────────────────
             cards: list[ParsedCard] = extract_cards(content_text or "")

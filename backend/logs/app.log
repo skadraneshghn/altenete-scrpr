@@ -91,3 +91,641 @@
 2026-06-11 18:11:57,548 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/#post-16749942 "HTTP/1.1 200 OK"
 2026-06-11 18:11:57,562 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956956/unread
 2026-06-11 18:12:01,345 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #57 (trigger: date[2026-06-11 18:11:48 +0330], next run at: 2026-06-11 18:11:48 +0330)" executed successfully
+2026-06-11 18:12:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:13:46 +0330)" (scheduled at 2026-06-11 18:12:46.219707+03:30)
+2026-06-11 18:12:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:13:46 +0330)" (scheduled at 2026-06-11 18:12:46.220217+03:30)
+2026-06-11 18:12:47,130 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #60 (check_new)
+2026-06-11 18:12:47,130 - app.scheduler.handlers - INFO - Triggering job 60
+2026-06-11 18:12:47,198 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:12:47,411 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:13:46 +0330)" executed successfully
+2026-06-11 18:12:47,839 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #60" to job store "default"
+2026-06-11 18:12:47,839 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:13:46 +0330)" executed successfully
+2026-06-11 18:12:47,839 - apscheduler.scheduler - INFO - Removed job job_60
+2026-06-11 18:12:47,839 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #60 (trigger: date[2026-06-11 18:12:47 +0330], next run at: 2026-06-11 18:12:47 +0330)" (scheduled at 2026-06-11 18:12:47.838858+03:30)
+2026-06-11 18:12:47,839 - app.scheduler.handlers - INFO - Executing job 60
+2026-06-11 18:12:49,784 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:12:50,327 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:12:51,197 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:12:51,204 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:12:51,428 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:12:51,428 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:12:51,684 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:12:52,513 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:12:52,524 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:12:52,977 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:12:54,436 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #60 (trigger: date[2026-06-11 18:12:47 +0330], next run at: 2026-06-11 18:12:47 +0330)" executed successfully
+2026-06-11 18:13:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:14:46 +0330)" (scheduled at 2026-06-11 18:13:46.219707+03:30)
+2026-06-11 18:13:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:14:46 +0330)" (scheduled at 2026-06-11 18:13:46.220217+03:30)
+2026-06-11 18:13:48,043 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #62 (check_new)
+2026-06-11 18:13:48,043 - app.scheduler.handlers - INFO - Triggering job 62
+2026-06-11 18:13:48,550 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #62" to job store "default"
+2026-06-11 18:13:48,550 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:14:46 +0330)" executed successfully
+2026-06-11 18:13:48,550 - apscheduler.scheduler - INFO - Removed job job_62
+2026-06-11 18:13:48,550 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #62 (trigger: date[2026-06-11 18:13:48 +0330], next run at: 2026-06-11 18:13:48 +0330)" (scheduled at 2026-06-11 18:13:48.550033+03:30)
+2026-06-11 18:13:48,550 - app.scheduler.handlers - INFO - Executing job 62
+2026-06-11 18:13:49,057 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:13:49,269 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:14:46 +0330)" executed successfully
+2026-06-11 18:13:50,487 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:13:51,071 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:13:51,852 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:13:51,862 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:13:52,080 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:13:52,080 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:13:52,347 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:13:53,114 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:13:53,123 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:13:53,556 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:13:54,985 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #62 (trigger: date[2026-06-11 18:13:48 +0330], next run at: 2026-06-11 18:13:48 +0330)" executed successfully
+2026-06-11 18:14:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:15:46 +0330)" (scheduled at 2026-06-11 18:14:46.219707+03:30)
+2026-06-11 18:14:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:15:46 +0330)" (scheduled at 2026-06-11 18:14:46.220217+03:30)
+2026-06-11 18:14:47,149 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #65 (check_new)
+2026-06-11 18:14:47,149 - app.scheduler.handlers - INFO - Triggering job 65
+2026-06-11 18:14:47,168 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:14:47,370 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:15:46 +0330)" executed successfully
+2026-06-11 18:14:47,592 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #65" to job store "default"
+2026-06-11 18:14:47,592 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:15:46 +0330)" executed successfully
+2026-06-11 18:14:47,593 - apscheduler.scheduler - INFO - Removed job job_65
+2026-06-11 18:14:47,593 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #65 (trigger: date[2026-06-11 18:14:47 +0330], next run at: 2026-06-11 18:14:47 +0330)" (scheduled at 2026-06-11 18:14:47.592389+03:30)
+2026-06-11 18:14:47,593 - app.scheduler.handlers - INFO - Executing job 65
+2026-06-11 18:14:49,354 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:14:49,786 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:14:50,538 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:14:50,548 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:14:50,770 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:14:50,770 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:14:51,057 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:14:51,991 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:14:52,048 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:14:52,499 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:14:53,984 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #65 (trigger: date[2026-06-11 18:14:47 +0330], next run at: 2026-06-11 18:14:47 +0330)" executed successfully
+2026-06-11 18:15:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:16:46 +0330)" (scheduled at 2026-06-11 18:15:46.219707+03:30)
+2026-06-11 18:15:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:16:46 +0330)" (scheduled at 2026-06-11 18:15:46.220217+03:30)
+2026-06-11 18:15:47,129 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #68 (check_new)
+2026-06-11 18:15:47,129 - app.scheduler.handlers - INFO - Triggering job 68
+2026-06-11 18:15:47,213 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:15:47,436 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:16:46 +0330)" executed successfully
+2026-06-11 18:15:47,574 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #68" to job store "default"
+2026-06-11 18:15:47,575 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:16:46 +0330)" executed successfully
+2026-06-11 18:15:47,575 - apscheduler.scheduler - INFO - Removed job job_68
+2026-06-11 18:15:47,575 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #68 (trigger: date[2026-06-11 18:15:47 +0330], next run at: 2026-06-11 18:15:47 +0330)" (scheduled at 2026-06-11 18:15:47.574754+03:30)
+2026-06-11 18:15:47,575 - app.scheduler.handlers - INFO - Executing job 68
+2026-06-11 18:15:49,486 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:15:50,167 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:15:50,937 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:15:50,952 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:15:51,174 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:15:51,174 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:15:51,862 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:15:52,639 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:15:52,648 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:15:53,096 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:15:54,550 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #68 (trigger: date[2026-06-11 18:15:47 +0330], next run at: 2026-06-11 18:15:47 +0330)" executed successfully
+2026-06-11 18:16:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:17:46 +0330)" (scheduled at 2026-06-11 18:16:46.219707+03:30)
+2026-06-11 18:16:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:17:46 +0330)" (scheduled at 2026-06-11 18:16:46.220217+03:30)
+2026-06-11 18:16:47,127 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #70 (check_new)
+2026-06-11 18:16:47,127 - app.scheduler.handlers - INFO - Triggering job 70
+2026-06-11 18:16:47,217 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:16:47,441 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:17:46 +0330)" executed successfully
+2026-06-11 18:16:47,575 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #70" to job store "default"
+2026-06-11 18:16:47,575 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:17:46 +0330)" executed successfully
+2026-06-11 18:16:47,576 - apscheduler.scheduler - INFO - Removed job job_70
+2026-06-11 18:16:47,576 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #70 (trigger: date[2026-06-11 18:16:47 +0330], next run at: 2026-06-11 18:16:47 +0330)" (scheduled at 2026-06-11 18:16:47.575469+03:30)
+2026-06-11 18:16:47,576 - app.scheduler.handlers - INFO - Executing job 70
+2026-06-11 18:16:49,525 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:16:49,980 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:16:50,782 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:16:50,789 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:16:51,021 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:16:51,021 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:16:51,314 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:16:52,126 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:16:52,142 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:16:52,604 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:16:54,062 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #70 (trigger: date[2026-06-11 18:16:47 +0330], next run at: 2026-06-11 18:16:47 +0330)" executed successfully
+2026-06-11 18:17:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:18:46 +0330)" (scheduled at 2026-06-11 18:17:46.219707+03:30)
+2026-06-11 18:17:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:18:46 +0330)" (scheduled at 2026-06-11 18:17:46.220217+03:30)
+2026-06-11 18:17:47,123 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #73 (check_new)
+2026-06-11 18:17:47,124 - app.scheduler.handlers - INFO - Triggering job 73
+2026-06-11 18:17:47,217 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:17:47,440 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:18:46 +0330)" executed successfully
+2026-06-11 18:17:47,571 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #73" to job store "default"
+2026-06-11 18:17:47,571 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:18:46 +0330)" executed successfully
+2026-06-11 18:17:47,571 - apscheduler.scheduler - INFO - Removed job job_73
+2026-06-11 18:17:47,572 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #73 (trigger: date[2026-06-11 18:17:47 +0330], next run at: 2026-06-11 18:17:47 +0330)" (scheduled at 2026-06-11 18:17:47.571297+03:30)
+2026-06-11 18:17:47,572 - app.scheduler.handlers - INFO - Executing job 73
+2026-06-11 18:17:49,524 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:17:50,076 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:17:51,042 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:17:51,070 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:17:51,295 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:17:51,295 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:17:51,919 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:17:52,685 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:17:52,706 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:17:53,157 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:17:54,664 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #73 (trigger: date[2026-06-11 18:17:47 +0330], next run at: 2026-06-11 18:17:47 +0330)" executed successfully
+2026-06-11 18:18:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:19:46 +0330)" (scheduled at 2026-06-11 18:18:46.219707+03:30)
+2026-06-11 18:18:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:19:46 +0330)" (scheduled at 2026-06-11 18:18:46.220217+03:30)
+2026-06-11 18:18:47,140 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #75 (check_new)
+2026-06-11 18:18:47,140 - app.scheduler.handlers - INFO - Triggering job 75
+2026-06-11 18:18:47,184 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:18:47,398 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:19:46 +0330)" executed successfully
+2026-06-11 18:18:47,598 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #75" to job store "default"
+2026-06-11 18:18:47,598 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:19:46 +0330)" executed successfully
+2026-06-11 18:18:47,598 - apscheduler.scheduler - INFO - Removed job job_75
+2026-06-11 18:18:47,598 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #75 (trigger: date[2026-06-11 18:18:47 +0330], next run at: 2026-06-11 18:18:47 +0330)" (scheduled at 2026-06-11 18:18:47.597843+03:30)
+2026-06-11 18:18:47,598 - app.scheduler.handlers - INFO - Executing job 75
+2026-06-11 18:18:49,476 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:18:50,037 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:18:50,799 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:18:50,809 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:18:51,025 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:18:51,026 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:18:51,304 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:18:52,151 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:18:52,160 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:18:52,599 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:18:54,117 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #75 (trigger: date[2026-06-11 18:18:47 +0330], next run at: 2026-06-11 18:18:47 +0330)" executed successfully
+2026-06-11 18:19:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:20:46 +0330)" (scheduled at 2026-06-11 18:19:46.219707+03:30)
+2026-06-11 18:19:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:20:46 +0330)" (scheduled at 2026-06-11 18:19:46.220217+03:30)
+2026-06-11 18:19:47,086 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #79 (check_new)
+2026-06-11 18:19:47,086 - app.scheduler.handlers - INFO - Triggering job 79
+2026-06-11 18:19:47,211 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:19:47,433 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:20:46 +0330)" executed successfully
+2026-06-11 18:19:47,514 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #79" to job store "default"
+2026-06-11 18:19:47,514 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:20:46 +0330)" executed successfully
+2026-06-11 18:19:47,514 - apscheduler.scheduler - INFO - Removed job job_79
+2026-06-11 18:19:47,515 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #79 (trigger: date[2026-06-11 18:19:47 +0330], next run at: 2026-06-11 18:19:47 +0330)" (scheduled at 2026-06-11 18:19:47.514251+03:30)
+2026-06-11 18:19:47,515 - app.scheduler.handlers - INFO - Executing job 79
+2026-06-11 18:19:49,432 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:19:49,895 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:19:50,725 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:19:50,743 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:19:50,967 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:19:50,967 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:19:51,285 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:19:52,091 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:19:52,105 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:19:52,574 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:19:54,031 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #79 (trigger: date[2026-06-11 18:19:47 +0330], next run at: 2026-06-11 18:19:47 +0330)" executed successfully
+2026-06-11 18:20:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:21:46 +0330)" (scheduled at 2026-06-11 18:20:46.219707+03:30)
+2026-06-11 18:20:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:21:46 +0330)" (scheduled at 2026-06-11 18:20:46.220217+03:30)
+2026-06-11 18:20:47,117 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #83 (check_new)
+2026-06-11 18:20:47,117 - app.scheduler.handlers - INFO - Triggering job 83
+2026-06-11 18:20:47,213 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:20:47,434 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:21:46 +0330)" executed successfully
+2026-06-11 18:20:47,567 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #83" to job store "default"
+2026-06-11 18:20:47,567 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:21:46 +0330)" executed successfully
+2026-06-11 18:20:47,568 - apscheduler.scheduler - INFO - Removed job job_83
+2026-06-11 18:20:47,568 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #83 (trigger: date[2026-06-11 18:20:47 +0330], next run at: 2026-06-11 18:20:47 +0330)" (scheduled at 2026-06-11 18:20:47.567349+03:30)
+2026-06-11 18:20:47,568 - app.scheduler.handlers - INFO - Executing job 83
+2026-06-11 18:20:49,493 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:20:49,955 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:20:50,821 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:20:50,829 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:20:51,053 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:20:51,053 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:20:51,520 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:20:52,293 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:20:52,307 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:20:52,757 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:20:54,228 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #83 (trigger: date[2026-06-11 18:20:47 +0330], next run at: 2026-06-11 18:20:47 +0330)" executed successfully
+2026-06-11 18:21:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:22:46 +0330)" (scheduled at 2026-06-11 18:21:46.219707+03:30)
+2026-06-11 18:21:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:22:46 +0330)" (scheduled at 2026-06-11 18:21:46.220217+03:30)
+2026-06-11 18:21:47,125 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #85 (check_new)
+2026-06-11 18:21:47,125 - app.scheduler.handlers - INFO - Triggering job 85
+2026-06-11 18:21:47,219 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:21:47,444 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:22:46 +0330)" executed successfully
+2026-06-11 18:21:47,572 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #85" to job store "default"
+2026-06-11 18:21:47,572 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:22:46 +0330)" executed successfully
+2026-06-11 18:21:47,572 - apscheduler.scheduler - INFO - Removed job job_85
+2026-06-11 18:21:47,572 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #85 (trigger: date[2026-06-11 18:21:47 +0330], next run at: 2026-06-11 18:21:47 +0330)" (scheduled at 2026-06-11 18:21:47.572115+03:30)
+2026-06-11 18:21:47,573 - app.scheduler.handlers - INFO - Executing job 85
+2026-06-11 18:21:49,531 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:21:50,122 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:21:50,993 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:21:51,005 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:21:51,230 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:21:51,230 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:21:51,501 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:21:52,269 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:21:52,279 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:21:52,824 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:21:54,305 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #85 (trigger: date[2026-06-11 18:21:47 +0330], next run at: 2026-06-11 18:21:47 +0330)" executed successfully
+2026-06-11 18:22:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:23:46 +0330)" (scheduled at 2026-06-11 18:22:46.219707+03:30)
+2026-06-11 18:22:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:23:46 +0330)" (scheduled at 2026-06-11 18:22:46.220217+03:30)
+2026-06-11 18:22:47,152 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #87 (check_new)
+2026-06-11 18:22:47,152 - app.scheduler.handlers - INFO - Triggering job 87
+2026-06-11 18:22:47,170 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:22:47,389 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:23:46 +0330)" executed successfully
+2026-06-11 18:22:47,630 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #87" to job store "default"
+2026-06-11 18:22:47,631 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:23:46 +0330)" executed successfully
+2026-06-11 18:22:47,631 - apscheduler.scheduler - INFO - Removed job job_87
+2026-06-11 18:22:47,631 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #87 (trigger: date[2026-06-11 18:22:47 +0330], next run at: 2026-06-11 18:22:47 +0330)" (scheduled at 2026-06-11 18:22:47.630644+03:30)
+2026-06-11 18:22:47,631 - app.scheduler.handlers - INFO - Executing job 87
+2026-06-11 18:22:49,404 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:22:49,990 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:22:50,905 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:22:50,913 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:22:51,118 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:22:51,118 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:22:51,375 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:22:52,649 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:22:52,660 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:22:53,085 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:22:54,429 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #87 (trigger: date[2026-06-11 18:22:47 +0330], next run at: 2026-06-11 18:22:47 +0330)" executed successfully
+2026-06-11 18:23:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:24:46 +0330)" (scheduled at 2026-06-11 18:23:46.219707+03:30)
+2026-06-11 18:23:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:24:46 +0330)" (scheduled at 2026-06-11 18:23:46.220217+03:30)
+2026-06-11 18:23:47,075 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #89 (check_new)
+2026-06-11 18:23:47,076 - app.scheduler.handlers - INFO - Triggering job 89
+2026-06-11 18:23:47,191 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:23:47,405 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:24:46 +0330)" executed successfully
+2026-06-11 18:23:47,492 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #89" to job store "default"
+2026-06-11 18:23:47,492 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:24:46 +0330)" executed successfully
+2026-06-11 18:23:47,492 - apscheduler.scheduler - INFO - Removed job job_89
+2026-06-11 18:23:47,492 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #89 (trigger: date[2026-06-11 18:23:47 +0330], next run at: 2026-06-11 18:23:47 +0330)" (scheduled at 2026-06-11 18:23:47.492100+03:30)
+2026-06-11 18:23:47,493 - app.scheduler.handlers - INFO - Executing job 89
+2026-06-11 18:23:49,363 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:23:49,931 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:23:50,963 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:23:50,986 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:23:51,200 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:23:51,200 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:23:51,663 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:23:52,411 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:23:52,429 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:23:52,862 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:23:54,269 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #89 (trigger: date[2026-06-11 18:23:47 +0330], next run at: 2026-06-11 18:23:47 +0330)" executed successfully
+2026-06-11 18:24:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:25:46 +0330)" (scheduled at 2026-06-11 18:24:46.219707+03:30)
+2026-06-11 18:24:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:25:46 +0330)" (scheduled at 2026-06-11 18:24:46.220217+03:30)
+2026-06-11 18:24:47,099 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #91 (check_new)
+2026-06-11 18:24:47,099 - app.scheduler.handlers - INFO - Triggering job 91
+2026-06-11 18:24:47,186 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:24:47,399 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:25:46 +0330)" executed successfully
+2026-06-11 18:24:47,523 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #91" to job store "default"
+2026-06-11 18:24:47,523 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:25:46 +0330)" executed successfully
+2026-06-11 18:24:47,523 - apscheduler.scheduler - INFO - Removed job job_91
+2026-06-11 18:24:47,523 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #91 (trigger: date[2026-06-11 18:24:47 +0330], next run at: 2026-06-11 18:24:47 +0330)" (scheduled at 2026-06-11 18:24:47.523007+03:30)
+2026-06-11 18:24:47,523 - app.scheduler.handlers - INFO - Executing job 91
+2026-06-11 18:24:49,468 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:24:49,973 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:24:50,776 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:24:50,785 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:24:50,999 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:24:50,999 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:24:51,278 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:24:52,099 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:24:52,121 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:24:52,556 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:24:53,964 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #91 (trigger: date[2026-06-11 18:24:47 +0330], next run at: 2026-06-11 18:24:47 +0330)" executed successfully
+2026-06-11 18:25:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:26:46 +0330)" (scheduled at 2026-06-11 18:25:46.219707+03:30)
+2026-06-11 18:25:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:26:46 +0330)" (scheduled at 2026-06-11 18:25:46.220217+03:30)
+2026-06-11 18:25:47,083 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #93 (check_new)
+2026-06-11 18:25:47,083 - app.scheduler.handlers - INFO - Triggering job 93
+2026-06-11 18:25:47,209 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:25:47,432 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:26:46 +0330)" executed successfully
+2026-06-11 18:25:47,518 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #93" to job store "default"
+2026-06-11 18:25:47,518 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:26:46 +0330)" executed successfully
+2026-06-11 18:25:47,518 - apscheduler.scheduler - INFO - Removed job job_93
+2026-06-11 18:25:47,519 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #93 (trigger: date[2026-06-11 18:25:47 +0330], next run at: 2026-06-11 18:25:47 +0330)" (scheduled at 2026-06-11 18:25:47.518215+03:30)
+2026-06-11 18:25:47,519 - app.scheduler.handlers - INFO - Executing job 93
+2026-06-11 18:25:49,448 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:25:49,884 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:25:50,592 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:25:50,599 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:25:50,821 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:25:50,821 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:25:51,064 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:25:51,796 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:25:51,804 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:25:52,260 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:25:53,780 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #93 (trigger: date[2026-06-11 18:25:47 +0330], next run at: 2026-06-11 18:25:47 +0330)" executed successfully
+2026-06-11 18:26:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:27:46 +0330)" (scheduled at 2026-06-11 18:26:46.219707+03:30)
+2026-06-11 18:26:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:27:46 +0330)" (scheduled at 2026-06-11 18:26:46.220217+03:30)
+2026-06-11 18:26:47,128 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #95 (check_new)
+2026-06-11 18:26:47,128 - app.scheduler.handlers - INFO - Triggering job 95
+2026-06-11 18:26:47,196 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:26:47,412 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:27:46 +0330)" executed successfully
+2026-06-11 18:26:47,575 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #95" to job store "default"
+2026-06-11 18:26:47,576 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:27:46 +0330)" executed successfully
+2026-06-11 18:26:47,576 - apscheduler.scheduler - INFO - Removed job job_95
+2026-06-11 18:26:47,576 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #95 (trigger: date[2026-06-11 18:26:47 +0330], next run at: 2026-06-11 18:26:47 +0330)" (scheduled at 2026-06-11 18:26:47.575671+03:30)
+2026-06-11 18:26:47,576 - app.scheduler.handlers - INFO - Executing job 95
+2026-06-11 18:26:49,416 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:26:49,887 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:26:50,740 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:26:50,754 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:26:50,966 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:26:50,966 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:26:51,229 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:26:52,105 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:26:52,112 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:26:52,590 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:26:54,020 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #95 (trigger: date[2026-06-11 18:26:47 +0330], next run at: 2026-06-11 18:26:47 +0330)" executed successfully
+2026-06-11 18:27:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:28:46 +0330)" (scheduled at 2026-06-11 18:27:46.219707+03:30)
+2026-06-11 18:27:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:28:46 +0330)" (scheduled at 2026-06-11 18:27:46.220217+03:30)
+2026-06-11 18:27:47,104 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #97 (check_new)
+2026-06-11 18:27:47,105 - app.scheduler.handlers - INFO - Triggering job 97
+2026-06-11 18:27:47,222 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:27:47,447 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:28:46 +0330)" executed successfully
+2026-06-11 18:27:47,536 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #97" to job store "default"
+2026-06-11 18:27:47,537 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:28:46 +0330)" executed successfully
+2026-06-11 18:27:47,537 - apscheduler.scheduler - INFO - Removed job job_97
+2026-06-11 18:27:47,537 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #97 (trigger: date[2026-06-11 18:27:47 +0330], next run at: 2026-06-11 18:27:47 +0330)" (scheduled at 2026-06-11 18:27:47.536837+03:30)
+2026-06-11 18:27:47,537 - app.scheduler.handlers - INFO - Executing job 97
+2026-06-11 18:27:49,496 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:27:50,100 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:27:50,901 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:27:50,907 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:27:51,141 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:27:51,141 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:27:51,417 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:27:52,176 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:27:52,183 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:27:52,780 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:27:54,333 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #97 (trigger: date[2026-06-11 18:27:47 +0330], next run at: 2026-06-11 18:27:47 +0330)" executed successfully
+2026-06-11 18:28:29,929 - app.main - INFO - Starting up application...
+2026-06-11 18:28:37,394 - app.main - INFO - Database initialized
+2026-06-11 18:28:38,442 - app.main - INFO - Stuck jobs cleaned up
+2026-06-11 18:28:38,443 - apscheduler.scheduler - INFO - Scheduler started
+2026-06-11 18:28:38,443 - app.scheduler.scheduler - INFO - APScheduler started
+2026-06-11 18:28:38,443 - app.main - INFO - Scheduler started
+2026-06-11 18:28:38,701 - apscheduler.scheduler - INFO - Added job "Watch #1: check_new every 60s" to job store "default"
+2026-06-11 18:28:38,702 - app.services.repeating_job_service - INFO - Registered repeating job repeat_1 → check_new every 60s
+2026-06-11 18:28:38,702 - apscheduler.scheduler - INFO - Added job "Watch #2: scrape_posts every 60s" to job store "default"
+2026-06-11 18:28:38,702 - app.services.repeating_job_service - INFO - Registered repeating job repeat_2 → scrape_posts every 60s
+2026-06-11 18:28:38,702 - app.services.repeating_job_service - INFO - Restored 2 active repeating job(s) to scheduler
+2026-06-11 18:28:38,943 - app.main - INFO - Repeating watches restored
+2026-06-11 18:28:39,000 - app.services.telegram_service - INFO - Telegram Bot service started
+2026-06-11 18:28:39,001 - app.main - INFO - Telegram Bot service initialized
+2026-06-11 18:28:39,007 - app.extractor.card_db - INFO - Connecting to card extraction PostgreSQL database...
+2026-06-11 18:28:41,941 - app.extractor.card_db - INFO - Card extraction PostgreSQL database initialised — tables ready.
+2026-06-11 18:28:41,941 - app.main - INFO - Card extraction DB connected
+2026-06-11 18:28:42,396 - app.services.card_export_service - INFO - Card daily export service started.
+2026-06-11 18:28:42,396 - app.main - INFO - Card daily export service restored
+2026-06-11 18:28:42,397 - app.main - INFO - Shutting down application...
+2026-06-11 18:28:42,402 - app.services.telegram_service - INFO - Telegram Bot service stopped
+2026-06-11 18:28:42,900 - app.main - INFO - Telegram Bot service stopped
+2026-06-11 18:28:42,900 - app.services.card_export_service - INFO - Card daily export service stopped.
+2026-06-11 18:28:43,017 - app.extractor.card_db - INFO - Card extraction PostgreSQL connection pool closed.
+2026-06-11 18:28:43,018 - app.scheduler.scheduler - INFO - APScheduler stopped
+2026-06-11 18:28:43,019 - app.scraper.http_client - WARNING - Anti-detection: curl_cffi NOT found. Falling back to standard httpx. Anti-bot spoofing will be limited.
+2026-06-11 18:28:43,019 - app.main - INFO - Application shut down
+2026-06-11 18:28:43,019 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-06-11 18:28:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:29:46 +0330)" (scheduled at 2026-06-11 18:28:46.219707+03:30)
+2026-06-11 18:28:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:29:46 +0330)" (scheduled at 2026-06-11 18:28:46.220217+03:30)
+2026-06-11 18:28:47,142 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #99 (check_new)
+2026-06-11 18:28:47,143 - app.scheduler.handlers - INFO - Triggering job 99
+2026-06-11 18:28:47,596 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #99" to job store "default"
+2026-06-11 18:28:47,597 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:29:46 +0330)" executed successfully
+2026-06-11 18:28:47,597 - apscheduler.scheduler - INFO - Removed job job_99
+2026-06-11 18:28:47,597 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #99 (trigger: date[2026-06-11 18:28:47 +0330], next run at: 2026-06-11 18:28:47 +0330)" (scheduled at 2026-06-11 18:28:47.596679+03:30)
+2026-06-11 18:28:47,597 - app.scheduler.handlers - INFO - Executing job 99
+2026-06-11 18:28:47,793 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #100 (scrape_posts)
+2026-06-11 18:28:47,793 - app.scheduler.handlers - INFO - Triggering job 100
+2026-06-11 18:28:48,253 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #100" to job store "default"
+2026-06-11 18:28:48,253 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:29:46 +0330)" executed successfully
+2026-06-11 18:28:48,254 - apscheduler.scheduler - INFO - Removed job job_100
+2026-06-11 18:28:48,254 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #100 (trigger: date[2026-06-11 18:28:48 +0330], next run at: 2026-06-11 18:28:48 +0330)" (scheduled at 2026-06-11 18:28:48.253382+03:30)
+2026-06-11 18:28:48,254 - app.scheduler.handlers - INFO - Executing job 100
+2026-06-11 18:28:49,542 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:28:49,996 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:28:50,718 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:28:50,733 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:28:51,322 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:28:51,322 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:28:51,454 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:28:51,611 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:28:51,803 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:28:52,240 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2957195/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:28:52,501 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:28:52,515 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:28:52,656 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2957195/ "HTTP/1.1 200 OK"
+2026-06-11 18:28:52,679 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:28:52,971 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:28:54,455 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #99 (trigger: date[2026-06-11 18:28:47 +0330], next run at: 2026-06-11 18:28:47 +0330)" executed successfully
+2026-06-11 18:28:55,678 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:28:56,034 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:28:58,288 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:28:58,693 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/#post-16750074 "HTTP/1.1 200 OK"
+2026-06-11 18:28:59,452 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:29:02,805 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:29:03,141 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:29:03,421 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:29:03,916 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/#post-16749942 "HTTP/1.1 200 OK"
+2026-06-11 18:29:03,994 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:29:07,947 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #100 (trigger: date[2026-06-11 18:28:48 +0330], next run at: 2026-06-11 18:28:48 +0330)" executed successfully
+2026-06-11 18:29:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:30:46 +0330)" (scheduled at 2026-06-11 18:29:46.219707+03:30)
+2026-06-11 18:29:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:30:46 +0330)" (scheduled at 2026-06-11 18:29:46.220217+03:30)
+2026-06-11 18:29:47,148 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #102 (check_new)
+2026-06-11 18:29:47,148 - app.scheduler.handlers - INFO - Triggering job 102
+2026-06-11 18:29:47,682 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #102" to job store "default"
+2026-06-11 18:29:47,682 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:30:46 +0330)" executed successfully
+2026-06-11 18:29:47,682 - apscheduler.scheduler - INFO - Removed job job_102
+2026-06-11 18:29:47,683 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #102 (trigger: date[2026-06-11 18:29:47 +0330], next run at: 2026-06-11 18:29:47 +0330)" (scheduled at 2026-06-11 18:29:47.682267+03:30)
+2026-06-11 18:29:47,683 - app.scheduler.handlers - INFO - Executing job 102
+2026-06-11 18:29:47,804 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #103 (scrape_posts)
+2026-06-11 18:29:47,804 - app.scheduler.handlers - INFO - Triggering job 103
+2026-06-11 18:29:48,255 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #103" to job store "default"
+2026-06-11 18:29:48,255 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:30:46 +0330)" executed successfully
+2026-06-11 18:29:48,255 - apscheduler.scheduler - INFO - Removed job job_103
+2026-06-11 18:29:48,256 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #103 (trigger: date[2026-06-11 18:29:48 +0330], next run at: 2026-06-11 18:29:48 +0330)" (scheduled at 2026-06-11 18:29:48.255268+03:30)
+2026-06-11 18:29:48,256 - app.scheduler.handlers - INFO - Executing job 103
+2026-06-11 18:29:49,740 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:29:50,185 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:29:51,195 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:29:51,202 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:29:51,454 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:29:51,799 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:29:52,075 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2957195/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:29:52,077 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:29:52,077 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:29:52,508 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2957195/ "HTTP/1.1 200 OK"
+2026-06-11 18:29:52,523 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwww.2957195/unread
+2026-06-11 18:29:52,625 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:29:53,382 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:29:53,389 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:29:53,846 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:29:55,344 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #102 (trigger: date[2026-06-11 18:29:47 +0330], next run at: 2026-06-11 18:29:47 +0330)" executed successfully
+2026-06-11 18:29:56,205 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:29:56,543 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:29:56,837 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:29:57,255 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/#post-16750074 "HTTP/1.1 200 OK"
+2026-06-11 18:29:57,265 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:30:00,046 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:30:00,385 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:30:05,996 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:30:06,559 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/#post-16749942 "HTTP/1.1 200 OK"
+2026-06-11 18:30:06,567 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:30:10,976 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #103 (trigger: date[2026-06-11 18:29:48 +0330], next run at: 2026-06-11 18:29:48 +0330)" executed successfully
+2026-06-11 18:30:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:31:46 +0330)" (scheduled at 2026-06-11 18:30:46.219707+03:30)
+2026-06-11 18:30:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:31:46 +0330)" (scheduled at 2026-06-11 18:30:46.220217+03:30)
+2026-06-11 18:30:47,154 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #104 (check_new)
+2026-06-11 18:30:47,154 - app.scheduler.handlers - INFO - Triggering job 104
+2026-06-11 18:30:47,608 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #104" to job store "default"
+2026-06-11 18:30:47,609 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:31:46 +0330)" executed successfully
+2026-06-11 18:30:47,609 - apscheduler.scheduler - INFO - Removed job job_104
+2026-06-11 18:30:47,609 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #104 (trigger: date[2026-06-11 18:30:47 +0330], next run at: 2026-06-11 18:30:47 +0330)" (scheduled at 2026-06-11 18:30:47.608831+03:30)
+2026-06-11 18:30:47,609 - app.scheduler.handlers - INFO - Executing job 104
+2026-06-11 18:30:47,663 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #105 (scrape_posts)
+2026-06-11 18:30:47,663 - app.scheduler.handlers - INFO - Triggering job 105
+2026-06-11 18:30:48,079 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #105" to job store "default"
+2026-06-11 18:30:48,080 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:31:46 +0330)" executed successfully
+2026-06-11 18:30:48,080 - apscheduler.scheduler - INFO - Removed job job_105
+2026-06-11 18:30:48,080 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #105 (trigger: date[2026-06-11 18:30:48 +0330], next run at: 2026-06-11 18:30:48 +0330)" (scheduled at 2026-06-11 18:30:48.079685+03:30)
+2026-06-11 18:30:48,080 - app.scheduler.handlers - INFO - Executing job 105
+2026-06-11 18:30:49,559 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:30:49,995 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:30:50,772 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:30:50,787 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:30:51,098 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwww.2957195/
+2026-06-11 18:30:51,439 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwww.2957195/
+2026-06-11 18:30:51,647 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:30:51,648 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:30:51,854 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2957195/ "HTTP/1.1 200 OK"
+2026-06-11 18:30:51,865 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwww.2957195/
+2026-06-11 18:30:52,130 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:30:53,090 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:30:53,101 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:30:53,547 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:30:55,043 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #104 (trigger: date[2026-06-11 18:30:47 +0330], next run at: 2026-06-11 18:30:47 +0330)" executed successfully
+2026-06-11 18:30:56,030 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2957194/
+2026-06-11 18:30:56,390 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2957194/
+2026-06-11 18:30:56,854 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/ "HTTP/1.1 200 OK"
+2026-06-11 18:30:56,888 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2957194/
+2026-06-11 18:31:00,415 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2956956/
+2026-06-11 18:31:00,779 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2956956/
+2026-06-11 18:31:01,258 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/ "HTTP/1.1 200 OK"
+2026-06-11 18:31:01,275 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956956/
+2026-06-11 18:31:05,668 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #105 (trigger: date[2026-06-11 18:30:48 +0330], next run at: 2026-06-11 18:30:48 +0330)" executed successfully
+2026-06-11 18:31:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:32:46 +0330)" (scheduled at 2026-06-11 18:31:46.219707+03:30)
+2026-06-11 18:31:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:32:46 +0330)" (scheduled at 2026-06-11 18:31:46.220217+03:30)
+2026-06-11 18:31:47,294 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #107 (check_new)
+2026-06-11 18:31:47,295 - app.scheduler.handlers - INFO - Triggering job 107
+2026-06-11 18:31:47,469 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:31:47,730 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:32:46 +0330)" executed successfully
+2026-06-11 18:31:47,858 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #107" to job store "default"
+2026-06-11 18:31:47,859 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:32:46 +0330)" executed successfully
+2026-06-11 18:31:47,859 - apscheduler.scheduler - INFO - Removed job job_107
+2026-06-11 18:31:47,859 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #107 (trigger: date[2026-06-11 18:31:47 +0330], next run at: 2026-06-11 18:31:47 +0330)" (scheduled at 2026-06-11 18:31:47.858833+03:30)
+2026-06-11 18:31:47,859 - app.scheduler.handlers - INFO - Executing job 107
+2026-06-11 18:31:49,943 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:31:50,539 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:31:51,442 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:31:51,453 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:31:52,328 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:31:52,329 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:31:52,621 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:31:53,683 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:31:53,691 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:31:54,213 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:31:55,882 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #107 (trigger: date[2026-06-11 18:31:47 +0330], next run at: 2026-06-11 18:31:47 +0330)" executed successfully
+2026-06-11 18:32:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:33:46 +0330)" (scheduled at 2026-06-11 18:32:46.219707+03:30)
+2026-06-11 18:32:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:33:46 +0330)" (scheduled at 2026-06-11 18:32:46.220217+03:30)
+2026-06-11 18:32:47,139 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #108 (check_new)
+2026-06-11 18:32:47,139 - app.scheduler.handlers - INFO - Triggering job 108
+2026-06-11 18:32:47,338 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:32:47,561 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:33:46 +0330)" executed successfully
+2026-06-11 18:32:47,593 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #108" to job store "default"
+2026-06-11 18:32:47,593 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:33:46 +0330)" executed successfully
+2026-06-11 18:32:47,594 - apscheduler.scheduler - INFO - Removed job job_108
+2026-06-11 18:32:47,594 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #108 (trigger: date[2026-06-11 18:32:47 +0330], next run at: 2026-06-11 18:32:47 +0330)" (scheduled at 2026-06-11 18:32:47.593507+03:30)
+2026-06-11 18:32:47,594 - app.scheduler.handlers - INFO - Executing job 108
+2026-06-11 18:32:49,645 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:32:50,490 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:32:51,303 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:32:51,325 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:32:51,547 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:32:51,547 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:32:51,824 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:32:52,668 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:32:52,685 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:32:53,139 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:32:54,618 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #108 (trigger: date[2026-06-11 18:32:47 +0330], next run at: 2026-06-11 18:32:47 +0330)" executed successfully
+2026-06-11 18:33:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:34:46 +0330)" (scheduled at 2026-06-11 18:33:46.219707+03:30)
+2026-06-11 18:33:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:34:46 +0330)" (scheduled at 2026-06-11 18:33:46.220217+03:30)
+2026-06-11 18:33:47,126 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #110 (check_new)
+2026-06-11 18:33:47,126 - app.scheduler.handlers - INFO - Triggering job 110
+2026-06-11 18:33:47,223 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:33:47,445 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:34:46 +0330)" executed successfully
+2026-06-11 18:33:47,571 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #110" to job store "default"
+2026-06-11 18:33:47,571 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:34:46 +0330)" executed successfully
+2026-06-11 18:33:47,572 - apscheduler.scheduler - INFO - Removed job job_110
+2026-06-11 18:33:47,572 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #110 (trigger: date[2026-06-11 18:33:47 +0330], next run at: 2026-06-11 18:33:47 +0330)" (scheduled at 2026-06-11 18:33:47.571479+03:30)
+2026-06-11 18:33:47,572 - app.scheduler.handlers - INFO - Executing job 110
+2026-06-11 18:33:49,515 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:33:50,001 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:33:50,903 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:33:50,913 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:33:51,148 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:33:51,148 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:33:51,419 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:33:52,192 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:33:52,204 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:33:52,652 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:33:54,112 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #110 (trigger: date[2026-06-11 18:33:47 +0330], next run at: 2026-06-11 18:33:47 +0330)" executed successfully
+2026-06-11 18:34:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:35:46 +0330)" (scheduled at 2026-06-11 18:34:46.219707+03:30)
+2026-06-11 18:34:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:35:46 +0330)" (scheduled at 2026-06-11 18:34:46.220217+03:30)
+2026-06-11 18:34:47,146 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #113 (check_new)
+2026-06-11 18:34:47,147 - app.scheduler.handlers - INFO - Triggering job 113
+2026-06-11 18:34:47,227 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:34:47,453 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:35:46 +0330)" executed successfully
+2026-06-11 18:34:47,596 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #113" to job store "default"
+2026-06-11 18:34:47,596 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:35:46 +0330)" executed successfully
+2026-06-11 18:34:47,597 - apscheduler.scheduler - INFO - Removed job job_113
+2026-06-11 18:34:47,597 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #113 (trigger: date[2026-06-11 18:34:47 +0330], next run at: 2026-06-11 18:34:47 +0330)" (scheduled at 2026-06-11 18:34:47.596452+03:30)
+2026-06-11 18:34:47,597 - app.scheduler.handlers - INFO - Executing job 113
+2026-06-11 18:34:49,530 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:34:50,079 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:34:50,881 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:34:50,891 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:34:51,114 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:34:51,114 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:34:52,559 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:34:53,362 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:34:53,374 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:34:53,822 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:34:55,313 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #113 (trigger: date[2026-06-11 18:34:47 +0330], next run at: 2026-06-11 18:34:47 +0330)" executed successfully
+2026-06-11 18:35:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:36:46 +0330)" (scheduled at 2026-06-11 18:35:46.219707+03:30)
+2026-06-11 18:35:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:36:46 +0330)" (scheduled at 2026-06-11 18:35:46.220217+03:30)
+2026-06-11 18:35:47,141 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #115 (check_new)
+2026-06-11 18:35:47,142 - app.scheduler.handlers - INFO - Triggering job 115
+2026-06-11 18:35:47,184 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:35:47,389 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:36:46 +0330)" executed successfully
+2026-06-11 18:35:47,593 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #115" to job store "default"
+2026-06-11 18:35:47,594 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:36:46 +0330)" executed successfully
+2026-06-11 18:35:47,594 - apscheduler.scheduler - INFO - Removed job job_115
+2026-06-11 18:35:47,594 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #115 (trigger: date[2026-06-11 18:35:47 +0330], next run at: 2026-06-11 18:35:47 +0330)" (scheduled at 2026-06-11 18:35:47.593822+03:30)
+2026-06-11 18:35:47,594 - app.scheduler.handlers - INFO - Executing job 115
+2026-06-11 18:35:49,337 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:35:49,976 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:35:50,946 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:35:50,963 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:35:51,172 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:35:51,172 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:35:51,483 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:35:52,252 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:35:52,270 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:35:52,683 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:35:54,041 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #115 (trigger: date[2026-06-11 18:35:47 +0330], next run at: 2026-06-11 18:35:47 +0330)" executed successfully
+2026-06-11 18:36:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:37:46 +0330)" (scheduled at 2026-06-11 18:36:46.219707+03:30)
+2026-06-11 18:36:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:37:46 +0330)" (scheduled at 2026-06-11 18:36:46.220217+03:30)
+2026-06-11 18:36:47,049 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #117 (check_new)
+2026-06-11 18:36:47,050 - app.scheduler.handlers - INFO - Triggering job 117
+2026-06-11 18:36:47,191 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:36:47,408 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:37:46 +0330)" executed successfully
+2026-06-11 18:36:47,464 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #117" to job store "default"
+2026-06-11 18:36:47,464 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:37:46 +0330)" executed successfully
+2026-06-11 18:36:47,464 - apscheduler.scheduler - INFO - Removed job job_117
+2026-06-11 18:36:47,465 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #117 (trigger: date[2026-06-11 18:36:47 +0330], next run at: 2026-06-11 18:36:47 +0330)" (scheduled at 2026-06-11 18:36:47.464192+03:30)
+2026-06-11 18:36:47,465 - app.scheduler.handlers - INFO - Executing job 117
+2026-06-11 18:36:49,366 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:36:49,831 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:36:50,636 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:36:50,645 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:36:50,861 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:36:50,861 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:36:51,185 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:36:52,000 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:36:52,009 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:36:52,447 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:36:53,877 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #117 (trigger: date[2026-06-11 18:36:47 +0330], next run at: 2026-06-11 18:36:47 +0330)" executed successfully

@@ -29,6 +29,7 @@ _running_tasks: dict[int, asyncio.Task] = {}
 
 async def _update_job_status(job_id: int, status: JobStatus, error: str | None = None):
     """Persist a status change to the database."""
+    from app.utils import sanitize_mysql_string
     async with AsyncSessionLocal() as db:
         result = await db.execute(select(Job).where(Job.id == job_id))
         job = result.scalar_one_or_none()
@@ -36,7 +37,7 @@ async def _update_job_status(job_id: int, status: JobStatus, error: str | None =
             return
         job.status = status
         if error:
-            job.error_message = error
+            job.error_message = sanitize_mysql_string(error)
         if status == JobStatus.RUNNING and not job.started_at:
             job.started_at = datetime.now(timezone.utc)
         if status in (JobStatus.COMPLETED, JobStatus.FAILED, JobStatus.CANCELLED):
@@ -47,8 +48,9 @@ async def _update_job_status(job_id: int, status: JobStatus, error: str | None =
 async def _add_log(job_id: int, level: LogLevel, message: str):
     """Add a log entry for a job."""
     from app.models.job import JobLog
+    from app.utils import sanitize_mysql_string
     async with AsyncSessionLocal() as db:
-        db.add(JobLog(job_id=job_id, level=level, message=message))
+        db.add(JobLog(job_id=job_id, level=level, message=sanitize_mysql_string(message)))
         await db.commit()
 
 

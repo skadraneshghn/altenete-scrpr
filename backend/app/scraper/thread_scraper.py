@@ -32,9 +32,21 @@ class ThreadScraper:
 
     def _build_thread_url(self, thread_url: str) -> str:
         """Build full thread URL."""
-        if thread_url.startswith("http"):
-            return thread_url
-        return f"{self.base_url}{thread_url}"
+        url = thread_url
+        if url.startswith("http"):
+            pass
+        else:
+            url = f"{self.base_url}{thread_url}"
+        
+        # Clean URL to make sure we don't fetch /unread
+        url = url.split("#")[0].split("?")[0]
+        if url.endswith("/unread"):
+            url = url[:-7]
+        elif url.endswith("/unread/"):
+            url = url[:-8]
+        if not url.endswith("/"):
+            url += "/"
+        return url
 
     async def scrape_thread(
         self,

@@ -28,6 +28,7 @@ class JobService:
 
     async def update_status(self, job_id: int, status: JobStatus, error_message: str | None = None):
         """Update job status."""
+        from app.utils import sanitize_mysql_string
         result = await self.db.execute(select(Job).where(Job.id == job_id))
         job = result.scalar_one_or_none()
         if not job:
@@ -39,7 +40,7 @@ class JobService:
         elif status in (JobStatus.COMPLETED, JobStatus.FAILED, JobStatus.CANCELLED):
             job.completed_at = datetime.now(timezone.utc)
         if error_message:
-            job.error_message = error_message
+            job.error_message = sanitize_mysql_string(error_message)
 
         await self.db.flush()
 
@@ -57,10 +58,11 @@ class JobService:
 
     async def add_log(self, job_id: int, level: LogLevel, message: str):
         """Add a log entry for a job."""
+        from app.utils import sanitize_mysql_string
         log = JobLog(
             job_id=job_id,
             level=level,
-            message=message,
+            message=sanitize_mysql_string(message),
         )
         self.db.add(log)
         await self.db.flush()
