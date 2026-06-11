@@ -237,7 +237,18 @@ async def get_screenshot(
     import json
     from fastapi import HTTPException, Response
     from app.models.forum import ForumConfig
-    from playwright.async_api import async_playwright
+
+    # Guard against Playwright not being installed in this environment
+    try:
+        from playwright.async_api import async_playwright
+    except ImportError:
+        raise HTTPException(
+            status_code=501,
+            detail=(
+                "Screenshot feature is unavailable: Playwright is not installed. "
+                "Add 'playwright' to requirements.txt and run 'playwright install chromium'."
+            ),
+        )
 
     # Find the active configuration
     result = await db.execute(select(ForumConfig).limit(1))
@@ -258,7 +269,7 @@ async def get_screenshot(
                         "domain": ".altenens.is" if "altenens.is" in url else "localhost",
                         "path": "/"
                     })
-            except Exception as e:
+            except Exception:
                 pass
 
     try:
