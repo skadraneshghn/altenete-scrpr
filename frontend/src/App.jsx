@@ -21,12 +21,12 @@ function PrivateRoute({ children }) {
   }, [isAuthenticated]);
 
   return isAuthenticated ? (
-    <div className="flex min-h-screen bg-slate-50 text-slate-800">
+    <div className="flex min-h-screen" style={{ background: '#f1f5f9' }}>
       <Sidebar />
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-slate-50/30 p-8">
-          <div className="max-w-7xl mx-auto w-full space-y-8">
+        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+          <div className="max-w-7xl mx-auto w-full">
             {children}
           </div>
         </main>
