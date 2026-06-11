@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Play, Plus, X, RotateCcw, Ban, Eye, Loader2 } from 'lucide-react';
+import { Play, Plus, X, RotateCcw, Ban, Eye, Loader2, Trash2 } from 'lucide-react';
 import useStore from '../store/useStore';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,8 @@ export default function Jobs() {
     fetchConfigs, 
     createJob, 
     cancelJob, 
-    retryJob 
+    retryJob,
+    deleteJob
   } = useStore();
 
   const [page, setPage] = useState(1);
@@ -66,6 +67,18 @@ export default function Jobs() {
       toast.success('Retrying job...');
     } else {
       toast.error('Failed to retry job');
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this job and its logs?')) {
+      return;
+    }
+    const success = await deleteJob(id);
+    if (success) {
+      toast.success('Job deleted successfully');
+    } else {
+      toast.error('Failed to delete job');
     }
   };
 
@@ -169,6 +182,15 @@ export default function Jobs() {
                         title="Retry job"
                       >
                         <RotateCcw className="h-4.5 w-4.5" />
+                      </button>
+                    )}
+                    {job.status !== 'running' && job.status !== 'pending' && (
+                      <button
+                        onClick={() => handleDelete(job.id)}
+                        className="p-2.5 hover:bg-red-50 text-red-500 hover:text-red-700 rounded-xl transition-all duration-200 cursor-pointer"
+                        title="Delete job"
+                      >
+                        <Trash2 className="h-4.5 w-4.5" />
                       </button>
                     )}
                   </td>

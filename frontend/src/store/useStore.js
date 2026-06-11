@@ -125,6 +125,17 @@ const useStore = create((set, get) => ({
     }
   },
 
+  deleteJob: async (id) => {
+    try {
+      await apiService.deleteJob(id);
+      get().fetchJobs();
+      return true;
+    } catch (err) {
+      console.error('Error deleting job:', err);
+      return false;
+    }
+  },
+
   // Dashboard Stats
   dashboardStats: null,
   dashboardActivity: [],

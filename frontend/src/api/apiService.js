@@ -45,6 +45,11 @@ const apiService = {
     return res.data;
   },
 
+  async deleteJob(id) {
+    const res = await client.delete(`/api/jobs/${id}`);
+    return res.data;
+  },
+
   // Dashboard Metrics
   async getDashboardStats() {
     const res = await client.get('/api/dashboard/stats');
