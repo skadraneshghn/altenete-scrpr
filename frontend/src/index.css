@@ -175,6 +175,20 @@ body {
 /* ============================================================
    Buttons (TW-Elements styled)
    ============================================================ */
+/* Global Button Color Inherits Fix */
+button {
+  color: inherit;
+}
+button:not(.btn-primary):not(.btn-danger):not(.login-btn) {
+  color: inherit !important;
+}
+.btn-primary, .btn-danger, .login-btn {
+  color: #fff !important;
+}
+.btn-secondary {
+  color: #334155 !important;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

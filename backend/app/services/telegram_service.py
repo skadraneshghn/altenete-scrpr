@@ -37,10 +37,18 @@ class TelegramBotManager:
             
             # Seed default settings row if it doesn't exist
             if not db_settings:
-                db_settings = TelegramSettings(id=1, enabled=False)
+                default_enabled = bool(settings.TELEGRAM_BOT_TOKEN)
+                db_settings = TelegramSettings(id=1, enabled=default_enabled)
                 db.add(db_settings)
                 await db.commit()
                 await db.refresh(db_settings)
+
+            # Auto-enable if env bot token is present and the bot has never run/been enabled
+            if not db_settings.enabled and settings.TELEGRAM_BOT_TOKEN:
+                if db_settings.bot_username is None and db_settings.last_error is None:
+                    db_settings.enabled = True
+                    await db.commit()
+                    await db.refresh(db_settings)
 
             token = db_settings.bot_token_override or settings.TELEGRAM_BOT_TOKEN
             admin_id = db_settings.admin_chat_id_override or settings.TELEGRAM_ADMIN_CHAT_ID

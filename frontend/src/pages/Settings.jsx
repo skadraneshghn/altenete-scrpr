@@ -388,8 +388,8 @@ function TelegramSettingsPanel() {
                 onClick={() => setEnabled(!enabled)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border ${
                   enabled 
-                    ? 'bg-emerald-500 text-white border-emerald-600 shadow-md shadow-emerald-500/10' 
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-emerald-500 !text-white border-emerald-600 shadow-md shadow-emerald-500/10' 
+                    : 'bg-white !text-slate-600 border-slate-200 hover:bg-slate-50'
                 }`}
               >
                 {enabled ? 'Enabled' : 'Disabled'}
@@ -406,8 +406,8 @@ function TelegramSettingsPanel() {
                 onClick={() => setWatchEnabled(!watchEnabled)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border ${
                   watchEnabled 
-                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-md shadow-indigo-600/10' 
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-indigo-600 !text-white border-indigo-700 shadow-md shadow-indigo-600/10' 
+                    : 'bg-white !text-slate-600 border-slate-200 hover:bg-slate-50'
                 }`}
               >
                 {watchEnabled ? 'Watching' : 'Paused'}
