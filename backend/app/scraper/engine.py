@@ -127,6 +127,9 @@ class ScraperEngine:
                 if job.job_type in ("crawl_forum", "full_run"):
                     await self._crawl_forum(db, config, job_service, auth, log_callback)
 
+                if job.job_type == "check_new":
+                    await self._check_new_threads(db, config, job_service, auth, log_callback)
+
                 if job.job_type in ("scrape_threads", "full_run"):
                     await self._scrape_threads(db, config, job_service, auth, log_callback)
 
@@ -236,6 +239,102 @@ class ScraperEngine:
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
             f"Phase 1 complete: saved {saved_count} threads to database"
+        )
+        await db.commit()
+
+    async def _check_new_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth, log_callback):
+        """Quick Check: Crawl page 1 of the forum section to find and index new threads."""
+        await job_service.add_log(
+            self.job_id, LogLevel.INFO,
+            f"Checking page 1 of forum: {config.forum_section_url} for new threads"
+        )
+        await db.commit()
+
+        crawler = ForumCrawler(
+            base_url=config.forum_url,
+            forum_section_url=config.forum_section_url,
+            max_pages=1,
+            delay=config.scrape_delay,
+            auth=auth,
+            logger_cb=log_callback,
+        )
+
+        async def on_page_complete(page_num, total_pages, threads_found):
+            await job_service.update_progress(
+                self.job_id,
+                processed=page_num,
+                total=total_pages,
+            )
+            await db.commit()
+
+        async def check_cancelled():
+            return await job_service.is_cancelled(self.job_id)
+
+        # Run the crawl for page 1
+        threads_data = await crawler.crawl_all(
+            on_page_complete=on_page_complete,
+            check_cancelled=check_cancelled,
+        )
+
+        new_count = 0
+        total_found = len(threads_data)
+        
+        for td in threads_data:
+            try:
+                # Check if thread already exists
+                existing = await db.execute(
+                    select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
+                )
+                thread = existing.scalar_one_or_none()
+
+                if not thread:
+                    # Create new thread entry in DB
+                    thread = Thread(
+                        thread_xf_id=td.thread_xf_id,
+                        title=td.title,
+                        url=td.url,
+                        author=td.author,
+                        replies=td.replies,
+                        views=td.views,
+                        is_sticky=td.is_sticky,
+                        thread_date=td.thread_date,
+                        config_id=config.id,
+                        job_id=self.job_id,
+                    )
+                    db.add(thread)
+                    new_count += 1
+                    await job_service.add_log(
+                        self.job_id, LogLevel.INFO,
+                        f"Found and indexed new topic: '{td.title}'"
+                    )
+                else:
+                    # Update existing thread's stats (replies, views, title)
+                    thread.title = td.title
+                    thread.author = td.author
+                    thread.replies = td.replies
+                    thread.views = td.views
+                    thread.is_sticky = td.is_sticky
+            except Exception as e:
+                logger.warning(f"Error saving/updating thread {td.thread_xf_id}: {e}")
+
+        await db.flush()
+        
+        if new_count > 0:
+            await job_service.add_log(
+                self.job_id, LogLevel.INFO,
+                f"Completed check: Discovered and indexed {new_count} new topic(s) out of {total_found} total topics on page 1."
+            )
+        else:
+            await job_service.add_log(
+                self.job_id, LogLevel.INFO,
+                f"Completed check: No new topics found on page 1 (checked {total_found} topics, all already indexed)."
+            )
+            
+        # Update progress items info
+        await job_service.update_progress(
+            self.job_id,
+            processed=new_count,
+            total=total_found
         )
         await db.commit()
 

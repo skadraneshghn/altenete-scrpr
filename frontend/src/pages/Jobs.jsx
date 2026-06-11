@@ -452,6 +452,7 @@ export default function Jobs() {
                 <div className="space-y-2">
                   {[
                     { value: 'full_run',       label: 'Full Pipeline Run', desc: 'Phase 1: Crawl forum  →  Phase 2: Scrape threads', pill: 'Recommended' },
+                    { value: 'check_new',      label: 'Check New Topics Only (Quick Check)', desc: 'Fetch page 1 of the forum and index newly posted topics', pill: 'New / Fast' },
                     { value: 'crawl_forum',    label: 'Crawl Forum Only',  desc: 'Discover & index thread URLs only',                 pill: null },
                     { value: 'scrape_threads', label: 'Scrape Threads Only', desc: 'Extract first post from already-indexed threads', pill: null },
                   ].map(opt => (

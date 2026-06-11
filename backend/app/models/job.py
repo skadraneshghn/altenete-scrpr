@@ -17,6 +17,7 @@ class JobType(str, PyEnum):
     CRAWL_FORUM = "crawl_forum"
     SCRAPE_THREADS = "scrape_threads"
     FULL_RUN = "full_run"
+    CHECK_NEW = "check_new"
 
 
 class JobStatus(str, PyEnum):

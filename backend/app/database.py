@@ -95,6 +95,12 @@ async def init_db():
         except Exception:
             pass
 
+        # Modify jobs.job_type to VARCHAR(50) to support dynamic operation types
+        try:
+            await conn.execute(text("ALTER TABLE jobs MODIFY COLUMN job_type VARCHAR(50) NOT NULL"))
+        except Exception:
+            pass
+
 
 async def close_db():
     """Dispose of the database engine and close all pooled connections."""
