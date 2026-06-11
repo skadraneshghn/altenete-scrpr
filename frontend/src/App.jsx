@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import Jobs from './pages/Jobs';
 import JobDetail from './pages/JobDetail';
@@ -20,11 +21,16 @@ function PrivateRoute({ children }) {
   }, [isAuthenticated]);
 
   return isAuthenticated ? (
-    <div className="flex min-h-screen bg-[#0a0a0f] text-zinc-100">
+    <div className="flex min-h-screen bg-slate-50 text-slate-800">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto h-screen">
-        {children}
-      </main>
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-y-auto bg-slate-50/30 p-8">
+          <div className="max-w-7xl mx-auto w-full space-y-8">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   ) : (
     <Navigate to="/login" replace />
@@ -38,10 +44,11 @@ export default function App() {
         position="top-right" 
         toastOptions={{
           style: {
-            background: '#12121a',
-            color: '#fff',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '12px'
+            background: '#ffffff',
+            color: '#1e293b',
+            border: '1px solid rgba(0, 0, 0, 0.06)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)'
           }
         }} 
       />

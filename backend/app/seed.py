@@ -19,23 +19,23 @@ async def seed():
     await init_db()
 
     async with AsyncSessionLocal() as db:
-        # Check if any user exists
-        result = await db.execute(select(User).limit(1))
+        # Check if salman user exists
+        result = await db.execute(select(User).where(User.username == "salman"))
         existing_user = result.scalar_one_or_none()
 
         if existing_user:
-            logger.info("Database already seeded. User table is not empty.")
+            logger.info("Database already seeded. User 'salman' exists.")
             return
 
-        logger.info("Seeding initial admin user...")
+        logger.info("Seeding initial admin user 'salman'...")
         admin = User(
-            username="admin",
-            email="admin@example.com",
-            hashed_password=hash_password("password"),
+            username="salman",
+            email="salman@example.com",
+            hashed_password=hash_password("136517"),
         )
         db.add(admin)
         await db.commit()
-        logger.info("Successfully seeded admin user: username=admin, password=password")
+        logger.info("Successfully seeded admin user: username=salman")
 
 
 if __name__ == "__main__":

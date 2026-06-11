@@ -59,24 +59,18 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in p-6 max-w-7xl mx-auto w-full">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">System Settings</h1>
-        <p className="text-zinc-500 text-sm mt-1">Configure target forum scrapers and login parameters</p>
-      </div>
-
+    <div className="space-y-6 animate-fade-in">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Create Settings Form */}
         <div className="glass-card p-6 lg:col-span-1 h-fit">
-          <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <Sliders className="h-5 w-5 text-indigo-400" />
+          <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <Sliders className="h-5 w-5 text-indigo-600" />
             <span>New Target Configuration</span>
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Config Name</label>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Config Name</label>
               <input
                 type="text"
                 value={name}
@@ -88,7 +82,7 @@ export default function Settings() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Base Forum URL</label>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Base Forum URL</label>
               <input
                 type="url"
                 value={forumUrl}
@@ -100,7 +94,7 @@ export default function Settings() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Section Forum URL</label>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Section Forum URL</label>
               <input
                 type="url"
                 value={forumSectionUrl}
@@ -113,7 +107,7 @@ export default function Settings() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Username</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Username</label>
                 <input
                   type="text"
                   value={xfUsername}
@@ -124,7 +118,7 @@ export default function Settings() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Password</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Password</label>
                 <input
                   type="password"
                   value={xfPassword}
@@ -138,7 +132,7 @@ export default function Settings() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Max Pages</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Max Pages</label>
                 <input
                   type="number"
                   value={maxPages}
@@ -149,7 +143,7 @@ export default function Settings() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Delay (Sec)</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Delay (Sec)</label>
                 <input
                   type="number"
                   value={scrapeDelay}
@@ -165,7 +159,7 @@ export default function Settings() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn btn-primary w-full py-3 mt-4 font-semibold flex items-center justify-center gap-2 cursor-pointer"
+              className="btn btn-primary w-full py-3.5 mt-4 font-bold flex items-center justify-center gap-2 cursor-pointer transition-all duration-200"
             >
               <span>Save Configuration</span>
             </button>
@@ -174,35 +168,35 @@ export default function Settings() {
 
         {/* Existing Configs List */}
         <div className="glass-card p-6 lg:col-span-2">
-          <h2 className="text-lg font-bold text-white mb-6">Target Configurations</h2>
+          <h2 className="text-lg font-bold text-slate-800 mb-6">Target Configurations</h2>
           <div className="space-y-4">
             {configs.map((c) => (
-              <div key={c.id} className="p-5 bg-white/2 rounded-2xl border border-white/5 hover:border-white/10 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div key={c.id} className="p-5 bg-slate-50/50 rounded-2xl border border-slate-100 hover:border-slate-200 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <h3 className="font-bold text-white text-base">{c.name}</h3>
+                    <h3 className="font-bold text-slate-800 text-base">{c.name}</h3>
                     {c.is_active && (
-                      <span className="px-2 py-0.5 bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                      <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 rounded-md text-[10px] font-bold uppercase tracking-wider">
                         Active
                       </span>
                     )}
                   </div>
-                  <div className="flex flex-col gap-1.5 text-xs text-zinc-400">
+                  <div className="flex flex-col gap-1.5 text-xs text-slate-400">
                     <div className="flex items-center gap-1.5">
-                      <Globe className="h-3.5 w-3.5 text-zinc-500" />
-                      <span>{c.forum_section_url}</span>
+                      <Globe className="h-3.5 w-3.5 text-slate-400" />
+                      <span className="font-medium text-slate-500">{c.forum_section_url}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Key className="h-3.5 w-3.5 text-zinc-500" />
-                      <span>Account: <b className="text-zinc-300 font-semibold">{c.xf_username}</b></span>
+                      <Key className="h-3.5 w-3.5 text-slate-400" />
+                      <span className="font-medium text-slate-500">Account: <b className="text-slate-700 font-bold">{c.xf_username}</b></span>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5 text-zinc-500" />
-                        <span>Delay: <b className="text-zinc-300 font-semibold">{c.scrape_delay}s</b></span>
+                        <Clock className="h-3.5 w-3.5 text-slate-400" />
+                        <span className="font-medium text-slate-500">Delay: <b className="text-slate-700 font-bold">{c.scrape_delay}s</b></span>
                       </div>
-                      <div>
-                        <span>Max Pages: <b className="text-zinc-300 font-semibold">{c.max_pages === 0 ? 'All' : c.max_pages}</b></span>
+                      <div className="font-medium text-slate-500">
+                        <span>Max Pages: <b className="text-slate-700 font-bold">{c.max_pages === 0 ? 'All' : c.max_pages}</b></span>
                       </div>
                     </div>
                   </div>
@@ -210,7 +204,7 @@ export default function Settings() {
 
                 <button
                   onClick={() => handleDelete(c.id)}
-                  className="p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/25 text-red-400 rounded-xl transition-all cursor-pointer self-end md:self-auto"
+                  className="p-3 bg-red-500/5 hover:bg-red-500/10 border border-red-500/10 text-red-600 rounded-xl transition-all cursor-pointer self-end md:self-auto"
                 >
                   <Trash className="h-4 w-4" />
                 </button>
@@ -218,7 +212,7 @@ export default function Settings() {
             ))}
 
             {configs.length === 0 && (
-              <div className="text-center py-12 text-zinc-500 italic">
+              <div className="text-center py-12 text-slate-400 italic">
                 No configurations created yet. Define one on the left.
               </div>
             )}

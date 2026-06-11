@@ -70,13 +70,21 @@ export default function Jobs() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in p-6 max-w-7xl mx-auto w-full">
-      {/* Header section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Scraping Operations</h1>
-          <p className="text-zinc-500 text-sm mt-1">Configure and manage crawler or scraper tasks</p>
-        </div>
+    <div className="space-y-6 animate-fade-in">
+      {/* Action Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-100 shadow-xs">
+        <select
+          value={statusFilter}
+          onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
+          className="input-field max-w-xs"
+        >
+          <option value="">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="running">Running</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
         <button
           onClick={() => {
             if (configs.length === 0) {
@@ -93,28 +101,12 @@ export default function Jobs() {
         </button>
       </div>
 
-      {/* Filter options */}
-      <div className="flex items-center gap-4">
-        <select
-          value={statusFilter}
-          onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-          className="input-field max-w-xs"
-        >
-          <option value="">All Statuses</option>
-          <option value="pending">Pending</option>
-          <option value="running">Running</option>
-          <option value="completed">Completed</option>
-          <option value="failed">Failed</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-      </div>
-
       {/* Jobs Table */}
       <div className="glass-card p-6">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-white/5 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
                 <th className="pb-4">Job ID</th>
                 <th className="pb-4">Operation Type</th>
                 <th className="pb-4">Status</th>
@@ -124,11 +116,11 @@ export default function Jobs() {
                 <th className="pb-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-sm text-zinc-300">
+            <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
               {jobs.map((job) => (
-                <tr key={job.id} className="hover:bg-white/2 transition-all duration-200">
-                  <td className="py-4 font-mono font-medium text-white">#{job.id}</td>
-                  <td className="py-4 capitalize">{job.job_type.replace('_', ' ')}</td>
+                <tr key={job.id} className="hover:bg-slate-50/50 transition-all duration-200">
+                  <td className="py-4 font-mono font-bold text-slate-800">#{job.id}</td>
+                  <td className="py-4 capitalize font-semibold">{job.job_type.replace('_', ' ')}</td>
                   <td className="py-4">
                     <span className={`status-badge status-${job.status}`}>
                       {job.status}
@@ -136,47 +128,47 @@ export default function Jobs() {
                   </td>
                   <td className="py-4">
                     <div className="flex items-center gap-3">
-                      <span className="font-semibold text-zinc-200">
+                      <span className="font-bold text-slate-700">
                         {job.processed_items} / {job.total_items}
                       </span>
                       {job.status === 'running' && (
-                        <div className="w-24 bg-white/5 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                           <div 
-                            className="bg-indigo-500 h-full transition-all duration-500"
+                            className="bg-indigo-600 h-full transition-all duration-500"
                             style={{ width: `${job.total_items > 0 ? (job.processed_items / job.total_items) * 100 : 0}%` }}
                           ></div>
                         </div>
                       )}
                     </div>
                   </td>
-                  <td className="py-4 text-red-400">{job.failed_items}</td>
-                  <td className="py-4 text-zinc-500">
+                  <td className="py-4 text-red-500 font-bold">{job.failed_items}</td>
+                  <td className="py-4 text-slate-400">
                     {job.started_at ? new Date(job.started_at).toLocaleString() : '-'}
                   </td>
                   <td className="py-4 text-right space-x-2">
                     <button
                       onClick={() => navigate(`/jobs/${job.id}`)}
-                      className="p-2 hover:bg-white/5 text-zinc-400 hover:text-white rounded-lg transition-all duration-200 cursor-pointer"
+                      className="p-2.5 hover:bg-slate-50 text-slate-500 hover:text-slate-800 rounded-xl transition-all duration-200 cursor-pointer"
                       title="View logs"
                     >
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-4.5 w-4.5" />
                     </button>
                     {(job.status === 'running' || job.status === 'pending') && (
                       <button
                         onClick={() => handleCancel(job.id)}
-                        className="p-2 hover:bg-red-500/10 text-red-400 hover:text-red-300 rounded-lg transition-all duration-200 cursor-pointer"
+                        className="p-2.5 hover:bg-red-50 text-red-600 hover:text-red-800 rounded-xl transition-all duration-200 cursor-pointer"
                         title="Cancel job"
                       >
-                        <Ban className="h-4 w-4" />
+                        <Ban className="h-4.5 w-4.5" />
                       </button>
                     )}
                     {job.status === 'failed' && (
                       <button
                         onClick={() => handleRetry(job.id)}
-                        className="p-2 hover:bg-indigo-500/10 text-indigo-400 hover:text-indigo-300 rounded-lg transition-all duration-200 cursor-pointer"
+                        className="p-2.5 hover:bg-indigo-50 text-indigo-600 hover:text-indigo-800 rounded-xl transition-all duration-200 cursor-pointer"
                         title="Retry job"
                       >
-                        <RotateCcw className="h-4 w-4" />
+                        <RotateCcw className="h-4.5 w-4.5" />
                       </button>
                     )}
                   </td>
@@ -184,7 +176,7 @@ export default function Jobs() {
               ))}
               {jobs.length === 0 && (
                 <tr>
-                  <td colSpan="7" className="text-center py-12 text-zinc-500">
+                  <td colSpan="7" className="text-center py-12 text-slate-400">
                     No scraping operations found matching criteria.
                   </td>
                 </tr>
@@ -195,8 +187,8 @@ export default function Jobs() {
 
         {/* Pagination */}
         {totalJobs > 10 && (
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-            <span className="text-xs text-zinc-500">Showing {jobs.length} of {totalJobs} entries</span>
+          <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+            <span className="text-xs text-slate-400">Showing {jobs.length} of {totalJobs} entries</span>
             <div className="flex items-center gap-2">
               <button
                 disabled={page === 1}
@@ -205,7 +197,7 @@ export default function Jobs() {
               >
                 Previous
               </button>
-              <span className="text-sm text-zinc-400 font-semibold">{page}</span>
+              <span className="text-sm text-slate-600 font-bold">{page}</span>
               <button
                 disabled={page * 10 >= totalJobs}
                 onClick={() => setPage(page + 1)}
@@ -220,20 +212,20 @@ export default function Jobs() {
 
       {/* Create Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="w-full max-w-md bg-[#12121a] border border-white/10 rounded-2xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="w-full max-w-md bg-white border border-slate-100 rounded-2xl p-6 shadow-2xl relative">
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute right-4 top-4 text-zinc-500 hover:text-white"
+              className="absolute right-4 top-4 text-slate-400 hover:text-slate-700 cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <h2 className="text-xl font-bold text-white mb-6">Start Scraping Operation</h2>
+            <h2 className="text-xl font-bold text-slate-800 mb-6">Start Scraping Operation</h2>
 
             <form onSubmit={handleCreateJob} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Target Config</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Target Config</label>
                 <select
                   value={configId}
                   onChange={(e) => setConfigId(e.target.value)}
@@ -247,7 +239,7 @@ export default function Jobs() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Operation Type</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Operation Type</label>
                 <select
                   value={jobType}
                   onChange={(e) => setJobType(e.target.value)}

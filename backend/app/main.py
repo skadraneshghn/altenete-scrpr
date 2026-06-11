@@ -33,20 +33,20 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("Database initialized")
 
-    # Auto-seed default admin user if database is empty
+    # Auto-seed admin user if 'salman' does not exist
     from app.database import AsyncSessionLocal
     from app.models.user import User
     from app.services.auth_service import hash_password
     from sqlalchemy import select
 
     async with AsyncSessionLocal() as db:
-        user_exists = (await db.execute(select(User).limit(1))).scalar_one_or_none()
+        user_exists = (await db.execute(select(User).where(User.username == "salman"))).scalar_one_or_none()
         if not user_exists:
-            logger.info("Seeding default admin user (username: admin, password: password)...")
+            logger.info("Seeding default admin user (username: salman, password: [hidden])...")
             default_admin = User(
-                username="admin",
-                email="admin@example.com",
-                hashed_password=hash_password("password"),
+                username="salman",
+                email="salman@example.com",
+                hashed_password=hash_password("136517"),
             )
             db.add(default_admin)
             await db.commit()

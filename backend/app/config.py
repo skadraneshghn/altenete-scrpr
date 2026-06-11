@@ -1,8 +1,5 @@
-"""
-Application configuration using pydantic-settings.
-All values are loaded from environment variables or .env file.
-"""
-
+import os
+from pydantic import model_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
@@ -37,6 +34,15 @@ class Settings(BaseSettings):
         "env_file_encoding": "utf-8",
         "case_sensitive": True,
     }
+
+    @model_validator(mode="after")
+    def check_addons(self) -> "Settings":
+        """Clever Cloud MySQL Addon URI auto-detection."""
+        addon_uri = os.environ.get("MYSQL_ADDON_URI")
+        if addon_uri:
+            if addon_uri.startswith("mysql://"):
+                self.DATABASE_URL = addon_uri.replace("mysql://", "mysql+aiomysql://", 1)
+        return self
 
 
 @lru_cache()
