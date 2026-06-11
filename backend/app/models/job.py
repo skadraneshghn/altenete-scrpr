@@ -71,12 +71,8 @@ class Job(Base):
     config: Mapped["ForumConfig | None"] = relationship()
     logs: Mapped[list["JobLog"]] = relationship(back_populates="job", cascade="all, delete-orphan")
     threads: Mapped[list["Thread"]] = relationship(back_populates="job")
-    sub_jobs: Mapped[list["Job"]] = relationship(
-        "Job", foreign_keys="Job.parent_job_id", back_populates="parent_job", cascade="all, delete-orphan"
-    )
-    parent_job: Mapped["Job | None"] = relationship(
-        "Job", foreign_keys="Job.parent_job_id", back_populates="sub_jobs", remote_side="Job.id"
-    )
+    # Note: sub-jobs are queried directly via parent_job_id column (no ORM relationship
+    # to avoid SQLAlchemy async mapper conflicts with self-referential FKs)
 
 
 class JobLog(Base):
