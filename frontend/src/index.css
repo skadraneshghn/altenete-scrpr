@@ -1,5 +1,27 @@
 @import "tailwindcss";
+@import "tw-elements-react/dist/css/tw-elements-react.min.css";
 @source "../src/**/*.{js,jsx,ts,tsx}";
+
+@theme {
+  --color-primary: #3b71ca;
+  --color-primary-50: #f0f5ff;
+  --color-primary-100: #e0ebff;
+  --color-primary-600: #305bb0;
+  --color-primary-700: #284b93;
+  --color-secondary: #9fa6b2;
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-success: #14a44d;
+  --color-success-100: #d1fae5;
+  --color-success-700: #047857;
+  --color-danger: #dc4c64;
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-700: #b91c1c;
+  --color-warning: #e4a11b;
+  --color-info: #54b4d3;
+}
 
 /* ============================================================
    Design System — Premium Light Theme
@@ -62,46 +84,49 @@ body {
 /* ============================================================
    Cards
    ============================================================ */
+/* ============================================================
+   Cards (TW-Elements styled)
+   ============================================================ */
 .card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  border: none;
+  border-radius: 0.5rem; /* 8px rounded as in TW-Elements */
+  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
+  transition: all 0.2s ease-in-out;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
 }
 
 /* Legacy alias — keeps existing JSX working */
 .glass-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
+  transition: all 0.2s ease-in-out;
 }
 
 .glass-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
 }
 
 /* Stat card with left accent border */
 .stat-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 9px -4px rgba(51, 45, 45, 0.05), 0 8px 18px 0 rgba(51, 45, 45, 0.02), 0 4px 18px 0 rgba(51, 45, 45, 0.02);
   padding: 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
   position: relative;
   overflow: hidden;
 }
 
 .stat-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 9px -4px rgba(51, 45, 45, 0.06), 0 15px 20px 0 rgba(51, 45, 45, 0.03), 0 4px 20px 0 rgba(51, 45, 45, 0.03);
+  transform: translateY(-2px);
 }
 
 /* ============================================================
@@ -111,23 +136,23 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
-  border-radius: 99px;
+  padding: 4px 12px;
+  border-radius: 4px;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.status-pending   { color: #92400e; background: #fef3c7; border: 1px solid #fde68a; }
-.status-running   { color: #1e40af; background: #dbeafe; border: 1px solid #93c5fd; animation: pulseBlue 2s ease-in-out infinite; }
-.status-completed { color: #065f46; background: #d1fae5; border: 1px solid #6ee7b7; }
-.status-failed    { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
-.status-cancelled { color: #475569; background: #f1f5f9; border: 1px solid #cbd5e1; }
+.status-pending   { color: #92400e; background: #fef3c7; }
+.status-running   { color: #1e40af; background: #dbeafe; animation: pulseBlue 2s ease-in-out infinite; }
+.status-completed { color: #065f46; background: #d1fae5; }
+.status-failed    { color: #991b1b; background: #fee2e2; }
+.status-cancelled { color: #475569; background: #f1f5f9; }
 
 @keyframes pulseBlue {
-  0%, 100% { border-color: #93c5fd; }
-  50% { border-color: #3b82f6; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* ============================================================
@@ -145,81 +170,80 @@ body {
 }
 
 /* ============================================================
-   Buttons
+   Buttons (TW-Elements styled)
    ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 0.85rem;
+  padding: 7px 16px;
+  border-radius: 4px; /* TW Elements buttons are moderately rounded */
+  font-size: 0.75rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   border: none;
   outline: none;
   cursor: pointer;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s ease-in-out;
   white-space: nowrap;
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 4px 14px var(--accent-glow);
+  box-shadow: 0 4px 9px -4px var(--color-primary);
 }
 .btn-primary:hover {
-  background: var(--accent-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px var(--accent-glow);
+  background: var(--color-primary-600);
+  box-shadow: 0 8px 9px -4px rgba(59, 113, 202, 0.2), 0 4px 18px 0 rgba(59, 113, 202, 0.1);
 }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:focus {
+  background: var(--color-primary-600);
+}
+.btn-primary:active {
+  background: var(--color-primary-700);
+}
 
 .btn-secondary {
-  background: #fff;
-  color: var(--text-b);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  background: #f1f5f9;
+  color: #334155;
+  box-shadow: 0 4px 9px -4px #cbd5e1;
 }
 .btn-secondary:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  color: var(--text-h);
+  background: #e2e8f0;
 }
 
 .btn-danger {
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
+  background: var(--color-danger);
+  color: #fff;
+  box-shadow: 0 4px 9px -4px var(--color-danger);
 }
 .btn-danger:hover {
-  background: #fca5a5;
-  color: #7f1d1d;
+  background: #b91c1c;
 }
 
 /* ============================================================
-   Input Fields
+   Input Fields (TW-Elements Outlined appearance)
    ============================================================ */
 .input-field {
   width: 100%;
-  padding: 11px 16px;
-  background: #f8fafc;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  color: var(--text-h);
-  font-size: 0.875rem;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  color: #334155;
+  font-size: 0.85rem;
   font-weight: 500;
-  font-family: inherit;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
   outline: none;
 }
 
 .input-field:focus {
-  background: #ffffff;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-glow);
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
 }
-
 .input-field::placeholder { color: var(--text-soft); }
 
 .input-field-icon { padding-left: 44px; }

@@ -15,8 +15,10 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-hot-toast": "^2.6.0",
+    "react-is": "^19.2.7",
     "react-router-dom": "^7.17.0",
     "recharts": "^3.8.1",
+    "tw-elements-react": "^1.0.0-alpha-end",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
