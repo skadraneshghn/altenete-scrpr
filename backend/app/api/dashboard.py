@@ -375,8 +375,16 @@ async def get_screenshot(
                 except Exception:
                     pass
 
-                # Submit the form
-                await page.click("button[type='submit']")
+                # Submit the login form — use specific selector to avoid hitting
+                # the hidden search button which also matches button[type='submit']
+                try:
+                    # Most specific: the login button inside the login form
+                    login_btn = page.locator("form[action='/login/login'] button[type='submit']").first
+                    await login_btn.click(timeout=10000)
+                except Exception:
+                    # Fallback: just press Enter from the password field
+                    await page.press("input[name='password']", "Enter")
+
 
                 # Wait for redirect away from /login/ (success) or stay (failure)
                 try:
