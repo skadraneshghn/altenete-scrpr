@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen w-full bg-slate-50 flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Background gradients */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -53,13 +53,13 @@ export default function Login() {
           <div>
             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Username</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="admin"
-                className="input-field pl-10"
+                className="input-field input-field-icon"
                 required
               />
             </div>
@@ -68,13 +68,13 @@ export default function Login() {
           <div>
             <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="input-field pl-10"
+                className="input-field input-field-icon"
                 required
               />
             </div>

@@ -1,9 +1,10 @@
 import { create } from 'zustand';
-import client from '../api/client';
+import authService from '../api/authService';
+import apiService from '../api/apiService';
 
 const useStore = create((set, get) => ({
   user: null,
-  isAuthenticated: !!localStorage.getItem('token'),
+  isAuthenticated: authService.isAuthenticated(),
   loading: false,
   error: null,
 
@@ -11,8 +12,7 @@ const useStore = create((set, get) => ({
   login: async (username, password) => {
     set({ loading: true, error: null });
     try {
-      const res = await client.post('/api/auth/login', { username, password });
-      localStorage.setItem('token', res.data.access_token);
+      await authService.login(username, password);
       set({ isAuthenticated: true });
       await get().fetchCurrentUser();
       return true;
@@ -23,14 +23,14 @@ const useStore = create((set, get) => ({
   },
 
   logout: () => {
-    localStorage.removeItem('token');
+    authService.logout();
     set({ user: null, isAuthenticated: false });
   },
 
   fetchCurrentUser: async () => {
     try {
-      const res = await client.get('/api/auth/me');
-      set({ user: res.data, loading: false });
+      const userData = await authService.getCurrentUser();
+      set({ user: userData, loading: false });
     } catch (err) {
       get().logout();
     }
@@ -40,8 +40,8 @@ const useStore = create((set, get) => ({
   configs: [],
   fetchConfigs: async () => {
     try {
-      const res = await client.get('/api/forums/configs');
-      set({ configs: res.data });
+      const data = await apiService.getConfigs();
+      set({ configs: data });
     } catch (err) {
       console.error('Error fetching configs:', err);
     }
@@ -49,8 +49,8 @@ const useStore = create((set, get) => ({
 
   createConfig: async (configData) => {
     try {
-      const res = await client.post('/api/forums/configs', configData);
-      set((state) => ({ configs: [res.data, ...state.configs] }));
+      const data = await apiService.createConfig(configData);
+      set((state) => ({ configs: [data, ...state.configs] }));
       return true;
     } catch (err) {
       console.error('Error creating config:', err);
@@ -60,7 +60,7 @@ const useStore = create((set, get) => ({
 
   deleteConfig: async (id) => {
     try {
-      await client.delete(`/api/forums/configs/${id}`);
+      await apiService.deleteConfig(id);
       set((state) => ({ configs: state.configs.filter((c) => c.id !== id) }));
       return true;
     } catch (err) {
@@ -76,10 +76,8 @@ const useStore = create((set, get) => ({
   jobLogs: [],
   fetchJobs: async (page = 1, status = '') => {
     try {
-      const params = { page, per_page: 10 };
-      if (status) params.status = status;
-      const res = await client.get('/api/jobs', { params });
-      set({ jobs: res.data.items, totalJobs: res.data.total });
+      const data = await apiService.getJobs(page, status);
+      set({ jobs: data.items, totalJobs: data.total });
     } catch (err) {
       console.error('Error fetching jobs:', err);
     }
@@ -87,8 +85,8 @@ const useStore = create((set, get) => ({
 
   fetchJobDetails: async (id) => {
     try {
-      const res = await client.get(`/api/jobs/${id}`);
-      set({ activeJob: res.data.job, jobLogs: res.data.logs });
+      const data = await apiService.getJobDetails(id);
+      set({ activeJob: data.job, jobLogs: data.logs });
     } catch (err) {
       console.error('Error fetching job details:', err);
     }
@@ -96,8 +94,8 @@ const useStore = create((set, get) => ({
 
   createJob: async (jobData) => {
     try {
-      const res = await client.post('/api/jobs', jobData);
-      set((state) => ({ jobs: [res.data, ...state.jobs] }));
+      const data = await apiService.createJob(jobData);
+      set((state) => ({ jobs: [data, ...state.jobs] }));
       return true;
     } catch (err) {
       console.error('Error creating job:', err);
@@ -107,7 +105,7 @@ const useStore = create((set, get) => ({
 
   cancelJob: async (id) => {
     try {
-      await client.post(`/api/jobs/${id}/cancel`);
+      await apiService.cancelJob(id);
       get().fetchJobs();
       return true;
     } catch (err) {
@@ -118,7 +116,7 @@ const useStore = create((set, get) => ({
 
   retryJob: async (id) => {
     try {
-      await client.post(`/api/jobs/${id}/retry`);
+      await apiService.retryJob(id);
       get().fetchJobs();
       return true;
     } catch (err) {
@@ -133,15 +131,15 @@ const useStore = create((set, get) => ({
   recentJobs: [],
   fetchDashboardData: async () => {
     try {
-      const [statsRes, activityRes, recentRes] = await Promise.all([
-        client.get('/api/dashboard/stats'),
-        client.get('/api/dashboard/activity'),
-        client.get('/api/dashboard/recent-jobs'),
+      const [stats, activity, recent] = await Promise.all([
+        apiService.getDashboardStats(),
+        apiService.getDashboardActivity(),
+        apiService.getRecentJobs(),
       ]);
       set({
-        dashboardStats: statsRes.data,
-        dashboardActivity: activityRes.data,
-        recentJobs: recentRes.data,
+        dashboardStats: stats,
+        dashboardActivity: activity,
+        recentJobs: recent,
       });
     } catch (err) {
       console.error('Error fetching dashboard stats:', err);
@@ -155,13 +153,11 @@ const useStore = create((set, get) => ({
   activeThread: null,
   fetchThreads: async (page = 1, search = '') => {
     try {
-      const params = { page, per_page: 15 };
-      if (search) params.search = search;
-      const res = await client.get('/api/forums/threads', { params });
+      const data = await apiService.getThreads(page, search);
       set({
-        threads: res.data.items,
-        totalThreads: res.data.total,
-        totalPages: res.data.total_pages,
+        threads: data.items,
+        totalThreads: data.total,
+        totalPages: data.total_pages,
       });
     } catch (err) {
       console.error('Error fetching threads:', err);
@@ -170,8 +166,8 @@ const useStore = create((set, get) => ({
 
   fetchThreadDetails: async (id) => {
     try {
-      const res = await client.get(`/api/forums/threads/${id}`);
-      set({ activeThread: res.data });
+      const data = await apiService.getThreadDetails(id);
+      set({ activeThread: data });
     } catch (err) {
       console.error('Error fetching thread details:', err);
     }

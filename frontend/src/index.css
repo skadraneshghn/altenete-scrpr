@@ -32,6 +32,9 @@ body {
 
 #root {
   min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Custom Scrollbar */
@@ -225,4 +228,9 @@ thead tr {
 
 tbody tr:last-child {
   border-bottom: none !important;
+}
+
+/* Icon inputs padding override */
+.input-field-icon {
+  padding-left: 44px !important;
 }
