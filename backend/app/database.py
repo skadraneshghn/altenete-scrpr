@@ -32,10 +32,10 @@ if _is_mysql:
         settings.DATABASE_URL,
         echo=False,
         pool_pre_ping=True,
-        pool_size=2,        # persistent connections kept alive
-        max_overflow=2,     # extra connections allowed under burst (total max = 4)
-        pool_timeout=20,    # seconds to wait for a free connection before error
-        pool_recycle=1800,  # recycle connections after 30 minutes idle
+        pool_size=1,        # strictly keep only 1 persistent connection
+        max_overflow=1,     # allow at most 1 burst connection (total max = 2)
+        pool_timeout=30,    # wait longer for connections to clear before failing
+        pool_recycle=900,   # recycle connections every 15 minutes to keep them fresh
     )
 else:
     # SQLite / local dev — no connection limit concerns
