@@ -1,21 +1,49 @@
 """
 Database setup with async SQLAlchemy engine and session management.
+Configured for Clever Cloud MySQL free tier: max 5 simultaneous connections.
 """
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
 
 from app.config import get_settings
 
 settings = get_settings()
 
-engine = create_async_engine(
-    settings.DATABASE_URL,
-    echo=False,
-    pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20,
-)
+# ──────────────────────────────────────────────────────────────────────────
+# Connection pool strategy
+#
+# Clever Cloud free MySQL addon: max_user_connections = 5
+#
+# We keep pool_size=2, max_overflow=2 → peak 4 real connections, leaving
+# 1 spare for admin/monitoring tools.
+#
+# pool_recycle=1800   — drop connections idle for 30 min (avoids "gone away")
+# pool_pre_ping=True  — test connection health before use
+# pool_timeout=20     — raise after 20 s instead of hanging forever
+# pool_reset_on_return="rollback" — clean state between requests
+# ──────────────────────────────────────────────────────────────────────────
+
+_is_mysql = "mysql" in settings.DATABASE_URL
+
+if _is_mysql:
+    engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=False,
+        pool_pre_ping=True,
+        pool_size=2,        # persistent connections kept alive
+        max_overflow=2,     # extra connections allowed under burst (total max = 4)
+        pool_timeout=20,    # seconds to wait for a free connection before error
+        pool_recycle=1800,  # recycle connections after 30 minutes idle
+    )
+else:
+    # SQLite / local dev — no connection limit concerns
+    engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=False,
+        pool_pre_ping=True,
+    )
 
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,
@@ -49,5 +77,5 @@ async def init_db():
 
 
 async def close_db():
-    """Dispose of the database engine."""
+    """Dispose of the database engine and close all pooled connections."""
     await engine.dispose()
