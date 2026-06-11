@@ -5,6 +5,7 @@ Uses httpx for fetching — no browser/native binaries required.
 
 import asyncio
 import logging
+import random
 from app.scraper.http_client import get_client
 from app.scraper.parsers import parse_first_post, PostData
 from app.scraper.xenforo_auth import XenForoAuth
@@ -113,6 +114,8 @@ class ThreadScraper:
 
             # Rate limiting
             if i < total - 1:
-                await asyncio.sleep(self.delay)
+                # Add random jitter between 75% and 125% of self.delay to bypass CDN bot detection
+                jitter = self.delay * random.uniform(0.75, 1.25)
+                await asyncio.sleep(jitter)
 
         return results

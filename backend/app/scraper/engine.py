@@ -4,6 +4,7 @@ Main scraper engine - orchestrates authentication, crawling, and scraping.
 
 import asyncio
 import logging
+import random
 from datetime import datetime, timezone
 import json
 
@@ -302,7 +303,9 @@ class ScraperEngine:
             await db.commit()
 
             # Rate limiting
-            await asyncio.sleep(config.scrape_delay)
+            # Add random jitter between 75% and 125% of delay to bypass CDN bot detection
+            jitter = config.scrape_delay * random.uniform(0.75, 1.25)
+            await asyncio.sleep(jitter)
 
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
