@@ -71,7 +71,7 @@ async def login(
             detail="Account is deactivated",
         )
 
-    access_token = create_access_token(data={"sub": user.id})
+    access_token = create_access_token(data={"sub": str(user.id)})
     return Token(access_token=access_token)
 
 
