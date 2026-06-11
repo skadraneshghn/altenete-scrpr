@@ -275,7 +275,6 @@ async def get_screenshot(
     try:
         async with async_playwright() as p:
             browser = await p.chromium.launch(
-                executable_path="/usr/bin/google-chrome",
                 headless=True,
                 args=["--no-sandbox", "--disable-setuid-sandbox"]
             )
