@@ -19,6 +19,7 @@ from app.services.job_service import JobService
 from app.scraper.xenforo_auth import XenForoAuth
 from app.scraper.forum_crawler import ForumCrawler
 from app.scraper.thread_scraper import ThreadScraper
+from app.police import DuplicatePolice, ThreadOperation, PostOperation
 
 logger = logging.getLogger(__name__)
 
@@ -201,51 +202,59 @@ class ScraperEngine:
             check_cancelled=check_cancelled,
         )
 
-        # Save threads to database (upsert)
+        # Save threads to database — Police-guarded upsert
+        police = DuplicatePolice(db, log_callback)
         saved_count = 0
+        skipped_count = 0
         for td in threads_data:
             try:
-                # Check if thread already exists
-                existing = await db.execute(
-                    select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
-                )
-                thread = existing.scalar_one_or_none()
-
-                if thread:
-                    # Update existing
-                    thread.title = td.title
-                    thread.author = td.author
-                    thread.replies = td.replies
-                    thread.views = td.views
-                    thread.is_sticky = td.is_sticky
-                    thread.is_multipage = td.is_multipage
-                    thread.max_pages = td.max_pages
-                else:
-                    # Create new
-                    thread = Thread(
-                        thread_xf_id=td.thread_xf_id,
-                        title=td.title,
-                        url=td.url,
-                        author=td.author,
-                        replies=td.replies,
-                        views=td.views,
-                        is_sticky=td.is_sticky,
-                        thread_date=td.thread_date,
-                        is_multipage=td.is_multipage,
-                        max_pages=td.max_pages,
-                        config_id=config.id,
-                        job_id=self.job_id,
+                async def _save_thread(td=td):
+                    """Upsert one thread row (called only when Police says ALLOW)."""
+                    existing = await db.execute(
+                        select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
                     )
-                    db.add(thread)
+                    thread = existing.scalar_one_or_none()
+                    if thread:
+                        # Update existing metadata
+                        thread.title = td.title
+                        thread.author = td.author
+                        thread.replies = td.replies
+                        thread.views = td.views
+                        thread.is_sticky = td.is_sticky
+                        thread.is_multipage = td.is_multipage
+                        thread.max_pages = td.max_pages
+                    else:
+                        db.add(Thread(
+                            thread_xf_id=td.thread_xf_id,
+                            title=td.title,
+                            url=td.url,
+                            author=td.author,
+                            replies=td.replies,
+                            views=td.views,
+                            is_sticky=td.is_sticky,
+                            thread_date=td.thread_date,
+                            is_multipage=td.is_multipage,
+                            max_pages=td.max_pages,
+                            config_id=config.id,
+                            job_id=self.job_id,
+                        ))
+                    return True
 
-                saved_count += 1
+                op = ThreadOperation(thread_xf_id=td.thread_xf_id, save_fn=_save_thread)
+                result = await op.run(police)
+                if result.skipped:
+                    skipped_count += 1
+                elif result.success:
+                    saved_count += 1
+                else:
+                    logger.warning("Thread op failed: %s", result.message)
             except Exception as e:
                 logger.warning(f"Error saving thread {td.thread_xf_id}: {e}")
 
         await db.flush()
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
-            f"Phase 1 complete: saved {saved_count} threads to database"
+            f"Phase 1 complete: saved {saved_count} new/updated threads, {skipped_count} skipped (already indexed)"
         )
         await db.commit()
 
@@ -285,18 +294,13 @@ class ScraperEngine:
 
         new_count = 0
         total_found = len(threads_data)
-        
+        police = DuplicatePolice(db, log_callback)
+
         for td in threads_data:
             try:
-                # Check if thread already exists
-                existing = await db.execute(
-                    select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
-                )
-                thread = existing.scalar_one_or_none()
-
-                if not thread:
-                    # Create new thread entry in DB
-                    thread = Thread(
+                async def _save_new_thread(td=td):
+                    """Insert a brand-new thread (called only when Police says ALLOW)."""
+                    db.add(Thread(
                         thread_xf_id=td.thread_xf_id,
                         title=td.title,
                         url=td.url,
@@ -309,22 +313,32 @@ class ScraperEngine:
                         max_pages=td.max_pages,
                         config_id=config.id,
                         job_id=self.job_id,
-                    )
-                    db.add(thread)
+                    ))
+                    return True
+
+                op = ThreadOperation(thread_xf_id=td.thread_xf_id, save_fn=_save_new_thread)
+                result = await op.run(police)
+
+                if result.success:
                     new_count += 1
                     await job_service.add_log(
                         self.job_id, LogLevel.INFO,
                         f"Found and indexed new topic: '{td.title}'"
                     )
-                else:
-                    # Update existing thread's stats (replies, views, title)
-                    thread.title = td.title
-                    thread.author = td.author
-                    thread.replies = td.replies
-                    thread.views = td.views
-                    thread.is_sticky = td.is_sticky
-                    thread.is_multipage = td.is_multipage
-                    thread.max_pages = td.max_pages
+                elif result.skipped:
+                    # Still refresh the cached stats even though Police skipped the insert
+                    existing = await db.execute(
+                        select(Thread).where(Thread.thread_xf_id == td.thread_xf_id)
+                    )
+                    thread = existing.scalar_one_or_none()
+                    if thread:
+                        thread.title = td.title
+                        thread.author = td.author
+                        thread.replies = td.replies
+                        thread.views = td.views
+                        thread.is_sticky = td.is_sticky
+                        thread.is_multipage = td.is_multipage
+                        thread.max_pages = td.max_pages
             except Exception as e:
                 logger.warning(f"Error saving/updating thread {td.thread_xf_id}: {e}")
 
@@ -379,26 +393,41 @@ class ScraperEngine:
 
         processed = 0
         failed = 0
+        skipped = 0
+        police = DuplicatePolice(db, log_callback)
 
         for thread in threads:
             # Check cancellation
             if await job_service.is_cancelled(self.job_id):
                 break
 
-            post_data = await scraper.scrape_thread(
-                thread.url,
-                max_pages=thread.max_pages if thread.is_multipage else 1
-            )
-
-            if post_data:
-                post = Post(
+            async def _scrape_and_save(thread=thread):
+                """Scrape + persist the post (called only when Police says ALLOW)."""
+                post_data = await scraper.scrape_thread(
+                    thread.url,
+                    max_pages=thread.max_pages if thread.is_multipage else 1
+                )
+                if not post_data:
+                    return False
+                db.add(Post(
                     thread_id=thread.id,
                     content_html=post_data.content_html,
                     content_text=post_data.content_text,
                     author=post_data.author,
                     post_date=post_data.post_date,
-                )
-                db.add(post)
+                ))
+                return True
+
+            op = PostOperation(
+                thread_id=thread.id,
+                scrape_fn=_scrape_and_save,
+                thread_label=thread.title[:80],
+            )
+            result = await op.run(police)
+
+            if result.skipped:
+                skipped += 1
+            elif result.success:
                 processed += 1
             else:
                 failed += 1
@@ -409,7 +438,7 @@ class ScraperEngine:
 
             await job_service.update_progress(
                 self.job_id,
-                processed=processed + failed,
+                processed=processed + failed + skipped,
                 total=total,
                 failed=failed,
             )
@@ -422,7 +451,7 @@ class ScraperEngine:
 
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
-            f"Phase 2 complete: scraped {processed} posts, {failed} failed"
+            f"Phase 2 complete: scraped {processed} posts, {skipped} skipped (Police), {failed} failed"
         )
         await db.commit()
 
@@ -475,6 +504,8 @@ class ScraperEngine:
 
         processed = 0
         failed = 0
+        skipped = 0
+        police = DuplicatePolice(db, log_callback)
 
         for thread in threads:
             # Check cancellation
@@ -489,20 +520,33 @@ class ScraperEngine:
                 f"Extracting first post: [{thread.thread_xf_id}] {thread.title[:80]}"
             )
 
-            post_data = await scraper.scrape_thread(
-                thread.url,
-                first_post_only=True,  # <-- key: only page 1, only post #1
-            )
-
-            if post_data:
-                post = Post(
+            async def _scrape_first_post(thread=thread):
+                """Fetch first post only (called only when Police says ALLOW)."""
+                post_data = await scraper.scrape_thread(
+                    thread.url,
+                    first_post_only=True,  # only page 1, only post #1
+                )
+                if not post_data:
+                    return False
+                db.add(Post(
                     thread_id=thread.id,
                     content_html=post_data.content_html,
                     content_text=post_data.content_text,
                     author=post_data.author,
                     post_date=post_data.post_date,
-                )
-                db.add(post)
+                ))
+                return True
+
+            op = PostOperation(
+                thread_id=thread.id,
+                scrape_fn=_scrape_first_post,
+                thread_label=f"[{thread.thread_xf_id}] {thread.title[:60]}",
+            )
+            result = await op.run(police)
+
+            if result.skipped:
+                skipped += 1
+            elif result.success:
                 processed += 1
             else:
                 failed += 1
@@ -513,7 +557,7 @@ class ScraperEngine:
 
             await job_service.update_progress(
                 self.job_id,
-                processed=processed + failed,
+                processed=processed + failed + skipped,
                 total=total,
                 failed=failed,
             )
@@ -525,6 +569,6 @@ class ScraperEngine:
 
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
-            f"Scrape Posts complete: {processed} first posts saved, {failed} failed"
+            f"Scrape Posts complete: {processed} first posts saved, {skipped} skipped (Police), {failed} failed"
         )
         await db.commit()

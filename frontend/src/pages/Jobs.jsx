@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Play, Plus, X, RotateCcw, Ban, Eye, Loader2, Trash2,
   ChevronDown, ChevronRight, CheckCircle2, XCircle,
@@ -427,10 +428,24 @@ export default function Jobs() {
         )}
       </div>
 
-      {/* ── New Operation Modal ── */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="w-full max-w-md bg-white border border-slate-100 rounded-2xl shadow-2xl relative overflow-hidden">
+      {/* ── New Operation Modal (Portal → renders directly on document.body) ── */}
+      {isModalOpen && createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.45)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
+            zIndex: 9999,
+          }}
+          onClick={(e) => { if (e.target === e.currentTarget) setIsModalOpen(false); }}
+        >
+          <div className="w-full max-w-md bg-white border border-slate-100 rounded-2xl shadow-2xl relative overflow-hidden animate-fade-in">
             {/* Modal header */}
             <div className="px-6 pt-6 pb-4 border-b border-slate-100">
               <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-4 p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
@@ -492,7 +507,8 @@ export default function Jobs() {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

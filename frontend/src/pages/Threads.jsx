@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Search, Eye, X, Globe, User, MessageSquare, 
   BarChart2, Calendar, FileText, Download, 
@@ -310,10 +311,22 @@ export default function Threads() {
         )}
       </div>
 
-      {/* Slide-out/Modal Detail Viewer */}
-      {isViewerOpen && activeThread && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex justify-end z-50 animate-fade-in">
-          <div className="w-full max-w-3xl bg-white h-full flex flex-col p-6 md:p-8 shadow-2xl overflow-y-auto">
+      {/* Slide-out/Modal Detail Viewer — Portal to avoid grid clipping */}
+      {isViewerOpen && activeThread && createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(2px)',
+            WebkitBackdropFilter: 'blur(2px)',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            zIndex: 9999,
+          }}
+          onClick={(e) => { if (e.target === e.currentTarget) setIsViewerOpen(false); }}
+        >
+          <div className="w-full max-w-3xl bg-white h-full flex flex-col p-6 md:p-8 shadow-2xl overflow-y-auto animate-fade-in">
             {/* Header */}
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
               <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100/50">
@@ -412,7 +425,8 @@ export default function Threads() {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

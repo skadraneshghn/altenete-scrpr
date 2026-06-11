@@ -30,7 +30,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 bg-white flex flex-col h-screen sticky top-0" style={{ borderRight: '1px solid #e2e8f0', boxShadow: '2px 0 8px rgba(0,0,0,0.04)' }}>
+    <div style={{ width: '100%', height: '100%', background: '#ffffff', display: 'flex', flexDirection: 'column', borderRight: '1px solid #e2e8f0', boxShadow: '2px 0 8px rgba(0,0,0,0.04)', overflowY: 'auto' }}>
 
       {/* ── Brand ── */}
       <div className="px-6 py-5" style={{ borderBottom: '1px solid #e2e8f0' }}>

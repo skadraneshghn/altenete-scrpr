@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <header
-      className="flex items-center justify-between px-8 h-16 flex-shrink-0"
+      className="flex items-center justify-between px-8 h-full flex-shrink-0"
       style={{
         background: '#ffffff',
         borderBottom: '1px solid #e2e8f0',

@@ -25,20 +25,65 @@ function PrivateRoute({ children }) {
   }, [isAuthenticated]);
 
   return isAuthenticated ? (
-    <div className="flex h-screen relative overflow-hidden" style={{ background: '#f8fafc' }}>
-      {/* Background Glows for Modern Glassmorphism Accent */}
-      <div className="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-200/10 to-purple-200/15 blur-[120px] pointer-events-none z-0"></div>
-      <div className="absolute bottom-[-15%] left-[10%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-blue-200/10 to-pink-200/15 blur-[120px] pointer-events-none z-0"></div>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '256px 1fr',
+        gridTemplateRows: '64px 1fr',
+        height: '100vh',
+        width: '100%',
+        overflow: 'hidden',
+        background: '#f8fafc',
+        position: 'relative',
+      }}
+    >
+      {/* Background Glows */}
+      <div style={{
+        position: 'fixed',
+        top: '-15%', right: '-10%',
+        width: 600, height: 600,
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(165,180,252,0.12) 0%, transparent 70%)',
+        filter: 'blur(80px)',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+      <div style={{
+        position: 'fixed',
+        bottom: '-15%', left: '10%',
+        width: 600, height: 600,
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(196,181,253,0.12) 0%, transparent 70%)',
+        filter: 'blur(80px)',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
 
-      <Sidebar />
-      <div className="flex-1 flex flex-col h-screen overflow-hidden relative z-10">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          <div className="w-full space-y-8">
-            {children}
-          </div>
-        </main>
+      {/* Sidebar — spans both rows on column 1 */}
+      <div style={{ gridColumn: '1', gridRow: '1 / 3', zIndex: 20, position: 'relative' }}>
+        <Sidebar />
       </div>
+
+      {/* Header — row 1, column 2 */}
+      <div style={{ gridColumn: '2', gridRow: '1', zIndex: 30, position: 'relative' }}>
+        <Header />
+      </div>
+
+      {/* Main scroll area — row 2, column 2 */}
+      <main
+        style={{
+          gridColumn: '2',
+          gridRow: '2',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          position: 'relative',
+          zIndex: 10,
+        }}
+      >
+        <div style={{ padding: '2rem', minHeight: '100%' }}>
+          {children}
+        </div>
+      </main>
     </div>
   ) : (
     <Navigate to="/login" replace />

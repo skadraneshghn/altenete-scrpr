@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Activity, 
   RefreshCw, 
@@ -447,10 +448,23 @@ export default function HealthCheck() {
 
       </div>
 
-      {/* ── Fullscreen Overlay Modal ── */}
-      {isFullscreen && screenshotUrl && (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex flex-col justify-between p-6 animate-fade-in">
-          
+      {/* ── Fullscreen Overlay Modal — Portal ── */}
+      {isFullscreen && screenshotUrl && createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(15,23,42,0.85)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            zIndex: 9999,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: '1.5rem',
+          }}
+          className="animate-fade-in"
+        >
           {/* Header Controls */}
           <div className="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
             <div className="space-y-0.5">
@@ -504,10 +518,10 @@ export default function HealthCheck() {
 
           {/* Footer */}
           <div className="text-center text-[10px] text-slate-500">
-            Press ESC or click exit button above to return to dashboard.
+            Press Exit button above to return to dashboard.
           </div>
-
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>
