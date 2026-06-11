@@ -4,6 +4,7 @@ import {
   Play, Plus, X, RotateCcw, Ban, Eye, Loader2, Trash2,
   ChevronDown, ChevronRight, CheckCircle2, XCircle,
   Clock, Zap, AlertCircle, RefreshCw, Layers, Circle,
+  Repeat, Pause, TimerReset, Radio, Timer,
 } from 'lucide-react';
 import useStore from '../store/useStore';
 import apiService from '../api/apiService';
@@ -239,6 +240,311 @@ function JobRow({ job, onView, onCancel, onRetry, onDelete, onExpandChange }) {
   );
 }
 
+// ─── Watches Panel ───────────────────────────────────────────────────────────
+const REPEATABLE_TYPES = [
+  { value: 'check_new',    label: 'Check New Topics (Quick Check)' },
+  { value: 'scrape_posts', label: 'Scrape First Posts Only' },
+];
+
+function fmtInterval(secs) {
+  if (secs < 60) return `${secs}s`;
+  if (secs < 3600) return `${Math.round(secs / 60)}m`;
+  return `${(secs / 3600).toFixed(1)}h`;
+}
+
+function fmtTime(ts) {
+  if (!ts) return '—';
+  return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function WatchRow({ watch, configs, onToggle, onDelete, onIntervalSave }) {
+  const [editing, setEditing] = useState(false);
+  const [newSecs, setNewSecs] = useState(watch.interval_seconds);
+  const cfg = configs.find(c => c.id === watch.config_id);
+
+  const handleSave = async () => {
+    const v = parseInt(newSecs, 10);
+    if (isNaN(v) || v < 30) { toast.error('Minimum interval is 30 seconds'); return; }
+    await onIntervalSave(watch.id, v);
+    setEditing(false);
+  };
+
+  return (
+    <div
+      style={{
+        display: 'flex', alignItems: 'center', gap: '12px',
+        padding: '14px 20px',
+        background: watch.is_active ? '#f0fdf4' : '#f8fafc',
+        border: `1px solid ${watch.is_active ? '#bbf7d0' : '#e2e8f0'}`,
+        borderRadius: 12,
+        transition: 'all 0.2s',
+      }}
+    >
+      {/* Status dot */}
+      <span
+        style={{
+          width: 10, height: 10, borderRadius: '50%', flexShrink: 0,
+          background: watch.is_active ? '#22c55e' : '#94a3b8',
+          boxShadow: watch.is_active ? '0 0 0 3px rgba(34,197,94,0.2)' : 'none',
+          animation: watch.is_active ? 'pulse 2s infinite' : 'none',
+        }}
+      />
+
+      {/* Info */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, fontSize: 13, color: '#1e293b' }}>
+            {REPEATABLE_TYPES.find(t => t.value === watch.job_type)?.label || watch.job_type}
+          </span>
+          <span style={{
+            fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 99,
+            background: '#e0e7ff', color: '#4338ca'
+          }}>
+            {cfg?.name || `Config #${watch.config_id}`}
+          </span>
+        </div>
+        <div style={{ display: 'flex', gap: 16, marginTop: 4, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 11, color: '#64748b' }}>
+            <Timer style={{ display: 'inline', width: 12, height: 12, marginRight: 3 }} />
+            Every <strong>{fmtInterval(watch.interval_seconds)}</strong>
+          </span>
+          <span style={{ fontSize: 11, color: '#64748b' }}>
+            Runs: <strong>{watch.run_count}</strong>
+          </span>
+          <span style={{ fontSize: 11, color: '#64748b' }}>
+            Last: <strong>{fmtTime(watch.last_run_at)}</strong>
+          </span>
+          <span style={{ fontSize: 11, color: '#64748b' }}>
+            Next: <strong>{fmtTime(watch.next_run_at)}</strong>
+          </span>
+        </div>
+      </div>
+
+      {/* Interval editor */}
+      {editing ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <input
+            type="number" min={30} value={newSecs}
+            onChange={e => setNewSecs(e.target.value)}
+            style={{
+              width: 80, padding: '5px 8px', border: '1px solid #6366f1',
+              borderRadius: 6, fontSize: 12, fontWeight: 600, color: '#1e293b',
+              outline: 'none',
+            }}
+          />
+          <span style={{ fontSize: 11, color: '#64748b' }}>s</span>
+          <button onClick={handleSave} className="btn btn-primary" style={{ padding: '4px 10px', fontSize: 11 }}>Save</button>
+          <button onClick={() => setEditing(false)} className="btn btn-secondary" style={{ padding: '4px 10px', fontSize: 11 }}>Cancel</button>
+        </div>
+      ) : (
+        <button
+          onClick={() => { setNewSecs(watch.interval_seconds); setEditing(true); }}
+          className="btn btn-secondary"
+          style={{ padding: '4px 10px', fontSize: 11 }}
+          title="Change interval"
+        >
+          <TimerReset style={{ width: 13, height: 13 }} />
+        </button>
+      )}
+
+      {/* Toggle */}
+      <button
+        onClick={() => onToggle(watch.id)}
+        className={`btn ${watch.is_active ? 'btn-secondary' : 'btn-primary'}`}
+        style={{ padding: '5px 12px', fontSize: 11, minWidth: 72 }}
+        title={watch.is_active ? 'Pause watch' : 'Resume watch'}
+      >
+        {watch.is_active
+          ? <><Pause style={{ width: 12, height: 12 }} /> Pause</>
+          : <><Play style={{ width: 12, height: 12 }} /> Resume</>
+        }
+      </button>
+
+      {/* Delete */}
+      <button
+        onClick={() => onDelete(watch.id)}
+        className="btn btn-danger"
+        style={{ padding: '5px 10px', fontSize: 11 }}
+        title="Delete watch"
+      >
+        <Trash2 style={{ width: 12, height: 12 }} />
+      </button>
+    </div>
+  );
+}
+
+function WatchesPanel({ configs }) {
+  const [watches, setWatches] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
+  const [form, setForm] = useState({ job_type: 'check_new', config_id: '', interval_seconds: 60, label: '' });
+  const [creating, setCreating] = useState(false);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try { setWatches(await apiService.getWatches()); } catch {}
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  // Live refresh every 10s to update last_run_at / next_run_at / run_count
+  useEffect(() => {
+    const id = setInterval(load, 10000);
+    return () => clearInterval(id);
+  }, [load]);
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    if (!form.config_id) { toast.error('Select a forum configuration'); return; }
+    setCreating(true);
+    try {
+      await apiService.createWatch({
+        job_type: form.job_type,
+        config_id: Number(form.config_id),
+        interval_seconds: Number(form.interval_seconds),
+        label: form.label || undefined,
+      });
+      toast.success('Watch created');
+      setShowCreate(false);
+      setForm({ job_type: 'check_new', config_id: '', interval_seconds: 60, label: '' });
+      load();
+    } catch (e) {
+      toast.error(e?.response?.data?.detail || 'Failed to create watch');
+    }
+    setCreating(false);
+  };
+
+  const handleToggle = async (id) => {
+    try { await apiService.toggleWatch(id); load(); toast.success('Watch updated'); }
+    catch { toast.error('Failed to update watch'); }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this watch?')) return;
+    try { await apiService.deleteWatch(id); load(); toast.success('Watch deleted'); }
+    catch { toast.error('Failed to delete watch'); }
+  };
+
+  const handleIntervalSave = async (id, secs) => {
+    try { await apiService.updateWatchInterval(id, secs); load(); toast.success('Interval updated'); }
+    catch { toast.error('Failed to update interval'); }
+  };
+
+  const activeCount = watches.filter(w => w.is_active).length;
+
+  return (
+    <div className="glass-card p-6" style={{ marginTop: 8 }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
+          }}>
+            <Radio style={{ width: 18, height: 18, color: '#fff' }} />
+          </div>
+          <div>
+            <h2 style={{ fontWeight: 800, fontSize: 15, color: '#0f172a', margin: 0 }}>Active Watches</h2>
+            <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>
+              {activeCount} active · {watches.length} total — auto-repeating operations
+            </p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={load} className="btn btn-secondary" style={{ padding: '6px 10px' }} title="Refresh">
+            <RefreshCw style={{ width: 14, height: 14 }} />
+          </button>
+          <button onClick={() => setShowCreate(s => !s)} className="btn btn-primary" style={{ fontSize: 12 }}>
+            <Plus style={{ width: 14, height: 14 }} />
+            New Watch
+          </button>
+        </div>
+      </div>
+
+      {/* Create form */}
+      {showCreate && (
+        <form onSubmit={handleCreate}
+          style={{
+            background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12,
+            padding: '16px 20px', marginBottom: 16,
+          }}
+        >
+          <p style={{ fontWeight: 700, fontSize: 12, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>
+            Configure New Watch
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 4 }}>Operation Type</label>
+              <select value={form.job_type} onChange={e => setForm(f => ({ ...f, job_type: e.target.value }))} className="input-field" style={{ fontSize: 12 }}>
+                {REPEATABLE_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 4 }}>Forum Config</label>
+              <select value={form.config_id} onChange={e => setForm(f => ({ ...f, config_id: e.target.value }))} className="input-field" style={{ fontSize: 12 }} required>
+                <option value="">Select config…</option>
+                {configs.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 4 }}>Interval (seconds)</label>
+              <input
+                type="number" min={30} value={form.interval_seconds}
+                onChange={e => setForm(f => ({ ...f, interval_seconds: e.target.value }))}
+                className="input-field" style={{ fontSize: 12 }} required
+              />
+              <p style={{ fontSize: 10, color: '#94a3b8', marginTop: 3 }}>
+                {form.interval_seconds >= 60 ? `≈ ${Math.round(form.interval_seconds/60)} min` : ''}
+                {form.interval_seconds < 60 && form.interval_seconds >= 30 ? `${form.interval_seconds}s (min 30s)` : ''}
+              </p>
+            </div>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 4 }}>Label (optional)</label>
+              <input
+                type="text" value={form.label} maxLength={255}
+                onChange={e => setForm(f => ({ ...f, label: e.target.value }))}
+                placeholder="e.g. Hourly new-topic check"
+                className="input-field" style={{ fontSize: 12 }}
+              />
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="submit" disabled={creating} className="btn btn-primary" style={{ fontSize: 12 }}>
+              {creating ? <Loader2 style={{ width: 13, height: 13 }} className="animate-spin" /> : <><Repeat style={{ width: 13, height: 13 }} /> Create Watch</>}
+            </button>
+            <button type="button" onClick={() => setShowCreate(false)} className="btn btn-secondary" style={{ fontSize: 12 }}>Cancel</button>
+          </div>
+        </form>
+      )}
+
+      {/* Watch list */}
+      {loading && watches.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '24px 0', color: '#94a3b8' }}>
+          <Loader2 style={{ width: 20, height: 20, display: 'inline' }} className="animate-spin" />
+        </div>
+      ) : watches.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '24px 0' }}>
+          <Radio style={{ width: 32, height: 32, color: '#cbd5e1', margin: '0 auto 8px' }} />
+          <p style={{ fontWeight: 700, color: '#64748b', fontSize: 13 }}>No watches yet</p>
+          <p style={{ fontSize: 11, color: '#94a3b8' }}>Create a watch to automatically repeat an operation on an interval.</p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {watches.map(w => (
+            <WatchRow
+              key={w.id} watch={w} configs={configs}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+              onIntervalSave={handleIntervalSave}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Jobs page ──────────────────────────────────────────────────────────
 export default function Jobs() {
   const {
@@ -428,7 +734,11 @@ export default function Jobs() {
         )}
       </div>
 
+      {/* ── Watches Panel ── */}
+      <WatchesPanel configs={configs} />
+
       {/* ── New Operation Modal (Portal → renders directly on document.body) ── */}
+
       {isModalOpen && createPortal(
         <div
           style={{

@@ -91,6 +91,11 @@ async def lifespan(app: FastAPI):
     init_scheduler()
     logger.info("Scheduler started")
 
+    # Restore active repeating watches to APScheduler
+    from app.services.repeating_job_service import RepeatingJobService
+    await RepeatingJobService.restore_all_on_startup()
+    logger.info("Repeating watches restored")
+
     yield
 
     # Shutdown
@@ -161,6 +166,7 @@ from app.api.jobs import router as jobs_router
 from app.api.forums import router as forums_router, posts_router
 from app.api.dashboard import router as dashboard_router
 from app.api.admin_logs import router as admin_logs_router
+from app.api.repeating_jobs import router as watches_router
 
 app.include_router(auth_router)
 app.include_router(jobs_router)
@@ -168,6 +174,7 @@ app.include_router(forums_router)
 app.include_router(posts_router)
 app.include_router(dashboard_router)
 app.include_router(admin_logs_router)
+app.include_router(watches_router)
 
 
 @app.get("/api/health", tags=["Health"])

@@ -165,6 +165,31 @@ const apiService = {
     });
     return res.data;
   },
+
+  // Watches (Repeating Jobs)
+  async getWatches() {
+    const res = await client.get('/api/watches');
+    return res.data;
+  },
+
+  async createWatch(data) {
+    const res = await client.post('/api/watches', data);
+    return res.data;
+  },
+
+  async toggleWatch(id) {
+    const res = await client.patch(`/api/watches/${id}/toggle`);
+    return res.data;
+  },
+
+  async updateWatchInterval(id, interval_seconds) {
+    const res = await client.patch(`/api/watches/${id}/interval`, { interval_seconds });
+    return res.data;
+  },
+
+  async deleteWatch(id) {
+    await client.delete(`/api/watches/${id}`);
+  },
 };
 
 export default apiService;
