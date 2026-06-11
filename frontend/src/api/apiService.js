@@ -76,6 +76,15 @@ const apiService = {
     return URL.createObjectURL(res.data);
   },
 
+  // Admin Logs
+  async getLogs(limit = 300, search = '', level = '') {
+    const params = { limit };
+    if (search) params.search = search;
+    if (level) params.level = level;
+    const res = await client.get('/api/admin/logs', { params });
+    return res.data;
+  },
+
   // Scraped Content & Threads
   async getThreads(page = 1, search = '', configId = '', sortBy = 'scraped_at', sortDir = 'desc') {
     const params = { page, per_page: 15, sort_by: sortBy, sort_dir: sortDir };

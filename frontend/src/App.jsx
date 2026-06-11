@@ -10,6 +10,7 @@ import Threads from './pages/Threads';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import HealthCheck from './pages/HealthCheck';
+import AdminLogs from './pages/AdminLogs';
 import useStore from './store/useStore';
 
 function PrivateRoute({ children }) {
@@ -105,6 +106,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <HealthCheck />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/logs" 
+          element={
+            <PrivateRoute>
+              <AdminLogs />
             </PrivateRoute>
           } 
         />

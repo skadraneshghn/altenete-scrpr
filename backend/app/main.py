@@ -17,12 +17,36 @@ import app.models  # noqa: F401
 
 settings = get_settings()
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-)
+# Configure logging to console and a rotating file in logs/ folder
+import os
+from logging.handlers import RotatingFileHandler
+
+logs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../logs"))
+os.makedirs(logs_dir, exist_ok=True)
+log_file = os.path.join(logs_dir, "app.log")
+
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+
+# Clear default handlers if any
+while root_logger.handlers:
+    root_logger.removeHandler(root_logger.handlers[0])
+
+# Formatter
+log_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+# Console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(log_formatter)
+root_logger.addHandler(console_handler)
+
+# Rotating File handler (10MB per file, max 5 backups)
+file_handler = RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=5, encoding="utf-8")
+file_handler.setFormatter(log_formatter)
+root_logger.addHandler(file_handler)
+
 logger = logging.getLogger(__name__)
+
 
 
 @asynccontextmanager
@@ -124,11 +148,13 @@ from app.api.auth import router as auth_router
 from app.api.jobs import router as jobs_router
 from app.api.forums import router as forums_router
 from app.api.dashboard import router as dashboard_router
+from app.api.admin_logs import router as admin_logs_router
 
 app.include_router(auth_router)
 app.include_router(jobs_router)
 app.include_router(forums_router)
 app.include_router(dashboard_router)
+app.include_router(admin_logs_router)
 
 
 @app.get("/api/health", tags=["Health"])

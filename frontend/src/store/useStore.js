@@ -184,6 +184,17 @@ const useStore = create((set, get) => ({
     }
   },
 
+  // Admin Logs State
+  logs: [],
+  fetchLogs: async (limit = 300, search = '', level = '') => {
+    try {
+      const data = await apiService.getLogs(limit, search, level);
+      set({ logs: data.entries || [] });
+    } catch (err) {
+      console.error('Error fetching logs:', err);
+    }
+  },
+
   // Threads State
   threads: [],
   totalThreads: 0,
