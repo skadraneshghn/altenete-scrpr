@@ -7,7 +7,7 @@ WORKDIR /frontend
 
 # Copy package files first to leverage Docker layer cache
 COPY frontend/package*.json ./
-RUN npm ci --prefer-offline
+RUN npm ci --legacy-peer-deps --prefer-offline
 
 # Copy all frontend source files
 COPY frontend/ ./
