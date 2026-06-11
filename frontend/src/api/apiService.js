@@ -190,6 +190,22 @@ const apiService = {
   async deleteWatch(id) {
     await client.delete(`/api/watches/${id}`);
   },
+
+  // Telegram Settings
+  async getTelegramSettings() {
+    const res = await client.get('/api/telegram/settings');
+    return res.data;
+  },
+
+  async updateTelegramSettings(data) {
+    const res = await client.put('/api/telegram/settings', data);
+    return res.data;
+  },
+
+  async testTelegramBot(message) {
+    const res = await client.post('/api/telegram/test', { message });
+    return res.data;
+  },
 };
 
 export default apiService;

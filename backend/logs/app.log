@@ -1,0 +1,10 @@
+2026-06-11 17:19:36,612 - app.main - INFO - Starting up application...
+2026-06-11 17:19:39,808 - app.main - INFO - Database initialized
+2026-06-11 17:19:40,704 - app.main - INFO - Stuck jobs cleaned up
+2026-06-11 17:19:40,705 - apscheduler.scheduler - INFO - Scheduler started
+2026-06-11 17:19:40,705 - app.scheduler.scheduler - INFO - APScheduler started
+2026-06-11 17:19:40,705 - app.main - INFO - Scheduler started
+2026-06-11 17:19:40,932 - app.services.repeating_job_service - INFO - Restored 0 active repeating job(s) to scheduler
+2026-06-11 17:19:41,147 - app.main - INFO - Repeating watches restored
+2026-06-11 17:19:41,203 - app.services.telegram_service - INFO - Telegram Bot service started
+2026-06-11 17:19:41,203 - app.main - INFO - Telegram Bot service initialized

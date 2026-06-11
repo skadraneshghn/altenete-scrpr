@@ -29,6 +29,10 @@ class Settings(BaseSettings):
     # Frontend
     FRONTEND_URL: str = "http://localhost:5173"
 
+    # Telegram Bot Configuration
+    TELEGRAM_BOT_TOKEN: str = ""
+    TELEGRAM_ADMIN_CHAT_ID: str = ""
+
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",

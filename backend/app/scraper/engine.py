@@ -401,8 +401,11 @@ class ScraperEngine:
             if await job_service.is_cancelled(self.job_id):
                 break
 
+            scraped_content = None
+
             async def _scrape_and_save(thread=thread):
                 """Scrape + persist the post (called only when Police says ALLOW)."""
+                nonlocal scraped_content
                 post_data = await scraper.scrape_thread(
                     thread.url,
                     max_pages=thread.max_pages if thread.is_multipage else 1
@@ -416,6 +419,7 @@ class ScraperEngine:
                     author=post_data.author,
                     post_date=post_data.post_date,
                 ))
+                scraped_content = post_data.content_text
                 return True
 
             op = PostOperation(
@@ -429,6 +433,12 @@ class ScraperEngine:
                 skipped += 1
             elif result.success:
                 processed += 1
+                # Trigger Telegram notification (fire-and-forget)
+                try:
+                    from app.services.telegram_service import telegram_bot_manager
+                    asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
+                except Exception as tg_err:
+                    logger.error(f"Telegram notification error: {tg_err}")
             else:
                 failed += 1
                 await job_service.add_log(
@@ -520,8 +530,11 @@ class ScraperEngine:
                 f"Extracting first post: [{thread.thread_xf_id}] {thread.title[:80]}"
             )
 
+            scraped_content = None
+
             async def _scrape_first_post(thread=thread):
                 """Fetch first post only (called only when Police says ALLOW)."""
+                nonlocal scraped_content
                 post_data = await scraper.scrape_thread(
                     thread.url,
                     first_post_only=True,  # only page 1, only post #1
@@ -535,6 +548,7 @@ class ScraperEngine:
                     author=post_data.author,
                     post_date=post_data.post_date,
                 ))
+                scraped_content = post_data.content_text
                 return True
 
             op = PostOperation(
@@ -548,6 +562,12 @@ class ScraperEngine:
                 skipped += 1
             elif result.success:
                 processed += 1
+                # Trigger Telegram notification (fire-and-forget)
+                try:
+                    from app.services.telegram_service import telegram_bot_manager
+                    asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
+                except Exception as tg_err:
+                    logger.error(f"Telegram notification error: {tg_err}")
             else:
                 failed += 1
                 await job_service.add_log(

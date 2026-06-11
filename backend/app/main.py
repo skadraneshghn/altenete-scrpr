@@ -96,10 +96,19 @@ async def lifespan(app: FastAPI):
     await RepeatingJobService.restore_all_on_startup()
     logger.info("Repeating watches restored")
 
+    # Start Telegram Bot Manager background loop
+    from app.services.telegram_service import telegram_bot_manager
+    await telegram_bot_manager.start()
+    logger.info("Telegram Bot service initialized")
+
     yield
 
     # Shutdown
     logger.info("Shutting down application...")
+    from app.services.telegram_service import telegram_bot_manager
+    await telegram_bot_manager.stop()
+    logger.info("Telegram Bot service stopped")
+
     shutdown_scheduler()
     await close_db()
     from app.scraper.http_client import close_client
@@ -167,6 +176,7 @@ from app.api.forums import router as forums_router, posts_router
 from app.api.dashboard import router as dashboard_router
 from app.api.admin_logs import router as admin_logs_router
 from app.api.repeating_jobs import router as watches_router
+from app.api.telegram import router as telegram_router
 
 app.include_router(auth_router)
 app.include_router(jobs_router)
@@ -175,6 +185,7 @@ app.include_router(posts_router)
 app.include_router(dashboard_router)
 app.include_router(admin_logs_router)
 app.include_router(watches_router)
+app.include_router(telegram_router)
 
 
 @app.get("/api/health", tags=["Health"])

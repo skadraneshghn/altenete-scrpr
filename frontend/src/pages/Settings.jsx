@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Trash, Globe, Key, Clock, Shield, Sliders } from 'lucide-react';
+import { Plus, Trash, Globe, Key, Clock, Shield, Sliders, Bot, Send, Info, MessageSquare, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import useStore from '../store/useStore';
+import apiService from '../api/apiService';
 import toast from 'react-hot-toast';
 
 export default function Settings() {
@@ -219,6 +220,300 @@ export default function Settings() {
           </div>
         </div>
       </div>
+
+      {/* Telegram Bot Configuration Panel */}
+      <TelegramSettingsPanel />
     </div>
   );
 }
+
+function TelegramSettingsPanel() {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [testing, setTesting] = useState(false);
+
+  const [enabled, setEnabled] = useState(false);
+  const [watchEnabled, setWatchEnabled] = useState(true);
+  const [botToken, setBotToken] = useState('');
+  const [adminChatId, setAdminChatId] = useState('');
+  const [template, setTemplate] = useState('');
+
+  const [statusInfo, setStatusInfo] = useState({
+    bot_username: '',
+    bot_status: 'Stopped',
+    last_error: '',
+    has_token_in_env: false,
+    has_admin_id_in_env: false,
+  });
+
+  const loadSettings = async () => {
+    try {
+      const data = await apiService.getTelegramSettings();
+      setEnabled(data.enabled);
+      setWatchEnabled(data.watch_enabled);
+      setBotToken(data.bot_token_override || '');
+      setAdminChatId(data.admin_chat_id_override || '');
+      setTemplate(data.message_template);
+      setStatusInfo({
+        bot_username: data.bot_username || '',
+        bot_status: data.bot_status || 'Stopped',
+        last_error: data.last_error || '',
+        has_token_in_env: data.has_token_in_env,
+        has_admin_id_in_env: data.has_admin_id_in_env,
+      });
+    } catch (err) {
+      toast.error('Failed to load Telegram settings');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      const updated = await apiService.updateTelegramSettings({
+        enabled,
+        watch_enabled: watchEnabled,
+        bot_token_override: botToken || null,
+        admin_chat_id_override: adminChatId || null,
+        message_template: template,
+      });
+      toast.success('Telegram configuration updated successfully');
+      loadSettings();
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to update Telegram settings');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleTest = async () => {
+    setTesting(true);
+    try {
+      await apiService.testTelegramBot("⚡ Test message from Altenete Scraper Admin Dashboard!");
+      toast.success('Test message sent successfully to Telegram admin!');
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to send test message');
+    } finally {
+      setTesting(false);
+    }
+  };
+
+  // Preview renderer helper
+  const renderPreview = () => {
+    let preview = template;
+    const dummy = {
+      title: "Sample XenForo Database Dump 2026",
+      author: "XenForoAdmin",
+      url: "https://altenens.is/threads/sample.12345/",
+      content: "This is a sample text preview of the XenForo post contents that will be scraped and automatically sent to your Telegram account.",
+      scraped_at: new Date().toLocaleString()
+    };
+    
+    Object.keys(dummy).forEach(key => {
+      preview = preview.replaceAll(`{${key}}`, dummy[key]);
+    });
+
+    return preview;
+  };
+
+  if (loading) {
+    return (
+      <div className="glass-card p-8 text-center text-slate-400">
+        Loading Telegram Configuration...
+      </div>
+    );
+  }
+
+  return (
+    <div className="glass-card p-8 w-full mt-6 space-y-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-100">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+            <Bot className="h-6 w-6" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-slate-800">Telegram Bot Engine</h2>
+            <p className="text-xs text-slate-400">Receive real-time notifications about newly crawled posts and database leaks</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-400 uppercase">Bot Status:</span>
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                statusInfo.bot_status === 'Running' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                statusInfo.bot_status === 'Error' ? 'bg-red-50 text-red-700 border border-red-200' :
+                'bg-slate-50 text-slate-600 border border-slate-200'
+              }`}>
+                {statusInfo.bot_status === 'Running' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                {statusInfo.bot_status}
+              </span>
+            </div>
+            {statusInfo.bot_username && (
+              <span className="text-[11px] font-medium text-slate-400 mt-1">Bot Name: <b className="text-slate-600">@{statusInfo.bot_username}</b></span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {statusInfo.last_error && (
+        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 shrink-0 text-red-500 mt-0.5" />
+          <div>
+            <span className="font-bold block mb-1">Telegram Connection Issue</span>
+            <span>{statusInfo.last_error}</span>
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSave} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* Left Column: settings fields */}
+          <div className="space-y-5">
+            <div className="flex items-center justify-between p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <span className="block font-bold text-slate-800 text-sm">Enable Telegram System</span>
+                <span className="text-[11px] text-slate-400 block mt-0.5">Activate or deactivate background polling and alerts</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEnabled(!enabled)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border ${
+                  enabled 
+                    ? 'bg-emerald-500 text-white border-emerald-600 shadow-md shadow-emerald-500/10' 
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                {enabled ? 'Enabled' : 'Disabled'}
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <span className="block font-bold text-slate-800 text-sm">Watch New Posts</span>
+                <span className="text-[11px] text-slate-400 block mt-0.5">Pause or resume delivery of alerts to the administrator</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setWatchEnabled(!watchEnabled)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border ${
+                  watchEnabled 
+                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-md shadow-indigo-600/10' 
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                {watchEnabled ? 'Watching' : 'Paused'}
+              </button>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>Bot Token (Override)</span>
+                {statusInfo.has_token_in_env && (
+                  <span className="text-[10px] text-emerald-600 normal-case font-bold bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded-md">Using env token</span>
+                )}
+              </label>
+              <input
+                type="password"
+                value={botToken}
+                onChange={(e) => setBotToken(e.target.value)}
+                placeholder={statusInfo.has_token_in_env ? "•••••••••••• (Set in environment variables)" : "Enter telegram bot token"}
+                className="input-field"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>Admin Chat ID (Override)</span>
+                {statusInfo.has_admin_id_in_env && (
+                  <span className="text-[10px] text-emerald-600 normal-case font-bold bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded-md">Using env chat ID</span>
+                )}
+              </label>
+              <input
+                type="text"
+                value={adminChatId}
+                onChange={(e) => setAdminChatId(e.target.value)}
+                placeholder={statusInfo.has_admin_id_in_env ? `${statusInfo.has_admin_id_in_env} (Set in environment variables)` : "Enter admin chat ID"}
+                className="input-field"
+              />
+              <p className="text-[10px] text-slate-400 mt-2 flex items-center gap-1.5">
+                <Info className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                <span>Tip: Link bot by clicking <b>/start</b>. First sender automatically claims admin if left blank.</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Custom Message Template & Preview */}
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Message Template</label>
+              <textarea
+                value={template}
+                onChange={(e) => setTemplate(e.target.value)}
+                className="input-field h-44 font-mono text-xs p-4 resize-none leading-relaxed"
+                placeholder="Enter message template..."
+                required
+              />
+              <p className="text-[10px] text-slate-400 mt-2">
+                Placeholders: <code className="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-bold">{'{title}'}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-bold">{'{author}'}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-bold">{'{url}'}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-bold">{'{content}'}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-bold">{'{scraped_at}'}</code>
+              </p>
+            </div>
+
+            <div>
+              <span className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                <MessageSquare className="h-3.5 w-3.5" />
+                <span>Live Notification Preview</span>
+              </span>
+              <div className="p-4 bg-slate-800 text-slate-100 rounded-2xl text-xs font-sans whitespace-pre-wrap leading-relaxed shadow-inner max-h-56 overflow-y-auto border border-slate-700">
+                {renderPreview()}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Controls */}
+        <div className="flex flex-wrap justify-between items-center gap-4 pt-4 border-t border-slate-100">
+          <button
+            type="button"
+            onClick={handleTest}
+            disabled={testing || !enabled}
+            className="btn btn-secondary flex items-center gap-2 font-bold py-2.5 px-5 cursor-pointer disabled:opacity-50"
+            title={!enabled ? "Please enable bot first to send test messages" : ""}
+          >
+            {testing ? (
+              <span>Sending...</span>
+            ) : (
+              <>
+                <Send className="h-4 w-4" />
+                <span>Test Connection</span>
+              </>
+            )}
+          </button>
+
+          <button
+            type="submit"
+            disabled={saving}
+            className="btn btn-primary flex items-center gap-2 font-bold py-2.5 px-6 cursor-pointer"
+          >
+            {saving ? (
+              <span>Saving Changes...</span>
+            ) : (
+              <>
+                <span>Save Bot Settings</span>
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
