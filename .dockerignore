@@ -1,0 +1,24 @@
+# Build directories/files
+node_modules/
+dist/
+build/
+*.db
+*.db-journal
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+.env
+.git/
+.gitignore
+docker-compose.yml
+Dockerfile
+.dockerignore
+Walkthrough.md
+*.log
+.DS_Store

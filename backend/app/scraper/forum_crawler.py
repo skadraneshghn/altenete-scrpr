@@ -1,0 +1,131 @@
+"""
+Forum page crawler - crawls forum listing pages and discovers thread URLs.
+"""
+
+import asyncio
+import logging
+from scrapling.fetchers import StealthyFetcher
+from app.scraper.parsers import parse_threads_from_page, parse_total_pages, ThreadData
+
+logger = logging.getLogger(__name__)
+
+
+class ForumCrawler:
+    """Crawl forum listing pages to discover threads."""
+
+    def __init__(
+        self,
+        base_url: str,
+        forum_section_url: str,
+        max_pages: int = 0,
+        delay: float = 2.0,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.forum_section_url = forum_section_url.rstrip("/")
+        self.max_pages = max_pages  # 0 = all pages
+        self.delay = delay
+        self._cancelled = False
+
+    def cancel(self):
+        """Cancel the crawling operation."""
+        self._cancelled = True
+
+    def _build_page_url(self, page_num: int) -> str:
+        """Build the URL for a specific page number."""
+        if page_num == 1:
+            return self.forum_section_url
+        return f"{self.forum_section_url}/page-{page_num}"
+
+    async def crawl_page(self, page_num: int) -> list[ThreadData]:
+        """
+        Crawl a single forum listing page.
+
+        Args:
+            page_num: Page number to crawl
+
+        Returns:
+            List of ThreadData from that page
+        """
+        url = self._build_page_url(page_num)
+        logger.info(f"Crawling page {page_num}: {url}")
+
+        try:
+            page = StealthyFetcher.fetch(
+                url,
+                headless=True,
+                network_idle=True,
+            )
+
+            if not page:
+                logger.error(f"Failed to fetch page {page_num}")
+                return []
+
+            threads = parse_threads_from_page(page)
+            return threads
+
+        except Exception as e:
+            logger.error(f"Error crawling page {page_num}: {e}")
+            return []
+
+    async def get_total_pages(self) -> int:
+        """Get the total number of pages in the forum section."""
+        try:
+            page = StealthyFetcher.fetch(
+                self.forum_section_url,
+                headless=True,
+                network_idle=True,
+            )
+            if page:
+                return parse_total_pages(page)
+            return 1
+        except Exception as e:
+            logger.error(f"Error getting total pages: {e}")
+            return 1
+
+    async def crawl_all(
+        self,
+        on_page_complete=None,
+        check_cancelled=None,
+    ) -> list[ThreadData]:
+        """
+        Crawl all forum pages and collect thread data.
+
+        Args:
+            on_page_complete: Callback(page_num, total_pages, threads_found)
+            check_cancelled: Async callback that returns True if crawling should stop
+
+        Returns:
+            Complete list of all discovered threads
+        """
+        all_threads = []
+
+        # Get total pages
+        total_pages = await self.get_total_pages()
+        if self.max_pages > 0:
+            total_pages = min(total_pages, self.max_pages)
+
+        logger.info(f"Starting crawl of {total_pages} pages from {self.forum_section_url}")
+
+        for page_num in range(1, total_pages + 1):
+            # Check cancellation
+            if self._cancelled:
+                logger.info("Crawling cancelled")
+                break
+            if check_cancelled and await check_cancelled():
+                logger.info("Crawling cancelled by external check")
+                break
+
+            # Crawl page
+            threads = await self.crawl_page(page_num)
+            all_threads.extend(threads)
+
+            # Callback
+            if on_page_complete:
+                await on_page_complete(page_num, total_pages, len(threads))
+
+            # Rate limiting delay
+            if page_num < total_pages:
+                await asyncio.sleep(self.delay)
+
+        logger.info(f"Crawling complete. Total threads discovered: {len(all_threads)}")
+        return all_threads
