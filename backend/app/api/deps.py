@@ -14,7 +14,7 @@ from app.models.user import User
 from app.schemas.user import TokenData
 
 settings = get_settings()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/swagger-login")
 
 
 async def get_current_user(
