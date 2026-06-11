@@ -50,6 +50,11 @@ const apiService = {
     return res.data;
   },
 
+  async getSubJobs(parentId) {
+    const res = await client.get(`/api/jobs/${parentId}/sub-jobs`);
+    return res.data;
+  },
+
   async getJobQueue() {
     const res = await client.get('/api/jobs/queue/status');
     return res.data;

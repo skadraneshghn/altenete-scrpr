@@ -20,6 +20,8 @@ class JobResponse(BaseModel):
     job_type: str
     status: str
     config_id: int | None
+    parent_job_id: int | None = None
+    phase: str | None = None
     total_items: int
     processed_items: int
     failed_items: int
@@ -33,7 +35,7 @@ class JobResponse(BaseModel):
 
 
 class JobListResponse(BaseModel):
-    """Paginated job list."""
+    """Paginated job list — top-level (parent/standalone) jobs only."""
     items: list[JobResponse]
     total: int
     page: int

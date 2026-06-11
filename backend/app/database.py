@@ -83,6 +83,18 @@ async def init_db():
         except Exception:
             pass
 
+        # Add parent_job_id for sub-job chaining
+        try:
+            await conn.execute(text("ALTER TABLE jobs ADD COLUMN parent_job_id INT NULL"))
+        except Exception:
+            pass
+
+        # Add phase label column for sub-jobs
+        try:
+            await conn.execute(text("ALTER TABLE jobs ADD COLUMN phase VARCHAR(120) NULL"))
+        except Exception:
+            pass
+
 
 async def close_db():
     """Dispose of the database engine and close all pooled connections."""

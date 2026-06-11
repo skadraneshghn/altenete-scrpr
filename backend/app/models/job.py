@@ -51,6 +51,12 @@ class Job(Base):
     config_id: Mapped[int | None] = mapped_column(
         ForeignKey("forum_configs.id", ondelete="SET NULL"), nullable=True
     )
+    # Parent job ID — set on sub-jobs spawned by a full_run parent
+    parent_job_id: Mapped[int | None] = mapped_column(
+        ForeignKey("jobs.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    # Human-readable phase label, e.g. "Phase 1: Crawl Forum" or "Phase 2: Scrape Threads"
+    phase: Mapped[str | None] = mapped_column(String(120), nullable=True)
     total_items: Mapped[int] = mapped_column(Integer, default=0)
     processed_items: Mapped[int] = mapped_column(Integer, default=0)
     failed_items: Mapped[int] = mapped_column(Integer, default=0)
@@ -65,6 +71,12 @@ class Job(Base):
     config: Mapped["ForumConfig | None"] = relationship()
     logs: Mapped[list["JobLog"]] = relationship(back_populates="job", cascade="all, delete-orphan")
     threads: Mapped[list["Thread"]] = relationship(back_populates="job")
+    sub_jobs: Mapped[list["Job"]] = relationship(
+        "Job", foreign_keys="Job.parent_job_id", back_populates="parent_job", cascade="all, delete-orphan"
+    )
+    parent_job: Mapped["Job | None"] = relationship(
+        "Job", foreign_keys="Job.parent_job_id", back_populates="sub_jobs", remote_side="Job.id"
+    )
 
 
 class JobLog(Base):

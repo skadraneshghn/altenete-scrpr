@@ -29,6 +29,8 @@ def _job_to_response(job: Job) -> JobResponse:
         job_type=job.job_type,
         status=job.status,
         config_id=job.config_id,
+        parent_job_id=job.parent_job_id,
+        phase=job.phase,
         total_items=job.total_items,
         processed_items=job.processed_items,
         failed_items=job.failed_items,
@@ -49,8 +51,9 @@ async def list_jobs(
     _: User = Depends(get_current_user),
 ):
     """List all jobs with pagination and optional status filter."""
-    query = select(Job)
-    count_query = select(func.count(Job.id))
+    # Only return TOP-LEVEL jobs (parent_job_id IS NULL) so sub-jobs don't clutter the list
+    query = select(Job).where(Job.parent_job_id.is_(None))
+    count_query = select(func.count(Job.id)).where(Job.parent_job_id.is_(None))
 
     if status_filter:
         query = query.where(Job.status == status_filter)
@@ -131,6 +134,22 @@ async def get_job(
         job=_job_to_response(job),
         logs=[JobLogResponse.model_validate(log) for log in logs],
     )
+
+
+@router.get("/{job_id}/sub-jobs")
+async def get_sub_jobs(
+    job_id: int,
+    db: AsyncSession = Depends(get_db),
+    _: User = Depends(get_current_user),
+):
+    """Get all sub-jobs (pipeline phases) for a parent job."""
+    result = await db.execute(
+        select(Job)
+        .where(Job.parent_job_id == job_id)
+        .order_by(Job.created_at)
+    )
+    sub_jobs = result.scalars().all()
+    return [_job_to_response(j) for j in sub_jobs]
 
 
 @router.post("/{job_id}/cancel", response_model=JobResponse)
