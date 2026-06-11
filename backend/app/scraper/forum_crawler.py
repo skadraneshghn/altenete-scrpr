@@ -23,6 +23,7 @@ class ForumCrawler:
         delay: float = 2.0,
         auth: XenForoAuth | None = None,
         cookies: dict | None = None,
+        logger_cb = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.forum_section_url = forum_section_url.rstrip("/")
@@ -30,7 +31,15 @@ class ForumCrawler:
         self.delay = delay
         self.auth = auth
         self.cookies = cookies or (auth._cookies if auth else {})
+        self.logger_cb = logger_cb
         self._cancelled = False
+
+    async def log(self, msg: str, level: str = "info"):
+        if self.logger_cb:
+            try:
+                await self.logger_cb(msg, level)
+            except Exception:
+                pass
 
     def cancel(self):
         """Cancel the crawling operation."""
@@ -53,7 +62,9 @@ class ForumCrawler:
             resp.raise_for_status()
             return resp.text
         except Exception as e:
-            logger.error(f"Error fetching {url}: {e}")
+            msg = f"Error fetching {url}: {e}"
+            logger.error(msg)
+            await self.log(msg, "error")
             return None
 
     async def crawl_page(self, page_num: int) -> list[ThreadData]:
@@ -68,16 +79,29 @@ class ForumCrawler:
 
         html = await self._fetch_html(url)
         if not html:
+            await self.log(f"Skipping page {page_num} due to fetch error.", "warning")
             return []
 
-        threads = parse_threads_from_page(html)
-        return threads
+        try:
+            threads = parse_threads_from_page(html)
+            return threads
+        except Exception as e:
+            msg = f"Error parsing threads from page {page_num}: {e}"
+            logger.error(msg, exc_info=True)
+            await self.log(msg, "error")
+            return []
 
     async def get_total_pages(self) -> int:
         """Get the total number of pages in the forum section."""
         html = await self._fetch_html(self.forum_section_url)
         if html:
-            return parse_total_pages(html)
+            try:
+                return parse_total_pages(html)
+            except Exception as e:
+                msg = f"Error parsing total pages: {e}"
+                logger.error(msg, exc_info=True)
+                await self.log(msg, "warning")
+                return 1
         return 1
 
     async def crawl_all(

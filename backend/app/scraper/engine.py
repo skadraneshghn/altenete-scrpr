@@ -55,6 +55,17 @@ class ScraperEngine:
                 )
                 await db.commit()
 
+                # Define standard log callback that writes directly to the job's database logs
+                async def log_callback(message: str, level: str = "info"):
+                    db_level = LogLevel.INFO
+                    if level == "error":
+                        db_level = LogLevel.ERROR
+                    elif level == "warning":
+                        db_level = LogLevel.WARNING
+                    
+                    await job_service.add_log(self.job_id, db_level, message)
+                    await db.commit()
+
                 # Initialize auth handler with session cookies persistence callback
                 async def on_session_refreshed(new_cookies):
                     logger.info("Session cookies updated, persisting to database...")
@@ -68,7 +79,8 @@ class ScraperEngine:
                     base_url=config.forum_url,
                     username=config.xf_username,
                     password=config.xf_password_encrypted,
-                    on_session_refreshed=on_session_refreshed
+                    on_session_refreshed=on_session_refreshed,
+                    logger_cb=log_callback
                 )
 
                 # Load existing cookies from DB
@@ -112,10 +124,10 @@ class ScraperEngine:
                 job = result.scalar_one()
 
                 if job.job_type in ("crawl_forum", "full_run"):
-                    await self._crawl_forum(db, config, job_service, auth)
+                    await self._crawl_forum(db, config, job_service, auth, log_callback)
 
                 if job.job_type in ("scrape_threads", "full_run"):
-                    await self._scrape_threads(db, config, job_service, auth)
+                    await self._scrape_threads(db, config, job_service, auth, log_callback)
 
                 # Check if cancelled
                 if await job_service.is_cancelled(self.job_id):
@@ -140,7 +152,7 @@ class ScraperEngine:
                 )
                 await db.commit()
 
-    async def _crawl_forum(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth):
+    async def _crawl_forum(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth, log_callback):
         """Phase 1: Crawl forum pages to discover threads."""
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
@@ -154,6 +166,7 @@ class ScraperEngine:
             max_pages=config.max_pages,
             delay=config.scrape_delay,
             auth=auth,
+            logger_cb=log_callback,
         )
 
         total_threads_found = 0
@@ -225,7 +238,7 @@ class ScraperEngine:
         )
         await db.commit()
 
-    async def _scrape_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth):
+    async def _scrape_threads(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth, log_callback):
         """Phase 2: Scrape first post from each thread."""
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
@@ -250,6 +263,7 @@ class ScraperEngine:
             base_url=config.forum_url,
             delay=config.scrape_delay,
             auth=auth,
+            logger_cb=log_callback,
         )
 
         processed = 0

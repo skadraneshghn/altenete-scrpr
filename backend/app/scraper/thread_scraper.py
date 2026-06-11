@@ -15,11 +15,19 @@ logger = logging.getLogger(__name__)
 class ThreadScraper:
     """Scrape first post content from individual thread pages."""
 
-    def __init__(self, base_url: str, delay: float = 2.0, auth: XenForoAuth | None = None, cookies: dict | None = None):
+    def __init__(self, base_url: str, delay: float = 2.0, auth: XenForoAuth | None = None, cookies: dict | None = None, logger_cb = None):
         self.base_url = base_url.rstrip("/")
         self.delay = delay
         self.auth = auth
         self.cookies = cookies or (auth._cookies if auth else {})
+        self.logger_cb = logger_cb
+
+    async def log(self, msg: str, level: str = "info"):
+        if self.logger_cb:
+            try:
+                await self.logger_cb(msg, level)
+            except Exception:
+                pass
 
     def _build_thread_url(self, thread_url: str) -> str:
         """Build full thread URL."""
@@ -49,16 +57,25 @@ class ThreadScraper:
                 resp.raise_for_status()
                 html = resp.text
 
-            post_data = parse_first_post(html)
-            if post_data:
-                logger.info(f"Successfully scraped first post from {full_url}")
-            else:
-                logger.warning(f"No first post found at {full_url}")
-
-            return post_data
+            try:
+                post_data = parse_first_post(html)
+                if post_data:
+                    logger.info(f"Successfully scraped first post from {full_url}")
+                else:
+                    msg = f"No first post content found at {full_url}"
+                    logger.warning(msg)
+                    await self.log(msg, "warning")
+                return post_data
+            except Exception as parse_err:
+                msg = f"Error parsing thread post content for {full_url}: {parse_err}"
+                logger.error(msg, exc_info=True)
+                await self.log(msg, "error")
+                return None
 
         except Exception as e:
-            logger.error(f"Error scraping thread {full_url}: {e}")
+            msg = f"Error scraping thread {full_url}: {e}"
+            logger.error(msg)
+            await self.log(msg, "error")
             return None
 
     async def scrape_batch(
