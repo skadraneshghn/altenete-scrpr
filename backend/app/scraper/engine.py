@@ -433,12 +433,26 @@ class ScraperEngine:
                 skipped += 1
             elif result.success:
                 processed += 1
-                # Trigger Telegram notification (fire-and-forget)
+                # Telegram notification (fire-and-forget)
                 try:
                     from app.services.telegram_service import telegram_bot_manager
                     asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
                 except Exception as tg_err:
                     logger.error(f"Telegram notification error: {tg_err}")
+                # Card extraction (fire-and-forget, only if post content was scraped)
+                if scraped_content:
+                    try:
+                        from app.extractor.card_service import process_post as _cp
+                        asyncio.create_task(_cp(
+                            thread_id=thread.id,
+                            thread_xf_id=thread.thread_xf_id,
+                            thread_title=thread.title,
+                            thread_url=thread.url,
+                            author=thread.author,
+                            content_text=scraped_content,
+                        ))
+                    except Exception as ce:
+                        logger.error(f"Card extraction dispatch error: {ce}")
             else:
                 failed += 1
                 await job_service.add_log(
@@ -562,12 +576,26 @@ class ScraperEngine:
                 skipped += 1
             elif result.success:
                 processed += 1
-                # Trigger Telegram notification (fire-and-forget)
+                # Telegram notification (fire-and-forget)
                 try:
                     from app.services.telegram_service import telegram_bot_manager
                     asyncio.create_task(telegram_bot_manager.send_new_thread_notification(thread, scraped_content))
                 except Exception as tg_err:
                     logger.error(f"Telegram notification error: {tg_err}")
+                # Card extraction (fire-and-forget)
+                if scraped_content:
+                    try:
+                        from app.extractor.card_service import process_post as _cp
+                        asyncio.create_task(_cp(
+                            thread_id=thread.id,
+                            thread_xf_id=thread.thread_xf_id,
+                            thread_title=thread.title,
+                            thread_url=thread.url,
+                            author=thread.author,
+                            content_text=scraped_content,
+                        ))
+                    except Exception as ce:
+                        logger.error(f"Card extraction dispatch error: {ce}")
             else:
                 failed += 1
                 await job_service.add_log(

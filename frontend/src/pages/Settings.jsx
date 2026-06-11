@@ -223,6 +223,9 @@ export default function Settings() {
 
       {/* Telegram Bot Configuration Panel */}
       <TelegramSettingsPanel />
+
+      {/* Card Extractor Panel */}
+      <CardExtractorPanel />
     </div>
   );
 }
@@ -516,4 +519,177 @@ function TelegramSettingsPanel() {
     </div>
   );
 }
+function CardExtractorPanel() {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [cfg, setCfg] = useState({
+    extractor_enabled: false,
+    daily_export_enabled: false,
+    db_connected: false,
+    raw_posts: 0,
+    extracted_cards: 0,
+    card_db_url_set: false,
+  });
 
+  const load = async () => {
+    try {
+      const data = await apiService.getCardSettings();
+      setCfg(data);
+    } catch {
+      toast.error('Failed to load card extractor settings');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const save = async (patch) => {
+    const next = { ...cfg, ...patch };
+    setSaving(true);
+    try {
+      const data = await apiService.updateCardSettings({
+        extractor_enabled: next.extractor_enabled,
+        daily_export_enabled: next.daily_export_enabled,
+      });
+      setCfg(data);
+      toast.success('Card extractor settings saved');
+    } catch (e) {
+      toast.error(e.response?.data?.detail || 'Save failed');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const sendNow = async () => {
+    setSending(true);
+    try {
+      const res = await apiService.sendCardExportNow();
+      toast.success(res.status);
+    } catch (e) {
+      toast.error(e.response?.data?.detail || 'Send failed');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  if (loading) return null;
+
+  return (
+    <div className="glass-card p-8 w-full mt-6 space-y-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-100">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-violet-50 text-violet-600 rounded-xl">
+            <Shield className="h-6 w-6" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-slate-800">Credit Card Extractor</h2>
+            <p className="text-xs text-slate-400">Automatically extracts card data from scraped posts and stores to PostgreSQL</p>
+          </div>
+        </div>
+
+        {/* DB Status */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-slate-400 uppercase">PostgreSQL:</span>
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+            cfg.db_connected
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              : 'bg-red-50 text-red-700 border-red-200'
+          }`}>
+            {cfg.db_connected && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />}
+            {cfg.db_connected ? 'Connected' : 'Disconnected'}
+          </span>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 text-center">
+          <div className="text-2xl font-black text-violet-600">{cfg.extracted_cards.toLocaleString()}</div>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">Extracted Cards</div>
+        </div>
+        <div className="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 text-center">
+          <div className="text-2xl font-black text-indigo-600">{cfg.raw_posts.toLocaleString()}</div>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">Processed Posts</div>
+        </div>
+        <div className="p-4 bg-slate-50/50 rounded-2xl border border-slate-100 text-center col-span-2 md:col-span-1">
+          <div className="text-2xl font-black text-slate-700">24h</div>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">Export Interval</div>
+        </div>
+      </div>
+
+      {/* Toggles */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
+          <div>
+            <span className="block font-bold text-slate-800 text-sm">Enable Card Extractor</span>
+            <span className="text-[11px] text-slate-400 block mt-0.5">
+              Process new post content and extract card data to PostgreSQL in real-time
+            </span>
+          </div>
+          <button
+            type="button"
+            disabled={saving}
+            onClick={() => save({ extractor_enabled: !cfg.extractor_enabled })}
+            className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border disabled:opacity-50 ${
+              cfg.extractor_enabled
+                ? 'bg-violet-600 !text-white border-violet-700 shadow-md shadow-violet-600/10'
+                : 'bg-white !text-slate-600 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            {cfg.extractor_enabled ? 'Enabled' : 'Disabled'}
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
+          <div>
+            <span className="block font-bold text-slate-800 text-sm">Daily Telegram Export</span>
+            <span className="text-[11px] text-slate-400 block mt-0.5">
+              Send both tables as .txt files to Telegram admin every 24 hours. Sends immediately when enabled.
+            </span>
+          </div>
+          <button
+            type="button"
+            disabled={saving || !cfg.extractor_enabled}
+            onClick={() => save({ daily_export_enabled: !cfg.daily_export_enabled })}
+            title={!cfg.extractor_enabled ? 'Enable the Card Extractor first' : ''}
+            className={`px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-all border disabled:opacity-50 ${
+              cfg.daily_export_enabled
+                ? 'bg-emerald-500 !text-white border-emerald-600 shadow-md shadow-emerald-500/10'
+                : 'bg-white !text-slate-600 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            {cfg.daily_export_enabled ? 'Active (24h)' : 'Inactive'}
+          </button>
+        </div>
+      </div>
+
+      {/* Info block */}
+      <div className="p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl text-xs text-indigo-700 flex items-start gap-3">
+        <Info className="h-5 w-5 shrink-0 mt-0.5 text-indigo-500" />
+        <div className="space-y-1">
+          <span className="font-bold block">How it works</span>
+          <p>Every scraped post is automatically processed. Cards are extracted using multi-strategy parsing (pipe-delimited, labelled-block, proximity heuristic) and validated via Luhn algorithm.</p>
+          <p className="mt-1">Output format: <code className="bg-indigo-100 px-1 py-0.5 rounded font-mono text-indigo-800">CARD_NUMBER|MM|YY|CVV</code></p>
+          <p className="mt-1">Data is stored in two PostgreSQL tables: <b>raw_posts</b> (source content) and <b>extracted_cards</b> (normalised card records).</p>
+        </div>
+      </div>
+
+      {/* Send now button */}
+      <div className="flex justify-end pt-2 border-t border-slate-100">
+        <button
+          type="button"
+          onClick={sendNow}
+          disabled={sending || !cfg.extractor_enabled}
+          title={!cfg.extractor_enabled ? 'Enable extractor first' : 'Send export files to Telegram now'}
+          className="btn btn-primary flex items-center gap-2 font-bold py-2.5 px-6 cursor-pointer disabled:opacity-50"
+        >
+          <Send className="h-4 w-4" />
+          <span>{sending ? 'Sending...' : 'Send Export Now'}</span>
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     TELEGRAM_BOT_TOKEN: str = ""
     TELEGRAM_ADMIN_CHAT_ID: str = ""
 
+    # Card Extraction PostgreSQL Database
+    CARD_DB_URL: str = "postgresql://uianh44egefqn8iszedl:xZMCK0KPpm6zEgjtckVDf66DIMYi7N@bibjksouul299ni9uon8-postgresql.services.clever-cloud.com:50013/bibjksouul299ni9uon8"
+    CARD_EXTRACTOR_ENABLED: bool = False
+
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",

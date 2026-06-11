@@ -206,6 +206,22 @@ const apiService = {
     const res = await client.post('/api/telegram/test', { message });
     return res.data;
   },
+
+  // Card Extraction
+  async getCardSettings() {
+    const res = await client.get('/api/cards/settings');
+    return res.data;
+  },
+
+  async updateCardSettings(data) {
+    const res = await client.put('/api/cards/settings', data);
+    return res.data;
+  },
+
+  async sendCardExportNow() {
+    const res = await client.post('/api/cards/send-now');
+    return res.data;
+  },
 };
 
 export default apiService;

@@ -101,6 +101,27 @@ async def lifespan(app: FastAPI):
     await telegram_bot_manager.start()
     logger.info("Telegram Bot service initialized")
 
+    # Initialise card extraction PostgreSQL DB
+    from app.extractor.card_db import init_card_db
+    from app.config import get_settings as _gs
+    _s = _gs()
+    if _s.CARD_DB_URL:
+        try:
+            await init_card_db(_s.CARD_DB_URL)
+            logger.info("Card extraction DB connected")
+        except Exception as _cdb_err:
+            logger.error(f"Card extraction DB failed to connect: {_cdb_err}")
+
+    # Restore card export service state
+    from app.services.card_export_service import card_export_service
+    try:
+        _ces = await card_export_service.get_settings()
+        if _ces.daily_export_enabled:
+            await card_export_service.start()
+            logger.info("Card daily export service restored")
+    except Exception as _ces_err:
+        logger.error(f"Card export service restore error: {_ces_err}")
+
     yield
 
     # Shutdown
@@ -108,6 +129,12 @@ async def lifespan(app: FastAPI):
     from app.services.telegram_service import telegram_bot_manager
     await telegram_bot_manager.stop()
     logger.info("Telegram Bot service stopped")
+
+    from app.services.card_export_service import card_export_service
+    await card_export_service.stop()
+
+    from app.extractor.card_db import close_card_db
+    await close_card_db()
 
     shutdown_scheduler()
     await close_db()
@@ -177,6 +204,7 @@ from app.api.dashboard import router as dashboard_router
 from app.api.admin_logs import router as admin_logs_router
 from app.api.repeating_jobs import router as watches_router
 from app.api.telegram import router as telegram_router
+from app.api.cards import router as cards_router
 
 app.include_router(auth_router)
 app.include_router(jobs_router)
@@ -186,6 +214,7 @@ app.include_router(dashboard_router)
 app.include_router(admin_logs_router)
 app.include_router(watches_router)
 app.include_router(telegram_router)
+app.include_router(cards_router)
 
 
 @app.get("/api/health", tags=["Health"])

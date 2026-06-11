@@ -8,3 +8,86 @@
 2026-06-11 17:19:41,147 - app.main - INFO - Repeating watches restored
 2026-06-11 17:19:41,203 - app.services.telegram_service - INFO - Telegram Bot service started
 2026-06-11 17:19:41,203 - app.main - INFO - Telegram Bot service initialized
+2026-06-11 18:10:41,525 - app.main - INFO - Starting up application...
+2026-06-11 18:10:45,068 - app.main - INFO - Database initialized
+2026-06-11 18:10:45,987 - app.main - INFO - Stuck jobs cleaned up
+2026-06-11 18:10:45,988 - apscheduler.scheduler - INFO - Scheduler started
+2026-06-11 18:10:45,988 - app.scheduler.scheduler - INFO - APScheduler started
+2026-06-11 18:10:45,988 - app.main - INFO - Scheduler started
+2026-06-11 18:10:46,219 - apscheduler.scheduler - INFO - Added job "Watch #1: check_new every 60s" to job store "default"
+2026-06-11 18:10:46,220 - app.services.repeating_job_service - INFO - Registered repeating job repeat_1 → check_new every 60s
+2026-06-11 18:10:46,220 - apscheduler.scheduler - INFO - Added job "Watch #2: scrape_posts every 60s" to job store "default"
+2026-06-11 18:10:46,220 - app.services.repeating_job_service - INFO - Registered repeating job repeat_2 → scrape_posts every 60s
+2026-06-11 18:10:46,220 - app.services.repeating_job_service - INFO - Restored 2 active repeating job(s) to scheduler
+2026-06-11 18:10:46,456 - app.main - INFO - Repeating watches restored
+2026-06-11 18:10:46,515 - app.services.telegram_service - INFO - Telegram Bot service started
+2026-06-11 18:10:46,515 - app.main - INFO - Telegram Bot service initialized
+2026-06-11 18:10:46,524 - app.extractor.card_db - INFO - Connecting to card extraction PostgreSQL database...
+2026-06-11 18:10:50,662 - app.main - ERROR - Card extraction DB failed to connect: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.DuplicateTableError'>: relation "ix_extracted_cards_card_number" already exists
+[SQL: CREATE INDEX ix_extracted_cards_card_number ON extracted_cards (card_number)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-06-11 18:11:29,706 - app.main - INFO - Starting up application...
+2026-06-11 18:11:32,963 - app.main - INFO - Database initialized
+2026-06-11 18:11:33,863 - app.main - INFO - Stuck jobs cleaned up
+2026-06-11 18:11:33,864 - apscheduler.scheduler - INFO - Scheduler started
+2026-06-11 18:11:33,864 - app.scheduler.scheduler - INFO - APScheduler started
+2026-06-11 18:11:33,864 - app.main - INFO - Scheduler started
+2026-06-11 18:11:34,085 - apscheduler.scheduler - INFO - Added job "Watch #1: check_new every 60s" to job store "default"
+2026-06-11 18:11:34,085 - app.services.repeating_job_service - INFO - Registered repeating job repeat_1 → check_new every 60s
+2026-06-11 18:11:34,085 - apscheduler.scheduler - INFO - Added job "Watch #2: scrape_posts every 60s" to job store "default"
+2026-06-11 18:11:34,085 - app.services.repeating_job_service - INFO - Registered repeating job repeat_2 → scrape_posts every 60s
+2026-06-11 18:11:34,085 - app.services.repeating_job_service - INFO - Restored 2 active repeating job(s) to scheduler
+2026-06-11 18:11:34,296 - app.main - INFO - Repeating watches restored
+2026-06-11 18:11:34,355 - app.services.telegram_service - INFO - Telegram Bot service started
+2026-06-11 18:11:34,356 - app.main - INFO - Telegram Bot service initialized
+2026-06-11 18:11:34,364 - app.extractor.card_db - INFO - Connecting to card extraction PostgreSQL database...
+2026-06-11 18:11:38,239 - app.extractor.card_db - INFO - Card extraction PostgreSQL database initialised — tables ready.
+2026-06-11 18:11:38,240 - app.main - INFO - Card extraction DB connected
+2026-06-11 18:11:38,680 - app.main - INFO - Shutting down application...
+2026-06-11 18:11:38,687 - app.services.telegram_service - INFO - Telegram Bot service stopped
+2026-06-11 18:11:39,157 - app.main - INFO - Telegram Bot service stopped
+2026-06-11 18:11:39,158 - app.services.card_export_service - INFO - Card daily export service stopped.
+2026-06-11 18:11:39,274 - app.extractor.card_db - INFO - Card extraction PostgreSQL connection pool closed.
+2026-06-11 18:11:39,275 - app.scheduler.scheduler - INFO - APScheduler stopped
+2026-06-11 18:11:39,276 - app.scraper.http_client - WARNING - Anti-detection: curl_cffi NOT found. Falling back to standard httpx. Anti-bot spoofing will be limited.
+2026-06-11 18:11:39,276 - app.main - INFO - Application shut down
+2026-06-11 18:11:39,276 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-06-11 18:11:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:12:46 +0330)" (scheduled at 2026-06-11 18:11:46.219707+03:30)
+2026-06-11 18:11:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:12:46 +0330)" (scheduled at 2026-06-11 18:11:46.220217+03:30)
+2026-06-11 18:11:47,125 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #56 (check_new)
+2026-06-11 18:11:47,203 - app.scraper.http_client - WARNING - Anti-detection: curl_cffi NOT found. Falling back to standard httpx. Anti-bot spoofing will be limited.
+2026-06-11 18:11:47,207 - app.scheduler.handlers - INFO - Triggering job 56
+2026-06-11 18:11:47,682 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #56" to job store "default"
+2026-06-11 18:11:47,682 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:12:46 +0330)" executed successfully
+2026-06-11 18:11:47,683 - apscheduler.scheduler - INFO - Removed job job_56
+2026-06-11 18:11:47,683 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #56 (trigger: date[2026-06-11 18:11:47 +0330], next run at: 2026-06-11 18:11:47 +0330)" (scheduled at 2026-06-11 18:11:47.682260+03:30)
+2026-06-11 18:11:47,683 - app.scheduler.handlers - INFO - Executing job 56
+2026-06-11 18:11:47,750 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #57 (scrape_posts)
+2026-06-11 18:11:47,750 - app.scheduler.handlers - INFO - Triggering job 57
+2026-06-11 18:11:48,187 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #57" to job store "default"
+2026-06-11 18:11:48,187 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:12:46 +0330)" executed successfully
+2026-06-11 18:11:48,188 - apscheduler.scheduler - INFO - Removed job job_57
+2026-06-11 18:11:48,188 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #57 (trigger: date[2026-06-11 18:11:48 +0330], next run at: 2026-06-11 18:11:48 +0330)" (scheduled at 2026-06-11 18:11:48.187359+03:30)
+2026-06-11 18:11:48,188 - app.scheduler.handlers - INFO - Executing job 57
+2026-06-11 18:11:49,661 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:11:50,112 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:11:50,896 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:11:50,958 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:11:51,498 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:11:51,806 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:11:51,806 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:11:51,829 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:11:52,065 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:11:52,250 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:11:52,671 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2957194/ "HTTP/1.1 200 OK"
+2026-06-11 18:11:52,681 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2957194/unread
+2026-06-11 18:11:52,755 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:11:52,767 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:11:53,213 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:11:54,639 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #56 (trigger: date[2026-06-11 18:11:47 +0330], next run at: 2026-06-11 18:11:47 +0330)" executed successfully
+2026-06-11 18:11:56,462 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:11:56,803 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:11:57,065 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/unread "HTTP/1.1 303 See Other"
+2026-06-11 18:11:57,548 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956956/#post-16749942 "HTTP/1.1 200 OK"
+2026-06-11 18:11:57,562 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956956/unread
+2026-06-11 18:12:01,345 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #57 (trigger: date[2026-06-11 18:11:48 +0330], next run at: 2026-06-11 18:11:48 +0330)" executed successfully
