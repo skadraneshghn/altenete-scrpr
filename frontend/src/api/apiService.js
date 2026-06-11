@@ -143,7 +143,28 @@ const apiService = {
       responseType: 'blob'
     });
     return res.data;
-  }
+  },
+
+  // Scraped Posts (First Post Content)
+  async getPosts(page = 1, search = '', configId = '', hasContent = null) {
+    const params = { page, per_page: 20 };
+    if (search) params.search = search;
+    if (configId) params.config_id = configId;
+    if (hasContent !== null) params.has_content = hasContent;
+    const res = await client.get('/api/posts', { params });
+    return res.data;
+  },
+
+  async exportPosts(search = '', configId = '', format = 'txt') {
+    const params = { format };
+    if (search) params.search = search;
+    if (configId) params.config_id = configId;
+    const res = await client.get('/api/posts/export', {
+      params,
+      responseType: 'blob'
+    });
+    return res.data;
+  },
 };
 
 export default apiService;

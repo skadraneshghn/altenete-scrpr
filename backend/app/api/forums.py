@@ -276,3 +276,181 @@ async def delete_thread(
     if not thread:
         raise HTTPException(status_code=404, detail="Thread not found")
     await db.delete(thread)
+
+
+# --- Posts (First Post Content Browser) ---
+
+posts_router = APIRouter(prefix="/api/posts", tags=["Posts"])
+
+
+@posts_router.get("")
+async def list_posts(
+    page: int = Query(1, ge=1),
+    per_page: int = Query(20, ge=1, le=100),
+    search: str | None = Query(None, description="Search in post content text or thread title"),
+    config_id: int | None = Query(None),
+    has_content: bool | None = Query(None, description="Filter to only posts with non-empty content"),
+    db: AsyncSession = Depends(get_db),
+    _: User = Depends(get_current_user),
+):
+    """
+    List all scraped first posts with their thread metadata.
+    Supports full-text search across post content and thread title.
+    """
+    from sqlalchemy import join
+
+    # Base query: join Post → Thread
+    base = (
+        select(Post, Thread)
+        .join(Thread, Post.thread_id == Thread.id)
+    )
+    count_base = (
+        select(func.count(Post.id))
+        .join(Thread, Post.thread_id == Thread.id)
+    )
+
+    if search:
+        sf = or_(
+            Post.content_text.ilike(f"%{search}%"),
+            Thread.title.ilike(f"%{search}%"),
+            Thread.author.ilike(f"%{search}%"),
+        )
+        base = base.where(sf)
+        count_base = count_base.where(sf)
+
+    if config_id:
+        base = base.where(Thread.config_id == config_id)
+        count_base = count_base.where(Thread.config_id == config_id)
+
+    if has_content is True:
+        base = base.where(Post.content_text.isnot(None), Post.content_text != "")
+        count_base = count_base.where(Post.content_text.isnot(None), Post.content_text != "")
+
+    total = (await db.execute(count_base)).scalar() or 0
+    total_pages = (total + per_page - 1) // per_page
+
+    base = base.order_by(desc(Post.scraped_at)).offset((page - 1) * per_page).limit(per_page)
+    rows = (await db.execute(base)).all()
+
+    items = []
+    for post, thread in rows:
+        items.append({
+            "post_id": post.id,
+            "thread_id": thread.id,
+            "thread_xf_id": thread.thread_xf_id,
+            "thread_title": thread.title,
+            "thread_url": thread.url,
+            "thread_author": thread.author,
+            "thread_replies": thread.replies,
+            "thread_views": thread.views,
+            "thread_date": thread.thread_date.isoformat() if thread.thread_date else None,
+            "config_id": thread.config_id,
+            "post_author": post.author,
+            "post_date": post.post_date.isoformat() if post.post_date else None,
+            "content_text": post.content_text,
+            "content_html": post.content_html,
+            "scraped_at": post.scraped_at.isoformat(),
+        })
+
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "per_page": per_page,
+        "total_pages": total_pages,
+    }
+
+
+@posts_router.get("/export")
+async def export_posts(
+    search: str | None = Query(None),
+    config_id: int | None = Query(None),
+    format: str = Query("txt", description="Export format: txt | csv | json"),
+    db: AsyncSession = Depends(get_db),
+    _: User = Depends(get_current_user),
+):
+    """
+    Export scraped first-post content in TXT, CSV, or JSON format.
+    TXT format outputs one clean block per post (best for data use).
+    """
+    base = (
+        select(Post, Thread)
+        .join(Thread, Post.thread_id == Thread.id)
+    )
+
+    if search:
+        sf = or_(
+            Post.content_text.ilike(f"%{search}%"),
+            Thread.title.ilike(f"%{search}%"),
+        )
+        base = base.where(sf)
+
+    if config_id:
+        base = base.where(Thread.config_id == config_id)
+
+    base = base.order_by(desc(Post.scraped_at))
+    rows = (await db.execute(base)).all()
+
+    timestamp = __import__("datetime").datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+
+    if format == "json":
+        data = []
+        for post, thread in rows:
+            data.append({
+                "thread_id": thread.thread_xf_id,
+                "thread_title": thread.title,
+                "thread_url": thread.url,
+                "thread_author": thread.author,
+                "post_author": post.author,
+                "post_date": post.post_date.isoformat() if post.post_date else None,
+                "content": post.content_text,
+                "scraped_at": post.scraped_at.isoformat(),
+            })
+        body = json.dumps(data, indent=2, ensure_ascii=False)
+        return StreamingResponse(
+            iter([body]),
+            media_type="application/json",
+            headers={"Content-Disposition": f"attachment; filename=posts_{timestamp}.json"},
+        )
+
+    elif format == "csv":
+        output = StringIO()
+        writer = csv.writer(output)
+        writer.writerow([
+            "Thread XF ID", "Thread Title", "Thread URL", "Thread Author",
+            "Post Author", "Post Date", "Content Text", "Scraped At",
+        ])
+        for post, thread in rows:
+            writer.writerow([
+                thread.thread_xf_id, thread.title, thread.url, thread.author,
+                post.author,
+                post.post_date.isoformat() if post.post_date else "",
+                post.content_text or "",
+                post.scraped_at.isoformat(),
+            ])
+        output.seek(0)
+        return StreamingResponse(
+            iter([output.getvalue()]),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename=posts_{timestamp}.csv"},
+        )
+
+    else:
+        # Plain text: one block per post, easy to read / import
+        lines = []
+        for post, thread in rows:
+            lines.append(f"Thread: {thread.title}")
+            lines.append(f"URL: {thread.url}")
+            lines.append(f"Author: {post.author or thread.author}")
+            if post.post_date:
+                lines.append(f"Date: {post.post_date.isoformat()}")
+            lines.append("---")
+            lines.append(post.content_text or "(no content)")
+            lines.append("\n" + "=" * 80 + "\n")
+        body = "\n".join(lines)
+        return StreamingResponse(
+            iter([body]),
+            media_type="text/plain; charset=utf-8",
+            headers={"Content-Disposition": f"attachment; filename=posts_{timestamp}.txt"},
+        )
+

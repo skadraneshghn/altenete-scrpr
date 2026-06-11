@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Jobs from './pages/Jobs';
 import JobDetail from './pages/JobDetail';
 import Threads from './pages/Threads';
+import Posts from './pages/Posts';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import HealthCheck from './pages/HealthCheck';
@@ -91,6 +92,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <Threads />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/posts" 
+          element={
+            <PrivateRoute>
+              <Posts />
             </PrivateRoute>
           } 
         />

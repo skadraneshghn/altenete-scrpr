@@ -36,18 +36,56 @@ class ThreadScraper:
             return thread_url
         return f"{self.base_url}{thread_url}"
 
-    async def scrape_thread(self, thread_url: str, max_pages: int = 1) -> PostData | None:
+    async def scrape_thread(
+        self,
+        thread_url: str,
+        max_pages: int = 1,
+        first_post_only: bool = False,
+    ) -> PostData | None:
         """
-        Scrape all posts (or first post if single page) from a thread.
+        Scrape the first post (or all posts across pages) from a thread.
 
         Args:
             thread_url: URL or path to the thread
             max_pages: Number of pages to scrape (for multipage threads)
+            first_post_only: If True, only fetch page 1 and extract the very
+                             first post — ignores max_pages entirely. This is the
+                             recommended mode for the "Scrape Posts" operation.
 
         Returns:
             PostData or None if failed
         """
         full_url = self._build_thread_url(thread_url)
+
+        # ── Fast path: only the OP's first post is wanted ───────────────────
+        if first_post_only:
+            logger.info(f"Scraping first post only from: {full_url}")
+            await self.log("Fetching first post from thread page 1...")
+            try:
+                if self.auth:
+                    html = await self.auth.fetch_with_retry(full_url)
+                else:
+                    client = get_client()
+                    resp = await client.get(full_url, cookies=self.cookies)
+                    resp.raise_for_status()
+                    html = resp.text
+
+                posts = parse_all_posts_from_page(html)
+                if not posts:
+                    logger.warning(f"No posts found on page 1 of {full_url}")
+                    return None
+
+                first = posts[0]
+                logger.info(f"First post by '{first.author}' extracted successfully")
+                return first
+
+            except Exception as e:
+                msg = f"Error fetching first post ({full_url}): {e}"
+                logger.error(msg)
+                await self.log(msg, "warning")
+                return None
+
+        # ── Standard multi-page path ─────────────────────────────────────────
         all_posts = []
         actual_max_pages = min(max(1, max_pages), 50)  # Sane cap at 50 pages
 
@@ -89,14 +127,14 @@ class ThreadScraper:
 
         # Consolidate posts: first post metadata is retained, others concatenated
         first_post = all_posts[0]
-        
+
         consolidated_html_parts = []
         consolidated_text_parts = []
 
         for idx, p_data in enumerate(all_posts):
             p_num = idx + 1
             clean_date = p_data.post_date.strftime("%Y-%m-%d %H:%M:%S") if p_data.post_date else "Unknown Date"
-            
+
             html_part = (
                 f"<div class='post-entry' style='margin-bottom: 25px; border-bottom: 1px dashed #eee; padding-bottom: 15px;'>"
                 f"  <div class='post-meta' style='font-size: 12px; color: #777; margin-bottom: 8px; font-weight: 500;'>"
@@ -106,7 +144,7 @@ class ThreadScraper:
                 f"</div>"
             )
             text_part = f"--- Post #{p_num} by {p_data.author} on {clean_date} ---\n{p_data.content_text}\n"
-            
+
             consolidated_html_parts.append(html_part)
             consolidated_text_parts.append(text_part)
 

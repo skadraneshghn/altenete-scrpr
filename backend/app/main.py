@@ -158,13 +158,14 @@ from fastapi.responses import FileResponse, Response
 # Include API routers
 from app.api.auth import router as auth_router
 from app.api.jobs import router as jobs_router
-from app.api.forums import router as forums_router
+from app.api.forums import router as forums_router, posts_router
 from app.api.dashboard import router as dashboard_router
 from app.api.admin_logs import router as admin_logs_router
 
 app.include_router(auth_router)
 app.include_router(jobs_router)
 app.include_router(forums_router)
+app.include_router(posts_router)
 app.include_router(dashboard_router)
 app.include_router(admin_logs_router)
 

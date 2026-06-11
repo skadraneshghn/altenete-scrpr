@@ -133,6 +133,9 @@ class ScraperEngine:
                 if job.job_type in ("scrape_threads", "full_run"):
                     await self._scrape_threads(db, config, job_service, auth, log_callback)
 
+                if job.job_type == "scrape_posts":
+                    await self._scrape_posts(db, config, job_service, auth, log_callback)
+
                 # Check if cancelled
                 if await job_service.is_cancelled(self.job_id):
                     await job_service.add_log(
@@ -420,5 +423,108 @@ class ScraperEngine:
         await job_service.add_log(
             self.job_id, LogLevel.INFO,
             f"Phase 2 complete: scraped {processed} posts, {failed} failed"
+        )
+        await db.commit()
+
+    async def _scrape_posts(self, db: AsyncSession, config: ForumConfig, job_service: JobService, auth: XenForoAuth, log_callback):
+        """
+        Dedicated "Scrape Posts" operation.
+
+        Targets ALL indexed threads that do not yet have a first post stored.
+        Uses first_post_only=True so only a single HTTP request per thread is
+        made (no multi-page traversal) — extremely efficient.
+        """
+        await job_service.add_log(
+            self.job_id, LogLevel.INFO,
+            "Scrape Posts: targeting all indexed threads without a stored first post"
+        )
+        await db.commit()
+
+        # All threads for this forum config that have no Post yet
+        result = await db.execute(
+            select(Thread).where(
+                Thread.config_id == config.id,
+                ~Thread.id.in_(select(Post.thread_id))
+            ).order_by(Thread.scraped_at.desc())
+        )
+        threads = result.scalars().all()
+        total = len(threads)
+
+        if total == 0:
+            await job_service.add_log(
+                self.job_id, LogLevel.INFO,
+                "Scrape Posts: all indexed threads already have a first post — nothing to do."
+            )
+            await job_service.update_progress(self.job_id, processed=0, total=0)
+            await db.commit()
+            return
+
+        await job_service.add_log(
+            self.job_id, LogLevel.INFO,
+            f"Scrape Posts: {total} threads need their first post extracted"
+        )
+        await job_service.update_progress(self.job_id, processed=0, total=total)
+        await db.commit()
+
+        scraper = ThreadScraper(
+            base_url=config.forum_url,
+            delay=config.scrape_delay,
+            auth=auth,
+            logger_cb=log_callback,
+        )
+
+        processed = 0
+        failed = 0
+
+        for thread in threads:
+            # Check cancellation
+            if await job_service.is_cancelled(self.job_id):
+                await job_service.add_log(
+                    self.job_id, LogLevel.WARNING, "Scrape Posts cancelled by user."
+                )
+                break
+
+            await job_service.add_log(
+                self.job_id, LogLevel.INFO,
+                f"Extracting first post: [{thread.thread_xf_id}] {thread.title[:80]}"
+            )
+
+            post_data = await scraper.scrape_thread(
+                thread.url,
+                first_post_only=True,  # <-- key: only page 1, only post #1
+            )
+
+            if post_data:
+                post = Post(
+                    thread_id=thread.id,
+                    content_html=post_data.content_html,
+                    content_text=post_data.content_text,
+                    author=post_data.author,
+                    post_date=post_data.post_date,
+                )
+                db.add(post)
+                processed += 1
+            else:
+                failed += 1
+                await job_service.add_log(
+                    self.job_id, LogLevel.WARNING,
+                    f"Failed to extract first post from: {thread.url}"
+                )
+
+            await job_service.update_progress(
+                self.job_id,
+                processed=processed + failed,
+                total=total,
+                failed=failed,
+            )
+            await db.commit()
+
+            # Respectful rate-limiting with jitter
+            jitter = config.scrape_delay * random.uniform(0.75, 1.25)
+            await asyncio.sleep(jitter)
+
+        await job_service.add_log(
+            self.job_id, LogLevel.INFO,
+            f"Scrape Posts complete: {processed} first posts saved, {failed} failed"
         )
         await db.commit()

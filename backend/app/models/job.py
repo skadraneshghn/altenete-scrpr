@@ -16,6 +16,7 @@ class JobType(str, PyEnum):
     """Types of scraping jobs."""
     CRAWL_FORUM = "crawl_forum"
     SCRAPE_THREADS = "scrape_threads"
+    SCRAPE_POSTS = "scrape_posts"
     FULL_RUN = "full_run"
     CHECK_NEW = "check_new"
 
