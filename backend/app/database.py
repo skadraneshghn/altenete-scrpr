@@ -3,6 +3,9 @@ Database setup with async SQLAlchemy engine and session management.
 Configured for Clever Cloud MySQL free tier: max 5 simultaneous connections.
 """
 
+import asyncio
+import logging
+
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
@@ -10,19 +13,22 @@ from sqlalchemy.pool import NullPool
 from app.config import get_settings
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 # ──────────────────────────────────────────────────────────────────────────
 # Connection pool strategy
 #
 # Clever Cloud free MySQL addon: max_user_connections = 5
 #
-# We keep pool_size=2, max_overflow=2 → peak 4 real connections, leaving
-# 1 spare for admin/monitoring tools.
+# NullPool means NO persistent connections are held between requests.
+# Every query opens a fresh connection and closes it immediately on release.
+# This is the safest strategy for a low-connection-limit free tier because
+# idle pool connections were exhausting the 5-connection cap even when the
+# app was serving zero traffic.
 #
-# pool_recycle=1800   — drop connections idle for 30 min (avoids "gone away")
-# pool_pre_ping=True  — test connection health before use
-# pool_timeout=20     — raise after 20 s instead of hanging forever
-# pool_reset_on_return="rollback" — clean state between requests
+# Trade-off: slightly higher latency per request (connection handshake each
+# time), but completely eliminates "OperationalError: Can't connect" caused
+# by pool saturation or stale connections.
 # ──────────────────────────────────────────────────────────────────────────
 
 _is_mysql = "mysql" in settings.DATABASE_URL
@@ -31,11 +37,7 @@ if _is_mysql:
     engine = create_async_engine(
         settings.DATABASE_URL,
         echo=False,
-        pool_pre_ping=True,
-        pool_size=1,        # strictly keep only 1 persistent connection
-        max_overflow=1,     # allow at most 1 burst connection (total max = 2)
-        pool_timeout=30,    # wait longer for connections to clear before failing
-        pool_recycle=900,   # recycle connections every 15 minutes to keep them fresh
+        poolclass=NullPool,  # no persistent connections — safest for 5-conn free tier
     )
 else:
     # SQLite / local dev — no connection limit concerns
@@ -73,9 +75,29 @@ async def get_db():
 from sqlalchemy import text
 
 async def init_db():
-    """Create all tables in the database and run any hotfixes."""
+    """Create all tables in the database and run any hotfixes.
+
+    Retries up to 5 times with exponential back-off so that a transient
+    Clever Cloud MySQL blip at startup does not crash the whole process.
+    """
+    max_attempts = 5
+    for attempt in range(1, max_attempts + 1):
+        try:
+            async with engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+            break  # success — exit retry loop
+        except Exception as exc:
+            if attempt == max_attempts:
+                logger.error("init_db: all %d attempts failed. Last error: %s", max_attempts, exc)
+                raise
+            wait = 2 ** attempt  # 2, 4, 8, 16 seconds
+            logger.warning(
+                "init_db: attempt %d/%d failed (%s). Retrying in %ds…",
+                attempt, max_attempts, exc, wait,
+            )
+            await asyncio.sleep(wait)
+
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
         
         # Add session_cookies column dynamically if it doesn't exist
         try:

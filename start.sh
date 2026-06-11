@@ -43,7 +43,7 @@ npm run build
 # 3. Run Unified Server on Port 8080
 echo "Starting unified FastAPI & React server on port 8080..."
 cd "$PROJECT_ROOT/backend"
-PYTHONPATH=. uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload &
+PYTHONPATH=. uvicorn app.main:app --host 0.0.0.0 --port 8080 &
 BACKEND_PID=$!
 
 echo "--------------------------------------------------"
