@@ -21,6 +21,12 @@
     "tw-elements-react": "^1.0.0-alpha-end",
     "zustand": "^5.0.14"
   },
+  "overrides": {
+    "tw-elements-react": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.0",
