@@ -40,6 +40,7 @@ COPY backend/ ./
 # Copy compiled frontend dist from Stage 1
 # Placed at /frontend/dist — explicitly set via FRONTEND_DIST_PATH env var below
 COPY --from=frontend-builder /frontend/dist /frontend/dist
+RUN chmod -R 755 /frontend/dist
 
 # -----------------------------------------------------------------------
 # Environment configuration
