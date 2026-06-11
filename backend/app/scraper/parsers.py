@@ -23,6 +23,8 @@ class ThreadData:
     views: int = 0
     is_sticky: bool = False
     thread_date: datetime | None = None
+    is_multipage: bool = False
+    max_pages: int = 1
 
 
 @dataclass
@@ -118,6 +120,19 @@ def parse_threads_from_page(html: str) -> list[ThreadData]:
 
             is_sticky = thread_id in sticky_ids
 
+            is_multipage = False
+            max_pages = 1
+            page_jump = element.select_one(".structItem-pageJump")
+            if page_jump:
+                is_multipage = True
+                links = page_jump.select("a")
+                if links:
+                    try:
+                        last_page_text = links[-1].get_text(strip=True)
+                        max_pages = int(last_page_text.replace(",", ""))
+                    except Exception:
+                        max_pages = 1
+
             threads.append(ThreadData(
                 thread_xf_id=thread_id,
                 title=title,
@@ -127,6 +142,8 @@ def parse_threads_from_page(html: str) -> list[ThreadData]:
                 views=views,
                 is_sticky=is_sticky,
                 thread_date=thread_date,
+                is_multipage=is_multipage,
+                max_pages=max_pages,
             ))
         except Exception as e:
             logger.warning(f"Error parsing thread element: {e}")
@@ -198,3 +215,41 @@ def parse_first_post(html: str) -> PostData | None:
     except Exception as e:
         logger.error(f"Error parsing first post: {e}")
         return None
+
+
+def parse_all_posts_from_page(html: str) -> list[PostData]:
+    """Parse all posts from a thread page HTML string."""
+    soup = _soup(html)
+    posts = []
+    post_elements = soup.select(".message--post, article.message")
+    for post_el in post_elements:
+        try:
+            content_el = post_el.select_one(".message-body .bbWrapper") or \
+                         post_el.select_one(".bbWrapper")
+            content_html = str(content_el) if content_el else ""
+            content_text = content_el.get_text(separator="\n", strip=True) if content_el else ""
+
+            author = ""
+            if post_el.get("data-author"):
+                author = post_el.get("data-author")
+            else:
+                author_el = post_el.select_one(".message-name a.username") or \
+                            post_el.select_one(".message-name")
+                author = author_el.get_text(strip=True) if author_el else ""
+
+            date_el = post_el.select_one(".message-date time") or \
+                      post_el.select_one(".message-attribution time") or \
+                      post_el.select_one("time.u-dt") or \
+                      post_el.select_one("time")
+            post_date = parse_timestamp(date_el) if date_el else None
+
+            if content_html or content_text:
+                posts.append(PostData(
+                    content_html=content_html,
+                    content_text=content_text,
+                    author=author,
+                    post_date=post_date,
+                ))
+        except Exception as e:
+            logger.warning(f"Error parsing post element: {e}")
+    return posts

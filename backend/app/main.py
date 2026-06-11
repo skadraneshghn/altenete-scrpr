@@ -76,6 +76,18 @@ async def lifespan(app: FastAPI):
             await db.commit()
             logger.info("Seeding completed.")
 
+    # Reset stuck jobs from previous run (if any)
+    from app.models.job import Job, JobStatus
+    from sqlalchemy import update
+    async with AsyncSessionLocal() as db:
+        await db.execute(
+            update(Job)
+            .where(Job.status.in_([JobStatus.RUNNING, JobStatus.PENDING]))
+            .values(status=JobStatus.FAILED, error_message="Interrupted by system restart")
+        )
+        await db.commit()
+        logger.info("Stuck jobs cleaned up")
+
     init_scheduler()
     logger.info("Scheduler started")
 

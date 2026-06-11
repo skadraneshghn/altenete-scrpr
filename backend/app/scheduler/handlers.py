@@ -87,6 +87,7 @@ async def execute_job(job_id: int):
         await _update_job_status(job_id, JobStatus.CANCELLED)
     except Exception as e:
         logger.error(f"Job {job_id} failed: {e}", exc_info=True)
+        await _update_job_status(job_id, JobStatus.FAILED, str(e))
     finally:
         _running_tasks.pop(job_id, None)
 
@@ -204,24 +205,33 @@ async def _create_sub_job(parent_job_id: int, config_id: int, job_type: JobType,
 
 async def _run_sub_job(job_id: int, scheduler_id: str) -> bool:
     """
-    Run a sub-job synchronously (awaiting its completion inside the pipeline coroutine).
-    Registers a one-off APScheduler entry so it appears in the queue, then runs inline.
+    Run a sub-job via the APScheduler engine and await its completion.
     Returns True if job completed successfully.
     """
-    # Register in APScheduler so it shows in the scheduler queue page
+    # Trigger the sub-job in APScheduler
     scheduler.add_job(
-        _noop,
+        execute_job,
+        args=[job_id],
         id=scheduler_id,
         replace_existing=True,
         name=scheduler_id,
     )
 
     try:
-        await execute_job(job_id)
+        # Poll the database for the sub-job completion status
+        while True:
+            async with AsyncSessionLocal() as db:
+                result = await db.execute(select(Job).where(Job.id == job_id))
+                job = result.scalar_one_or_none()
+                if not job:
+                    break
+                if job.status in (JobStatus.COMPLETED, JobStatus.FAILED, JobStatus.CANCELLED):
+                    break
+            await asyncio.sleep(2)
     except Exception as e:
-        logger.error(f"Sub-job {job_id} error: {e}", exc_info=True)
+        logger.error(f"Error monitoring sub-job {job_id}: {e}", exc_info=True)
     finally:
-        # Remove the marker from the scheduler queue once done
+        # Clean up APScheduler job entry
         try:
             scheduler.remove_job(scheduler_id)
         except Exception:

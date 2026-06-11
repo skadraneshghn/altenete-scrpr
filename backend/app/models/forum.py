@@ -52,6 +52,8 @@ class Thread(Base):
     views: Mapped[int] = mapped_column(Integer, default=0)
     is_sticky: Mapped[bool] = mapped_column(default=False)
     thread_date: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    is_multipage: Mapped[bool] = mapped_column(default=False)
+    max_pages: Mapped[int] = mapped_column(Integer, default=1)
     scraped_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )

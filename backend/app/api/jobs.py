@@ -171,7 +171,25 @@ async def cancel_job(
         )
 
     job.status = JobStatus.CANCELLED
-    await db.flush()
+    await db.commit()
+
+    # Cancel active asyncio tasks for the job and its sub-jobs
+    from app.scheduler.handlers import cancel_running_job
+    await cancel_running_job(job_id)
+
+    # Cancel any active sub-jobs
+    sub_result = await db.execute(
+        select(Job).where(
+            Job.parent_job_id == job_id,
+            Job.status.in_([JobStatus.PENDING, JobStatus.RUNNING])
+        )
+    )
+    sub_jobs = sub_result.scalars().all()
+    for sub in sub_jobs:
+        sub.status = JobStatus.CANCELLED
+        await cancel_running_job(sub.id)
+    
+    await db.commit()
     await db.refresh(job)
     return _job_to_response(job)
 

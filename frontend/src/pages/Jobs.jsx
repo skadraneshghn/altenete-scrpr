@@ -7,7 +7,7 @@ import {
 import useStore from '../store/useStore';
 import apiService from '../api/apiService';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // ─── Status helpers ─────────────────────────────────────────────────────────
 const STATUS_CONFIG = {
@@ -45,17 +45,18 @@ function ProgressBar({ processed, total, status }) {
   );
 }
 
-// ─── Sub-job row inside an expanded parent ───────────────────────────────────
 function SubJobRow({ sub, onView, onCancel }) {
   const phase = sub.phase || sub.job_type.replace(/_/g, ' ');
   return (
     <tr className="bg-indigo-50/30 border-b border-indigo-100/60 hover:bg-indigo-50/50 transition-colors">
-      <td className="pl-14 pr-4 py-3 text-xs">
+      <td className="pl-14 pr-4 py-3 text-xs font-mono text-slate-400">
         <div className="flex items-center gap-2">
           <div className="w-px h-5 bg-indigo-200 mr-1" />
-          <span className="font-mono text-slate-400">#{sub.id}</span>
-          <span className="font-semibold text-indigo-700 capitalize">{phase}</span>
+          #{sub.id}
         </div>
+      </td>
+      <td className="px-4 py-3 text-xs font-semibold text-indigo-700 capitalize">
+        {phase}
       </td>
       <td className="px-4 py-3"><StatusBadge status={sub.status} small /></td>
       <td className="px-4 py-3"><ProgressBar processed={sub.processed_items} total={sub.total_items} status={sub.status} /></td>
@@ -209,8 +210,10 @@ function JobRow({ job, onView, onCancel, onRetry, onDelete, onExpandChange }) {
         <>
           {subLoading ? (
             <tr className="bg-indigo-50/20">
-              <td colSpan="7" className="pl-14 py-3 text-xs text-slate-400 flex items-center gap-2">
-                <Loader2 className="h-3 w-3 animate-spin" /> Loading pipeline phases…
+              <td colSpan="7" className="pl-14 py-3 text-xs text-slate-400">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="h-3 w-3 animate-spin" /> Loading pipeline phases…
+                </div>
               </td>
             </tr>
           ) : subJobs.length === 0 ? (
@@ -346,10 +349,10 @@ export default function Jobs() {
             <RefreshCw className="h-4 w-4" />
           </button>
           {/* Link to Scheduler page */}
-          <a href="/scheduler" className="btn btn-secondary text-xs py-1.5 px-3 cursor-pointer">
+          <Link to="/scheduler" className="btn btn-secondary text-xs py-1.5 px-3 cursor-pointer">
             <Layers className="h-3.5 w-3.5" />
             Manage Schedules
-          </a>
+          </Link>
         </div>
       </div>
 

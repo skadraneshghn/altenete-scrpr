@@ -59,6 +59,8 @@ class ThreadResponse(BaseModel):
     views: int
     is_sticky: bool
     thread_date: datetime | None
+    is_multipage: bool = False
+    max_pages: int = 1
     scraped_at: datetime
     has_post: bool = False
 

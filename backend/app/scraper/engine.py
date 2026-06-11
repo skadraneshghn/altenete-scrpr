@@ -215,6 +215,8 @@ class ScraperEngine:
                     thread.replies = td.replies
                     thread.views = td.views
                     thread.is_sticky = td.is_sticky
+                    thread.is_multipage = td.is_multipage
+                    thread.max_pages = td.max_pages
                 else:
                     # Create new
                     thread = Thread(
@@ -226,6 +228,8 @@ class ScraperEngine:
                         views=td.views,
                         is_sticky=td.is_sticky,
                         thread_date=td.thread_date,
+                        is_multipage=td.is_multipage,
+                        max_pages=td.max_pages,
                         config_id=config.id,
                         job_id=self.job_id,
                     )
@@ -298,6 +302,8 @@ class ScraperEngine:
                         views=td.views,
                         is_sticky=td.is_sticky,
                         thread_date=td.thread_date,
+                        is_multipage=td.is_multipage,
+                        max_pages=td.max_pages,
                         config_id=config.id,
                         job_id=self.job_id,
                     )
@@ -314,6 +320,8 @@ class ScraperEngine:
                     thread.replies = td.replies
                     thread.views = td.views
                     thread.is_sticky = td.is_sticky
+                    thread.is_multipage = td.is_multipage
+                    thread.max_pages = td.max_pages
             except Exception as e:
                 logger.warning(f"Error saving/updating thread {td.thread_xf_id}: {e}")
 
@@ -374,7 +382,10 @@ class ScraperEngine:
             if await job_service.is_cancelled(self.job_id):
                 break
 
-            post_data = await scraper.scrape_thread(thread.url)
+            post_data = await scraper.scrape_thread(
+                thread.url,
+                max_pages=thread.max_pages if thread.is_multipage else 1
+            )
 
             if post_data:
                 post = Post(

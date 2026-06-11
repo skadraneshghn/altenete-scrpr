@@ -101,6 +101,18 @@ async def init_db():
         except Exception:
             pass
 
+        # Add is_multipage column to threads
+        try:
+            await conn.execute(text("ALTER TABLE threads ADD COLUMN is_multipage TINYINT(1) DEFAULT 0 NOT NULL"))
+        except Exception:
+            pass
+
+        # Add max_pages column to threads
+        try:
+            await conn.execute(text("ALTER TABLE threads ADD COLUMN max_pages INT DEFAULT 1 NOT NULL"))
+        except Exception:
+            pass
+
 
 async def close_db():
     """Dispose of the database engine and close all pooled connections."""
