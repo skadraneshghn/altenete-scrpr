@@ -222,6 +222,11 @@ const apiService = {
     const res = await client.post('/api/cards/send-now');
     return res.data;
   },
+
+  async validateCard(card_raw, email) {
+    const res = await client.post('/api/cards/validate', { card_raw, email });
+    return res.data;
+  },
 };
 
 export default apiService;

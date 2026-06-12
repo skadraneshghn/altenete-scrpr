@@ -11,6 +11,7 @@ import {
   Terminal,
   Calendar,
   Database,
+  CreditCard,
 } from 'lucide-react';
 import useStore from '../store/useStore';
 
@@ -19,14 +20,15 @@ export default function Sidebar() {
   const { user, logout } = useStore();
 
   const links = [
-    { name: 'Dashboard',       path: '/',         icon: LayoutDashboard },
-    { name: 'Operations',      path: '/jobs',      icon: Play },
-    { name: 'Job Scheduler',   path: '/scheduler', icon: Calendar },
-    { name: 'Scraped Threads', path: '/threads',   icon: FileText },
-    { name: 'Post Content',    path: '/posts',     icon: Database },
-    { name: 'Health Check',    path: '/health',    icon: Activity },
-    { name: 'Admin Logs',      path: '/logs',      icon: Terminal },
-    { name: 'Settings',        path: '/settings',  icon: SettingsIcon },
+    { name: 'Dashboard',       path: '/',                icon: LayoutDashboard },
+    { name: 'Operations',      path: '/jobs',            icon: Play },
+    { name: 'Job Scheduler',   path: '/scheduler',       icon: Calendar },
+    { name: 'Scraped Threads', path: '/threads',         icon: FileText },
+    { name: 'Post Content',    path: '/posts',           icon: Database },
+    { name: 'Card Validator',  path: '/card-validator',  icon: CreditCard },
+    { name: 'Health Check',    path: '/health',          icon: Activity },
+    { name: 'Admin Logs',      path: '/logs',            icon: Terminal },
+    { name: 'Settings',        path: '/settings',        icon: SettingsIcon },
   ];
 
   return (

