@@ -223,6 +223,13 @@ async def _process_one(
                 result_json=json.dumps(slim_data),
             )
 
+            # Extract the last captured API call response_body for display
+            api_calls: list[dict] = data.get("api_calls", [])
+            api_response_body = None
+            if api_calls:
+                last_call = api_calls[-1]
+                api_response_body = last_call.get("response_body")
+
             event: dict = {
                 "type": "card_done",
                 "result_id": result_id,
@@ -235,6 +242,7 @@ async def _process_one(
                 "steps_total": steps_total,
                 "elapsed_ms": elapsed_ms,
                 "steps": steps,
+                "api_response_body": api_response_body,
             }
             await _broadcast(job_id, event)
             return all_ok

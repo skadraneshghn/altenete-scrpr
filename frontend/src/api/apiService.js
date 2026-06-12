@@ -244,6 +244,11 @@ const apiService = {
     const host = window.location.host;
     return `${proto}://${host}/api/cards/bulk-validate/${jobId}/ws?token=${encodeURIComponent(token)}`;
   },
+
+  async getLatestBulkJob() {
+    const res = await client.get('/api/cards/bulk-validate/latest');
+    return res.data; // { job_id, status, total, processed, failed, created_at }
+  },
 };
 
 export default apiService;

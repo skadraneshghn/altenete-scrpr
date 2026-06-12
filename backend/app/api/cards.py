@@ -253,6 +253,36 @@ async def get_bulk_results(
         ],
     }
 
+# ─── Latest job lookup ────────────────────────────────────────────────────────
+
+@router.get("/bulk-validate/latest")
+async def get_latest_bulk_job(
+    current_user=Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Returns the most recent VALIDATE_CARDS job so the frontend can restore
+    the live view when the operator navigates back to the page.
+    """
+    from app.models.job import JobType as JT
+    result = await db.execute(
+        select(Job)
+        .where(Job.type == JT.VALIDATE_CARDS)
+        .order_by(Job.created_at.desc())
+        .limit(1)
+    )
+    job = result.scalar_one_or_none()
+    if not job:
+        return {"job_id": None}
+    return {
+        "job_id": job.id,
+        "status": job.status,
+        "total": job.total_items or 0,
+        "processed": job.processed_items or 0,
+        "failed": job.failed_items or 0,
+        "created_at": job.created_at.isoformat() if job.created_at else None,
+    }
+
 
 # ─── WebSocket — real-time updates ───────────────────────────────────────────
 
@@ -315,6 +345,13 @@ async def bulk_validate_ws(
                     "elapsed_ms": r.elapsed_ms,
                     "error_message": r.error_message,
                     "steps": [],
+                    "api_response_body": (
+                        (lambda d: (
+                            (d.get("api_calls") or [{}])[-1].get("response_body")
+                            if isinstance(d, dict) else None
+                        ))(json.loads(r.result_json))
+                        if r.result_json else None
+                    ),
                 }
                 for r in rows
             ],

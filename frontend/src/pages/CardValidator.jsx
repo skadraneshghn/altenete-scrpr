@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   CreditCard, Send, CheckCircle, XCircle, Clock, Loader, 
   AlertTriangle, ChevronDown, ChevronUp, Play, Square, 
@@ -81,6 +82,24 @@ function StatusBadge({ status, allOk }) {
   );
 }
 
+// Shimmer skeleton cell for pending / running rows
+function SkeletonCell({ width = '60%', center = false }) {
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        width,
+        height: 12,
+        borderRadius: 6,
+        background: 'linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%)',
+        backgroundSize: '200% 100%',
+        animation: 'shimmer 1.4s infinite',
+        margin: center ? '0 auto' : undefined,
+      }}
+    />
+  );
+}
+
 // Single card section
 function SingleCardSection() {
   const [cardRaw, setCardRaw] = useState('');
@@ -124,7 +143,7 @@ function SingleCardSection() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-6 items-start">
       {/* Left Input Card */}
-      <div className="glass-card p-6" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+      <div className="glass-card p-6">
         <h3 className="text-sm font-extrabold text-slate-800 mb-5 flex items-center gap-2">
           <Hash className="w-4 h-4 text-indigo-600" />
           Single Card Verification
@@ -210,7 +229,7 @@ function SingleCardSection() {
       {/* Right Result View */}
       <div>
         {!result && !error && !loading && (
-          <div className="glass-card p-12 text-center text-slate-400" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+          <div className="glass-card p-12 text-center text-slate-400">
             <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-100">
               <CreditCard className="w-8 h-8 text-slate-300" />
             </div>
@@ -220,7 +239,7 @@ function SingleCardSection() {
         )}
 
         {loading && (
-          <div className="glass-card p-12 text-center" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+          <div className="glass-card p-12 text-center">
             <div className="w-20 h-20 bg-indigo-50/50 rounded-full flex items-center justify-center mx-auto mb-6 relative">
               <div className="absolute inset-0 rounded-full border-4 border-indigo-100 border-t-indigo-600 animate-spin" />
               <Activity className="w-8 h-8 text-indigo-600 animate-pulse" />
@@ -245,7 +264,7 @@ function SingleCardSection() {
         {result && (
           <div className="flex flex-col gap-4">
             {/* Header info */}
-            <div className="glass-card p-6" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+            <div className="glass-card p-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-slate-100">
                 <span className="font-extrabold text-slate-800 text-sm flex items-center gap-2">
                   {stepsOk === stepsTotal && stepsTotal > 0 ? (
@@ -278,7 +297,7 @@ function SingleCardSection() {
 
             {/* Automation Steps */}
             {result.steps?.length > 0 && (
-              <div className="glass-card p-6" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+              <div className="glass-card p-6">
                 <button 
                   onClick={() => setShowSteps(v => !v)} 
                   className="flex items-center justify-between w-full font-bold text-slate-700 text-xs tracking-wider uppercase"
@@ -382,6 +401,7 @@ function BulkCardSection() {
             steps_total: msg.steps_total,
             elapsed_ms: msg.elapsed_ms,
             error_message: msg.error,
+            api_response_body: msg.api_response_body ?? null,
             steps: msg.steps || []
           } : r));
           
@@ -396,6 +416,7 @@ function BulkCardSection() {
                 steps_total: msg.steps_total,
                 elapsed_ms: msg.elapsed_ms,
                 error_message: msg.error,
+                api_response_body: msg.api_response_body ?? null,
                 steps: msg.steps || []
               };
             }
@@ -423,6 +444,27 @@ function BulkCardSection() {
     return () => {
       if (wsRef.current) wsRef.current.close();
     };
+  }, []);
+
+  // On mount: restore the last job so the operator can come back to the page
+  useEffect(() => {
+    let cancelled = false;
+    async function restoreLatestJob() {
+      try {
+        const data = await apiService.getLatestBulkJob();
+        if (cancelled || !data.job_id) return;
+        setJobId(data.job_id);
+        setJobStatus(data.status);
+        setProgress({ total: data.total, processed: data.processed, failed: data.failed });
+        // Reconnect WS — the snapshot event will populate results
+        connectWs(data.job_id);
+      } catch {
+        // silently ignore — operator may not have started any job yet
+      }
+    }
+    restoreLatestJob();
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleStart = async () => {
@@ -489,7 +531,7 @@ function BulkCardSection() {
     <div className="mt-2 space-y-6">
       {/* Dynamic Textarea Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-card p-5" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+        <div className="glass-card p-5">
           <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
             <List className="w-3.5 h-3.5 text-indigo-500" />
             Credit Card List ({cards.length})
@@ -498,13 +540,13 @@ function BulkCardSection() {
             value={cardsText}
             onChange={e => setCardsText(e.target.value)}
             placeholder={"4427567043223945|12|29|699\n4778720027006001|11|27|362\n4556123488771120|08|30|199"}
-            className="input-field w-full font-mono text-xs"
-            style={{ height: '160px', resize: 'vertical', borderRadius: '8px', padding: '12px' }}
+            className="input-field w-full font-mono"
+            style={{ height: '200px', resize: 'vertical', borderRadius: '8px', padding: '12px', fontSize: '13px', lineHeight: '1.7' }}
           />
           <p className="text-[10px] text-slate-400 mt-2">One card details per line using the pipe separator: CARD|MM|YY|CVC</p>
         </div>
 
-        <div className="glass-card p-5" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+        <div className="glass-card p-5">
           <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
             <Mail className="w-3.5 h-3.5 text-indigo-500" />
             Email Pool ({emails.length})
@@ -513,8 +555,8 @@ function BulkCardSection() {
             value={emailsText}
             onChange={e => setEmailsText(e.target.value)}
             placeholder={"olddealers@gmail.com\noperator_checkout@yahoo.com\ncustomer_mock@gmail.com"}
-            className="input-field w-full font-mono text-xs"
-            style={{ height: '160px', resize: 'vertical', borderRadius: '8px', padding: '12px' }}
+            className="input-field w-full font-mono"
+            style={{ height: '200px', resize: 'vertical', borderRadius: '8px', padding: '12px', fontSize: '13px', lineHeight: '1.7' }}
           />
           <p className="text-[10px] text-slate-400 mt-2">One email address per line. Verification will pick one at random for each checkout.</p>
         </div>
@@ -582,7 +624,7 @@ function BulkCardSection() {
 
       {/* Progress & Live Queue Stats */}
       {progress.total > 0 && (
-        <div className="glass-card p-5" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+        <div className="glass-card p-5">
           <div className="flex justify-between items-center mb-3">
             <div className="flex items-center gap-2">
               <span className="text-sm font-extrabold text-slate-800">{progress.processed} of {progress.total} Tested</span>
@@ -619,7 +661,7 @@ function BulkCardSection() {
 
       {/* Results Filter & Table */}
       {results.length > 0 && (
-        <div className="glass-card overflow-hidden" style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
+        <div className="glass-card overflow-hidden">
           {/* Filter Bar */}
           <div className="p-4 border-b border-slate-100 bg-slate-50/30 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-sm w-fit">
@@ -655,59 +697,89 @@ function BulkCardSection() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-xs">
               <thead>
-                <tr className="bg-slate-50/50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
-                  <th className="py-3 px-4 text-left font-bold w-12">#</th>
-                  <th className="py-3 px-4 text-left font-bold">Credit Card String</th>
-                  <th className="py-3 px-4 text-left font-bold">Assigned Email</th>
-                  <th className="py-3 px-4 text-center font-bold">Status Badge</th>
-                  <th className="py-3 px-4 text-center font-bold">Steps Passed</th>
-                  <th className="py-3 px-4 text-right font-bold">Duration</th>
-                  <th className="py-3 px-4 text-center font-bold w-20">Logs</th>
+                <tr className="bg-slate-50/75 border-b border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left w-10">#</th>
+                  <th className="px-4 py-3 text-left">Card</th>
+                  <th className="px-4 py-3 text-left">Email</th>
+                  <th className="px-4 py-3 text-center">Status</th>
+                  <th className="px-4 py-3 text-center">Steps</th>
+                  <th className="px-4 py-3 text-right">Time</th>
+                  <th className="px-4 py-3 text-center w-16">Detail</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredResults.map((r, i) => (
-                  <tr 
-                    key={r.id} 
-                    className="border-b border-slate-100 hover:bg-slate-50/70 transition-colors"
-                    style={{
-                      background: r.status === 'running' ? 'rgba(59, 130, 246, 0.03)' : i % 2 === 0 ? '#ffffff' : '#fafbfc'
-                    }}
-                  >
-                    <td className="py-3.5 px-4 font-bold text-slate-400">{i + 1}</td>
-                    <td className="py-3.5 px-4 font-mono font-bold text-slate-700">
-                      {r.card_number ? (
-                        <span>{r.card_number.slice(0, 4)} •••• •••• {r.card_number.slice(-4)}</span>
-                      ) : (
-                        <span>{r.card_raw}</span>
-                      )}
-                    </td>
-                    <td className="py-3.5 px-4 text-slate-600 font-medium">{r.email}</td>
-                    <td className="py-3.5 px-4 text-center">
-                      <StatusBadge status={r.status} allOk={r.all_steps_ok} />
-                    </td>
-                    <td className="py-3.5 px-4 text-center font-bold">
-                      {r.steps_total != null ? (
-                        <span style={{ color: r.all_steps_ok ? '#059669' : '#dc2626' }}>
-                          {r.steps_passed} / {r.steps_total}
-                        </span>
-                      ) : (
-                        <span className="text-slate-300">—</span>
-                      )}
-                    </td>
-                    <td className="py-3.5 px-4 text-right font-mono text-slate-500 font-medium">
-                      {elapsed(r.elapsed_ms)}
-                    </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <button 
-                        onClick={() => setSelectedCard(r)}
-                        className="px-2.5 py-1 rounded bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 transition-colors border border-slate-200 text-[10px] font-bold text-slate-600 flex items-center justify-center gap-1 mx-auto"
+                  <React.Fragment key={r.id}>
+                    <tr
+                      className="border-b border-slate-100 hover:bg-slate-50/70 transition-colors"
+                      style={{
+                        background: r.status === 'running' ? 'rgba(59, 130, 246, 0.03)' : i % 2 === 0 ? '#ffffff' : '#fafbfc',
+                        borderBottom: r.api_response_body ? 'none' : undefined
+                      }}
+                    >
+                      <td className="py-3.5 px-4 font-bold text-slate-400">{i + 1}</td>
+                      <td className="py-3.5 px-4 font-mono font-bold text-slate-700">
+                        {r.card_number ? (
+                          <span>{r.card_number.slice(0, 4)} •••• •••• {r.card_number.slice(-4)}</span>
+                        ) : (
+                          <span>{r.card_raw}</span>
+                        )}
+                      </td>
+                      <td className="py-3.5 px-4 text-slate-600 font-medium">{r.email}</td>
+                      <td className="py-3.5 px-4 text-center">
+                        <StatusBadge status={r.status} allOk={r.all_steps_ok} />
+                      </td>
+                      <td className="py-3.5 px-4 text-center font-bold">
+                        {(r.status === 'pending' || r.status === 'running') && r.steps_total == null ? (
+                          <span style={{ display: 'flex', justifyContent: 'center' }}><SkeletonCell width="40px" center /></span>
+                        ) : r.steps_total != null ? (
+                          <span style={{ color: r.all_steps_ok ? '#059669' : '#dc2626' }}>
+                            {r.steps_passed} / {r.steps_total}
+                          </span>
+                        ) : (
+                          <span className="text-slate-300">—</span>
+                        )}
+                      </td>
+                      <td className="py-3.5 px-4 text-right font-mono text-slate-500 font-medium">
+                        {(r.status === 'pending' || r.status === 'running') && r.elapsed_ms == null ? (
+                          <span style={{ display: 'flex', justifyContent: 'flex-end' }}><SkeletonCell width="48px" /></span>
+                        ) : (
+                          elapsed(r.elapsed_ms)
+                        )}
+                      </td>
+                      <td className="py-3.5 px-4 text-center">
+                        <button
+                          onClick={() => setSelectedCard(r)}
+                          className="px-2.5 py-1 rounded bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 transition-colors border border-slate-200 text-[10px] font-bold text-slate-600 flex items-center justify-center gap-1 mx-auto"
+                        >
+                          <Info className="w-3 h-3" />
+                          Logs
+                        </button>
+                      </td>
+                    </tr>
+                    {/* API response body sub-row */}
+                    {r.api_response_body && (
+                      <tr
+                        className="border-b border-slate-100"
+                        style={{ background: i % 2 === 0 ? '#ffffff' : '#fafbfc' }}
                       >
-                        <Info className="w-3 h-3" />
-                        Logs
-                      </button>
-                    </td>
-                  </tr>
+                        <td />
+                        <td colSpan={6} className="px-4 pb-3 pt-0">
+                          <div
+                            className="flex items-start gap-2 text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"
+                            style={{ fontFamily: 'monospace' }}
+                          >
+                            <span className="text-slate-400 font-bold flex-shrink-0 mt-0.5">API:</span>
+                            <span className="text-slate-700 break-all">
+                              {typeof r.api_response_body === 'object'
+                                ? Object.entries(r.api_response_body).map(([k, v]) => `${k}: ${v}`).join(' • ')
+                                : String(r.api_response_body)}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))}
                 {filteredResults.length === 0 && (
                   <tr>
@@ -722,8 +794,8 @@ function BulkCardSection() {
         </div>
       )}
 
-      {/* Selected Card Logs Modal */}
-      {selectedCard && (
+      {/* Selected Card Logs Modal — rendered in a portal to avoid stacking-context clipping */}
+      {selectedCard && createPortal(
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in"
           onClick={() => setSelectedCard(null)}
@@ -765,12 +837,23 @@ function BulkCardSection() {
               {selectedCard.error_message && (
                 <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-100 text-xs text-rose-800">
                   <div className="flex gap-2">
-                    <XCircle className="w-4.5 h-4.5 text-rose-600 flex-shrink-0" />
+                    <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="block font-bold mb-0.5">Checkout Gateway Rejection:</strong>
                       <span className="leading-relaxed">{selectedCard.error_message}</span>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {selectedCard.api_response_body && (
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">API Response Body</p>
+                  <pre className="font-mono text-slate-700 whitespace-pre-wrap break-all leading-relaxed">
+                    {typeof selectedCard.api_response_body === 'object'
+                      ? JSON.stringify(selectedCard.api_response_body, null, 2)
+                      : String(selectedCard.api_response_body)}
+                  </pre>
                 </div>
               )}
 
@@ -815,7 +898,8 @@ function BulkCardSection() {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
@@ -826,23 +910,27 @@ export default function CardValidator() {
   const [tab, setTab] = useState('single');
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-6xl mx-auto p-4 sm:p-6">
-      {/* Header Info */}
-      <div className="flex items-start gap-4 mb-2">
-        <div className="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center bg-gradient-to-tr from-indigo-500 via-indigo-600 to-purple-600 shadow-[0_4px_14px_rgba(79,70,229,0.35)]">
-          <CreditCard className="w-5.5 h-5.5 text-white" />
-        </div>
+    <div className="space-y-6 animate-fade-in">
+      {/* Page Header — matches Threads.jsx style */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-none">Credit Card Validation Gateway</h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-2 font-medium">Verify customer payment details via live automated security checkout proxy checks.</p>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Card Validator</h1>
+          <p className="text-slate-500 text-sm mt-0.5">Validate customer credit cards through the automated checkout checker.</p>
+        </div>
+        <div className="flex items-center gap-3 bg-white border border-slate-200/80 px-4 py-2.5 rounded-xl shadow-xs">
+          <CreditCard className="h-5 w-5 text-indigo-500" />
+          <div>
+            <p className="text-[10px] uppercase font-bold text-slate-400 leading-tight">Concurrency Limit</p>
+            <p className="text-base font-extrabold text-slate-800 leading-tight">5 Parallel Checks</p>
+          </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1.5 bg-slate-200/50 p-1.5 rounded-2xl w-fit border border-slate-200/40">
+      {/* Tab switcher — pill style */}
+      <div className="flex gap-0 bg-white border border-slate-200/80 rounded-xl p-1 w-fit shadow-xs">
         {[
-          { key: 'single', label: 'Single Validation', icon: Hash },
-          { key: 'bulk', label: 'Bulk Validation Queue', icon: Users }
+          { key: 'single', label: 'Single Card', icon: Hash },
+          { key: 'bulk',   label: 'Bulk Queue',  icon: Users }
         ].map(t => {
           const Icon = t.icon;
           const isActive = tab === t.key;
@@ -850,11 +938,11 @@ export default function CardValidator() {
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className="px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all cursor-pointer"
+              className="px-5 py-2 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer"
               style={{
-                background: isActive ? '#ffffff' : 'transparent',
-                color: isActive ? '#4f46e5' : '#64748b',
-                boxShadow: isActive ? '0 4px 12px rgba(0,0,0,0.04)' : 'none'
+                background: isActive ? '#4f46e5' : 'transparent',
+                color: isActive ? '#ffffff' : '#64748b',
+                boxShadow: isActive ? '0 2px 8px rgba(79,70,229,0.25)' : 'none'
               }}
             >
               <Icon className="w-3.5 h-3.5" />
