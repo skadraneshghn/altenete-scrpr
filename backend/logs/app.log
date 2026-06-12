@@ -3218,3 +3218,1369 @@ sqlalchemy.exc.OperationalError: (pymysql.err.OperationalError) (2013, 'Lost con
 2026-06-11 18:50:52,413 - app.scraper.parsers - INFO - Parsed 0 threads from page
 2026-06-11 18:50:52,831 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
 2026-06-11 18:50:54,197 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #147 (trigger: date[2026-06-11 18:50:47 +0330], next run at: 2026-06-11 18:50:47 +0330)" executed successfully
+2026-06-11 18:51:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:52:46 +0330)" (scheduled at 2026-06-11 18:51:46.219707+03:30)
+2026-06-11 18:51:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:52:46 +0330)" (scheduled at 2026-06-11 18:51:46.220217+03:30)
+2026-06-11 18:51:47,056 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #151 (check_new)
+2026-06-11 18:51:47,056 - app.scheduler.handlers - INFO - Triggering job 151
+2026-06-11 18:51:47,484 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #151" to job store "default"
+2026-06-11 18:51:47,484 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:52:46 +0330)" executed successfully
+2026-06-11 18:51:47,485 - apscheduler.scheduler - INFO - Removed job job_151
+2026-06-11 18:51:47,485 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #151 (trigger: date[2026-06-11 18:51:47 +0330], next run at: 2026-06-11 18:51:47 +0330)" (scheduled at 2026-06-11 18:51:47.484516+03:30)
+2026-06-11 18:51:47,485 - app.scheduler.handlers - INFO - Executing job 151
+2026-06-11 18:51:47,612 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #152 (scrape_posts)
+2026-06-11 18:51:47,612 - app.scheduler.handlers - INFO - Triggering job 152
+2026-06-11 18:51:48,004 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #152" to job store "default"
+2026-06-11 18:51:48,004 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:52:46 +0330)" executed successfully
+2026-06-11 18:51:48,004 - apscheduler.scheduler - INFO - Removed job job_152
+2026-06-11 18:51:48,004 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #152 (trigger: date[2026-06-11 18:51:48 +0330], next run at: 2026-06-11 18:51:48 +0330)" (scheduled at 2026-06-11 18:51:48.004024+03:30)
+2026-06-11 18:51:48,005 - app.scheduler.handlers - INFO - Executing job 152
+2026-06-11 18:51:49,284 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:51:49,701 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:51:50,511 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:51:50,525 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:51:51,074 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #152 (trigger: date[2026-06-11 18:51:48 +0330], next run at: 2026-06-11 18:51:48 +0330)" executed successfully
+2026-06-11 18:51:51,376 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:51:51,376 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:51:51,641 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:51:52,415 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:51:52,423 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:51:52,856 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:51:54,252 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #151 (trigger: date[2026-06-11 18:51:47 +0330], next run at: 2026-06-11 18:51:47 +0330)" executed successfully
+2026-06-11 18:52:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:53:46 +0330)" (scheduled at 2026-06-11 18:52:46.219707+03:30)
+2026-06-11 18:52:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:53:46 +0330)" (scheduled at 2026-06-11 18:52:46.220217+03:30)
+2026-06-11 18:52:47,075 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #155 (check_new)
+2026-06-11 18:52:47,075 - app.scheduler.handlers - INFO - Triggering job 155
+2026-06-11 18:52:47,516 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #155" to job store "default"
+2026-06-11 18:52:47,516 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:53:46 +0330)" executed successfully
+2026-06-11 18:52:47,516 - apscheduler.scheduler - INFO - Removed job job_155
+2026-06-11 18:52:47,516 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #155 (trigger: date[2026-06-11 18:52:47 +0330], next run at: 2026-06-11 18:52:47 +0330)" (scheduled at 2026-06-11 18:52:47.515975+03:30)
+2026-06-11 18:52:47,516 - app.scheduler.handlers - INFO - Executing job 155
+2026-06-11 18:52:47,732 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #156 (scrape_posts)
+2026-06-11 18:52:47,732 - app.scheduler.handlers - INFO - Triggering job 156
+2026-06-11 18:52:48,148 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #156" to job store "default"
+2026-06-11 18:52:48,149 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:53:46 +0330)" executed successfully
+2026-06-11 18:52:48,149 - apscheduler.scheduler - INFO - Removed job job_156
+2026-06-11 18:52:48,149 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #156 (trigger: date[2026-06-11 18:52:48 +0330], next run at: 2026-06-11 18:52:48 +0330)" (scheduled at 2026-06-11 18:52:48.148839+03:30)
+2026-06-11 18:52:48,149 - app.scheduler.handlers - INFO - Executing job 156
+2026-06-11 18:52:49,291 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:52:49,782 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:52:50,592 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:52:50,603 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:52:51,309 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #156 (trigger: date[2026-06-11 18:52:48 +0330], next run at: 2026-06-11 18:52:48 +0330)" executed successfully
+2026-06-11 18:52:51,445 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:52:51,445 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:52:51,714 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:52:52,437 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:52:52,452 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:52:52,879 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:52:54,269 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #155 (trigger: date[2026-06-11 18:52:47 +0330], next run at: 2026-06-11 18:52:47 +0330)" executed successfully
+2026-06-11 18:53:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:54:46 +0330)" (scheduled at 2026-06-11 18:53:46.219707+03:30)
+2026-06-11 18:53:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:54:46 +0330)" (scheduled at 2026-06-11 18:53:46.220217+03:30)
+2026-06-11 18:53:47,088 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #159 (check_new)
+2026-06-11 18:53:47,089 - app.scheduler.handlers - INFO - Triggering job 159
+2026-06-11 18:53:47,514 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #159" to job store "default"
+2026-06-11 18:53:47,514 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:54:46 +0330)" executed successfully
+2026-06-11 18:53:47,515 - apscheduler.scheduler - INFO - Removed job job_159
+2026-06-11 18:53:47,515 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #159 (trigger: date[2026-06-11 18:53:47 +0330], next run at: 2026-06-11 18:53:47 +0330)" (scheduled at 2026-06-11 18:53:47.514460+03:30)
+2026-06-11 18:53:47,515 - app.scheduler.handlers - INFO - Executing job 159
+2026-06-11 18:53:47,621 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #160 (scrape_posts)
+2026-06-11 18:53:47,622 - app.scheduler.handlers - INFO - Triggering job 160
+2026-06-11 18:53:48,025 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #160" to job store "default"
+2026-06-11 18:53:48,025 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:54:46 +0330)" executed successfully
+2026-06-11 18:53:48,025 - apscheduler.scheduler - INFO - Removed job job_160
+2026-06-11 18:53:48,025 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #160 (trigger: date[2026-06-11 18:53:48 +0330], next run at: 2026-06-11 18:53:48 +0330)" (scheduled at 2026-06-11 18:53:48.025130+03:30)
+2026-06-11 18:53:48,026 - app.scheduler.handlers - INFO - Executing job 160
+2026-06-11 18:53:49,366 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:53:49,824 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:53:50,671 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:53:50,737 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:53:51,072 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #160 (trigger: date[2026-06-11 18:53:48 +0330], next run at: 2026-06-11 18:53:48 +0330)" executed successfully
+2026-06-11 18:53:51,555 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:53:51,555 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:53:51,824 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:53:52,608 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:53:52,618 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:53:53,032 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:53:54,404 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #159 (trigger: date[2026-06-11 18:53:47 +0330], next run at: 2026-06-11 18:53:47 +0330)" executed successfully
+2026-06-11 18:54:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:55:46 +0330)" (scheduled at 2026-06-11 18:54:46.219707+03:30)
+2026-06-11 18:54:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:55:46 +0330)" (scheduled at 2026-06-11 18:54:46.220217+03:30)
+2026-06-11 18:54:46,536 - app.services.repeating_job_service - INFO - RepeatingJob 1 skipping tick — check_new/1 already active
+2026-06-11 18:54:46,755 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:55:46 +0330)" executed successfully
+2026-06-11 18:54:47,686 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #165 (scrape_posts)
+2026-06-11 18:54:47,686 - app.scheduler.handlers - INFO - Triggering job 165
+2026-06-11 18:54:48,103 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #165" to job store "default"
+2026-06-11 18:54:48,103 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:55:46 +0330)" executed successfully
+2026-06-11 18:54:48,103 - apscheduler.scheduler - INFO - Removed job job_165
+2026-06-11 18:54:48,103 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #165 (trigger: date[2026-06-11 18:54:48 +0330], next run at: 2026-06-11 18:54:48 +0330)" (scheduled at 2026-06-11 18:54:48.103126+03:30)
+2026-06-11 18:54:48,104 - app.scheduler.handlers - INFO - Executing job 165
+2026-06-11 18:54:51,276 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #165 (trigger: date[2026-06-11 18:54:48 +0330], next run at: 2026-06-11 18:54:48 +0330)" executed successfully
+2026-06-11 18:55:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:56:46 +0330)" (scheduled at 2026-06-11 18:55:46.219707+03:30)
+2026-06-11 18:55:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:56:46 +0330)" (scheduled at 2026-06-11 18:55:46.220217+03:30)
+2026-06-11 18:55:47,069 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #170 (check_new)
+2026-06-11 18:55:47,070 - app.scheduler.handlers - INFO - Triggering job 170
+2026-06-11 18:55:47,482 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #170" to job store "default"
+2026-06-11 18:55:47,483 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:56:46 +0330)" executed successfully
+2026-06-11 18:55:47,483 - apscheduler.scheduler - INFO - Removed job job_170
+2026-06-11 18:55:47,483 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #170 (trigger: date[2026-06-11 18:55:47 +0330], next run at: 2026-06-11 18:55:47 +0330)" (scheduled at 2026-06-11 18:55:47.482749+03:30)
+2026-06-11 18:55:47,483 - app.scheduler.handlers - INFO - Executing job 170
+2026-06-11 18:55:47,727 - app.services.repeating_job_service - INFO - RepeatingJob 2 fired → Job #171 (scrape_posts)
+2026-06-11 18:55:47,727 - app.scheduler.handlers - INFO - Triggering job 171
+2026-06-11 18:55:48,158 - apscheduler.scheduler - INFO - Added job "JobType.SCRAPE_POSTS #171" to job store "default"
+2026-06-11 18:55:48,158 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:56:46 +0330)" executed successfully
+2026-06-11 18:55:48,158 - apscheduler.scheduler - INFO - Removed job job_171
+2026-06-11 18:55:48,158 - apscheduler.executors.default - INFO - Running job "JobType.SCRAPE_POSTS #171 (trigger: date[2026-06-11 18:55:48 +0330], next run at: 2026-06-11 18:55:48 +0330)" (scheduled at 2026-06-11 18:55:48.157941+03:30)
+2026-06-11 18:55:48,158 - app.scheduler.handlers - INFO - Executing job 171
+2026-06-11 18:55:49,287 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:55:49,972 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:55:50,804 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:55:50,811 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:55:51,137 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956582/
+2026-06-11 18:55:51,454 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956582/
+2026-06-11 18:55:51,685 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:55:51,685 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:55:51,885 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956582/ "HTTP/1.1 200 OK"
+2026-06-11 18:55:51,895 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956582/
+2026-06-11 18:55:52,108 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:55:52,877 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:55:52,887 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:55:53,323 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:55:54,662 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #170 (trigger: date[2026-06-11 18:55:47 +0330], next run at: 2026-06-11 18:55:47 +0330)" executed successfully
+2026-06-11 18:55:55,488 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956581/
+2026-06-11 18:55:55,816 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956581/
+2026-06-11 18:55:56,258 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956581/ "HTTP/1.1 200 OK"
+2026-06-11 18:55:56,266 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956581/
+2026-06-11 18:55:59,197 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956580/
+2026-06-11 18:55:59,506 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956580/
+2026-06-11 18:55:59,978 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956580/ "HTTP/1.1 200 OK"
+2026-06-11 18:55:59,987 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956580/
+2026-06-11 18:56:03,038 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/worked-40.2956573/
+2026-06-11 18:56:03,352 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/worked-40.2956573/
+2026-06-11 18:56:03,820 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/worked-40.2956573/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:03,828 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/worked-40.2956573/
+2026-06-11 18:56:06,635 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/worked-80.2956578/
+2026-06-11 18:56:06,945 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/worked-80.2956578/
+2026-06-11 18:56:07,435 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/worked-80.2956578/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:07,446 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/worked-80.2956578/
+2026-06-11 18:56:10,455 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956575/
+2026-06-11 18:56:10,777 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956575/
+2026-06-11 18:56:11,293 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956575/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:11,302 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956575/
+2026-06-11 18:56:13,977 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956574/
+2026-06-11 18:56:14,297 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956574/
+2026-06-11 18:56:14,809 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956574/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:14,822 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956574/
+2026-06-11 18:56:18,095 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/lkill.2956567/
+2026-06-11 18:56:18,407 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/lkill.2956567/
+2026-06-11 18:56:19,118 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/lkill.2956567/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:19,124 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/lkill.2956567/
+2026-06-11 18:56:22,544 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956533/
+2026-06-11 18:56:22,856 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956533/
+2026-06-11 18:56:23,334 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956533/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:23,342 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956533/
+2026-06-11 18:56:26,691 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956535/
+2026-06-11 18:56:26,998 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956535/
+2026-06-11 18:56:27,475 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956535/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:27,479 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956535/
+2026-06-11 18:56:30,651 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956537/
+2026-06-11 18:56:30,962 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956537/
+2026-06-11 18:56:31,486 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956537/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:31,492 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956537/
+2026-06-11 18:56:34,287 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill-fast.2956540/
+2026-06-11 18:56:34,600 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill-fast.2956540/
+2026-06-11 18:56:35,153 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill-fast.2956540/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:35,159 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill-fast.2956540/
+2026-06-11 18:56:37,977 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956539/
+2026-06-11 18:56:38,301 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956539/
+2026-06-11 18:56:38,859 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956539/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:38,864 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956539/
+2026-06-11 18:56:41,940 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956538/
+2026-06-11 18:56:42,256 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956538/
+2026-06-11 18:56:42,762 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956538/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:42,767 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956538/
+2026-06-11 18:56:46,057 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956530/
+2026-06-11 18:56:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:57:46 +0330)" (scheduled at 2026-06-11 18:56:46.219707+03:30)
+2026-06-11 18:56:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:57:46 +0330)" (scheduled at 2026-06-11 18:56:46.220217+03:30)
+2026-06-11 18:56:46,389 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956530/
+2026-06-11 18:56:46,709 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:56:46,834 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956530/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:46,841 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956530/
+2026-06-11 18:56:46,932 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:57:46 +0330)" executed successfully
+2026-06-11 18:56:47,725 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #174 (check_new)
+2026-06-11 18:56:47,726 - app.scheduler.handlers - INFO - Triggering job 174
+2026-06-11 18:56:48,138 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #174" to job store "default"
+2026-06-11 18:56:48,139 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:57:46 +0330)" executed successfully
+2026-06-11 18:56:48,139 - apscheduler.scheduler - INFO - Removed job job_174
+2026-06-11 18:56:48,139 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #174 (trigger: date[2026-06-11 18:56:48 +0330], next run at: 2026-06-11 18:56:48 +0330)" (scheduled at 2026-06-11 18:56:48.138780+03:30)
+2026-06-11 18:56:48,139 - app.scheduler.handlers - INFO - Executing job 174
+2026-06-11 18:56:49,909 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:56:50,167 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:56:50,547 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill-fast.2956522/
+2026-06-11 18:56:50,881 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill-fast.2956522/
+2026-06-11 18:56:50,926 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:50,932 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:56:51,137 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:56:51,137 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:56:51,401 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:56:51,528 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill-fast.2956522/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:51,537 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill-fast.2956522/
+2026-06-11 18:56:52,135 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:52,139 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:56:52,564 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:56:53,942 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #174 (trigger: date[2026-06-11 18:56:48 +0330], next run at: 2026-06-11 18:56:48 +0330)" executed successfully
+2026-06-11 18:56:54,787 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956532/
+2026-06-11 18:56:55,112 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956532/
+2026-06-11 18:56:55,646 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956532/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:55,650 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956532/
+2026-06-11 18:56:58,401 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live.2956500/
+2026-06-11 18:56:58,729 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live.2956500/
+2026-06-11 18:56:59,224 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live.2956500/ "HTTP/1.1 200 OK"
+2026-06-11 18:56:59,230 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live.2956500/
+2026-06-11 18:57:01,893 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live-cc-use-asappp.2956506/
+2026-06-11 18:57:02,221 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live-cc-use-asappp.2956506/
+2026-06-11 18:57:02,744 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live-cc-use-asappp.2956506/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:02,759 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live-cc-use-asappp.2956506/
+2026-06-11 18:57:06,068 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill-fast-live.2956502/
+2026-06-11 18:57:06,393 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill-fast-live.2956502/
+2026-06-11 18:57:06,873 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill-fast-live.2956502/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:06,877 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill-fast-live.2956502/
+2026-06-11 18:57:10,437 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956609/
+2026-06-11 18:57:10,774 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956609/
+2026-06-11 18:57:11,221 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956609/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:11,229 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956609/
+2026-06-11 18:57:13,932 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/us.2956484/
+2026-06-11 18:57:14,259 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/us.2956484/
+2026-06-11 18:57:14,757 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/us.2956484/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:14,761 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/us.2956484/
+2026-06-11 18:57:17,360 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956608/
+2026-06-11 18:57:17,686 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956608/
+2026-06-11 18:57:18,151 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956608/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:18,156 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956608/
+2026-06-11 18:57:21,309 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwww.2956606/
+2026-06-11 18:57:21,635 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwww.2956606/
+2026-06-11 18:57:22,135 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwww.2956606/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:22,139 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwww.2956606/
+2026-06-11 18:57:24,894 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956602/
+2026-06-11 18:57:25,222 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956602/
+2026-06-11 18:57:25,697 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956602/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:25,704 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956602/
+2026-06-11 18:57:28,453 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww-liveeeeeeee.2956601/
+2026-06-11 18:57:28,783 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww-liveeeeeeee.2956601/
+2026-06-11 18:57:29,246 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww-liveeeeeeee.2956601/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:29,408 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww-liveeeeeeee.2956601/
+2026-06-11 18:57:32,829 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/killl.2956605/
+2026-06-11 18:57:33,160 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/killl.2956605/
+2026-06-11 18:57:33,633 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/killl.2956605/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:33,638 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/killl.2956605/
+2026-06-11 18:57:36,287 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/o.2956598/
+2026-06-11 18:57:36,613 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/o.2956598/
+2026-06-11 18:57:37,142 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/o.2956598/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:37,148 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/o.2956598/
+2026-06-11 18:57:40,089 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/chese.2956597/
+2026-06-11 18:57:40,415 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/chese.2956597/
+2026-06-11 18:57:40,894 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/chese.2956597/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:40,898 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/chese.2956597/
+2026-06-11 18:57:43,895 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956596/
+2026-06-11 18:57:44,222 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956596/
+2026-06-11 18:57:44,697 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956596/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:44,700 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956596/
+2026-06-11 18:57:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:58:46 +0330)" (scheduled at 2026-06-11 18:57:46.219707+03:30)
+2026-06-11 18:57:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:58:46 +0330)" (scheduled at 2026-06-11 18:57:46.220217+03:30)
+2026-06-11 18:57:47,150 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #176 (check_new)
+2026-06-11 18:57:47,150 - app.scheduler.handlers - INFO - Triggering job 176
+2026-06-11 18:57:47,261 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:57:47,535 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:58:46 +0330)" executed successfully
+2026-06-11 18:57:47,661 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #176" to job store "default"
+2026-06-11 18:57:47,661 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:58:46 +0330)" executed successfully
+2026-06-11 18:57:47,661 - apscheduler.scheduler - INFO - Removed job job_176
+2026-06-11 18:57:47,661 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #176 (trigger: date[2026-06-11 18:57:47 +0330], next run at: 2026-06-11 18:57:47 +0330)" (scheduled at 2026-06-11 18:57:47.660954+03:30)
+2026-06-11 18:57:47,661 - app.scheduler.handlers - INFO - Executing job 176
+2026-06-11 18:57:47,986 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956595/
+2026-06-11 18:57:48,308 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956595/
+2026-06-11 18:57:48,772 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956595/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:48,777 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956595/
+2026-06-11 18:57:49,563 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:57:49,841 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:57:50,608 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:50,617 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:57:50,828 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:57:50,828 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:57:51,143 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:57:51,977 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:51,981 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:57:52,405 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:57:52,563 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956594/
+2026-06-11 18:57:52,876 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956594/
+2026-06-11 18:57:53,342 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956594/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:53,347 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956594/
+2026-06-11 18:57:53,811 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #176 (trigger: date[2026-06-11 18:57:47 +0330], next run at: 2026-06-11 18:57:47 +0330)" executed successfully
+2026-06-11 18:57:56,772 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956592/
+2026-06-11 18:57:57,104 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956592/
+2026-06-11 18:57:57,602 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956592/ "HTTP/1.1 200 OK"
+2026-06-11 18:57:57,610 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956592/
+2026-06-11 18:58:00,565 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/approved-4366183268513458-06-2030-checkle-live.2956576/
+2026-06-11 18:58:00,876 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/approved-4366183268513458-06-2030-checkle-live.2956576/
+2026-06-11 18:58:01,343 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/approved-4366183268513458-06-2030-checkle-live.2956576/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:01,349 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/approved-4366183268513458-06-2030-checkle-live.2956576/
+2026-06-11 18:58:04,320 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956590/
+2026-06-11 18:58:04,629 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956590/
+2026-06-11 18:58:05,117 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956590/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:05,121 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956590/
+2026-06-11 18:58:08,489 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956588/
+2026-06-11 18:58:08,805 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956588/
+2026-06-11 18:58:09,302 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956588/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:09,306 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956588/
+2026-06-11 18:58:12,015 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/w.2956585/
+2026-06-11 18:58:12,324 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/w.2956585/
+2026-06-11 18:58:12,920 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/w.2956585/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:12,924 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/w.2956585/
+2026-06-11 18:58:15,939 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956586/
+2026-06-11 18:58:16,257 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956586/
+2026-06-11 18:58:16,951 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956586/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:16,955 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956586/
+2026-06-11 18:58:20,494 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956584/
+2026-06-11 18:58:20,809 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956584/
+2026-06-11 18:58:21,274 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956584/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:21,279 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956584/
+2026-06-11 18:58:24,629 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/worked.2956583/
+2026-06-11 18:58:24,939 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/worked.2956583/
+2026-06-11 18:58:25,430 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/worked.2956583/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:25,435 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/worked.2956583/
+2026-06-11 18:58:28,168 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/puk-puk-good-card.2956702/
+2026-06-11 18:58:28,486 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/puk-puk-good-card.2956702/
+2026-06-11 18:58:28,995 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/puk-puk-good-card.2956702/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:28,999 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/puk-puk-good-card.2956702/
+2026-06-11 18:58:31,919 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956742/
+2026-06-11 18:58:32,264 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956742/
+2026-06-11 18:58:32,762 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956742/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:32,768 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956742/
+2026-06-11 18:58:35,576 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956743/
+2026-06-11 18:58:35,892 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956743/
+2026-06-11 18:58:36,365 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956743/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:36,371 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956743/
+2026-06-11 18:58:39,044 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956741/
+2026-06-11 18:58:39,362 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956741/
+2026-06-11 18:58:39,846 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956741/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:39,850 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956741/
+2026-06-11 18:58:42,801 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956737/
+2026-06-11 18:58:43,109 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956737/
+2026-06-11 18:58:43,608 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956737/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:43,612 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956737/
+2026-06-11 18:58:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:59:46 +0330)" (scheduled at 2026-06-11 18:58:46.219707+03:30)
+2026-06-11 18:58:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:59:46 +0330)" (scheduled at 2026-06-11 18:58:46.220217+03:30)
+2026-06-11 18:58:47,086 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #178 (check_new)
+2026-06-11 18:58:47,087 - app.scheduler.handlers - INFO - Triggering job 178
+2026-06-11 18:58:47,203 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:58:47,426 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:59:46 +0330)" executed successfully
+2026-06-11 18:58:47,533 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956729/
+2026-06-11 18:58:47,859 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956729/
+2026-06-11 18:58:47,874 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #178" to job store "default"
+2026-06-11 18:58:47,874 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 18:59:46 +0330)" executed successfully
+2026-06-11 18:58:47,874 - apscheduler.scheduler - INFO - Removed job job_178
+2026-06-11 18:58:47,874 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #178 (trigger: date[2026-06-11 18:58:47 +0330], next run at: 2026-06-11 18:58:47 +0330)" (scheduled at 2026-06-11 18:58:47.873968+03:30)
+2026-06-11 18:58:47,874 - app.scheduler.handlers - INFO - Executing job 178
+2026-06-11 18:58:48,376 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956729/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:48,380 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956729/
+2026-06-11 18:58:49,660 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:58:50,014 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:58:50,828 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:50,831 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:58:51,051 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:58:51,051 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:58:51,320 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:58:52,105 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:52,110 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 18:58:52,347 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956693/
+2026-06-11 18:58:52,538 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 18:58:52,681 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956693/
+2026-06-11 18:58:53,156 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956693/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:53,163 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956693/
+2026-06-11 18:58:53,901 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #178 (trigger: date[2026-06-11 18:58:47 +0330], next run at: 2026-06-11 18:58:47 +0330)" executed successfully
+2026-06-11 18:58:56,534 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/approved-5549605371525646-09-2027-checkle-live.2956569/
+2026-06-11 18:58:56,867 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/approved-5549605371525646-09-2027-checkle-live.2956569/
+2026-06-11 18:58:57,382 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/approved-5549605371525646-09-2027-checkle-live.2956569/ "HTTP/1.1 200 OK"
+2026-06-11 18:58:57,388 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/approved-5549605371525646-09-2027-checkle-live.2956569/
+2026-06-11 18:59:00,618 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/dub-dub-booty-card.2956688/
+2026-06-11 18:59:00,954 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/dub-dub-booty-card.2956688/
+2026-06-11 18:59:01,468 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/dub-dub-booty-card.2956688/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:01,473 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/dub-dub-booty-card.2956688/
+2026-06-11 18:59:04,310 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/killlll.2956614/
+2026-06-11 18:59:04,694 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/killlll.2956614/
+2026-06-11 18:59:05,210 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/killlll.2956614/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:05,217 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/killlll.2956614/
+2026-06-11 18:59:07,992 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwww.2956618/
+2026-06-11 18:59:08,337 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwww.2956618/
+2026-06-11 18:59:08,822 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwww.2956618/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:08,827 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwww.2956618/
+2026-06-11 18:59:11,950 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956620/
+2026-06-11 18:59:12,288 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956620/
+2026-06-11 18:59:12,792 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956620/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:12,797 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956620/
+2026-06-11 18:59:15,641 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956621/
+2026-06-11 18:59:15,973 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956621/
+2026-06-11 18:59:16,472 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956621/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:16,477 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956621/
+2026-06-11 18:59:19,775 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/last.2956599/
+2026-06-11 18:59:20,114 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/last.2956599/
+2026-06-11 18:59:20,642 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/last.2956599/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:20,649 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/last.2956599/
+2026-06-11 18:59:24,087 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956613/
+2026-06-11 18:59:24,419 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956613/
+2026-06-11 18:59:24,892 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956613/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:24,897 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956613/
+2026-06-11 18:59:27,565 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ccc.2956612/
+2026-06-11 18:59:27,898 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ccc.2956612/
+2026-06-11 18:59:28,364 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ccc.2956612/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:28,371 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ccc.2956612/
+2026-06-11 18:59:31,652 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956611/
+2026-06-11 18:59:31,988 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956611/
+2026-06-11 18:59:32,448 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956611/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:32,454 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956611/
+2026-06-11 18:59:35,323 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/all-worked.2956563/
+2026-06-11 18:59:35,677 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/all-worked.2956563/
+2026-06-11 18:59:36,160 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/all-worked.2956563/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:36,164 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/all-worked.2956563/
+2026-06-11 18:59:39,509 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956607/
+2026-06-11 18:59:39,841 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956607/
+2026-06-11 18:59:40,305 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956607/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:40,309 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956607/
+2026-06-11 18:59:43,327 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwww.2956610/
+2026-06-11 18:59:43,662 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwww.2956610/
+2026-06-11 18:59:44,096 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwww.2956610/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:44,100 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwww.2956610/
+2026-06-11 18:59:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:00:46 +0330)" (scheduled at 2026-06-11 18:59:46.219707+03:30)
+2026-06-11 18:59:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:00:46 +0330)" (scheduled at 2026-06-11 18:59:46.220217+03:30)
+2026-06-11 18:59:47,107 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #180 (check_new)
+2026-06-11 18:59:47,107 - app.scheduler.handlers - INFO - Triggering job 180
+2026-06-11 18:59:47,176 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 18:59:47,389 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:00:46 +0330)" executed successfully
+2026-06-11 18:59:47,548 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/2026-otp-2fa-capture-worldwide.2921635/
+2026-06-11 18:59:47,811 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #180" to job store "default"
+2026-06-11 18:59:47,811 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:00:46 +0330)" executed successfully
+2026-06-11 18:59:47,811 - apscheduler.scheduler - INFO - Removed job job_180
+2026-06-11 18:59:47,811 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #180 (trigger: date[2026-06-11 18:59:47 +0330], next run at: 2026-06-11 18:59:47 +0330)" (scheduled at 2026-06-11 18:59:47.810951+03:30)
+2026-06-11 18:59:47,811 - app.scheduler.handlers - INFO - Executing job 180
+2026-06-11 18:59:47,880 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/2026-otp-2fa-capture-worldwide.2921635/
+2026-06-11 18:59:48,411 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/2026-otp-2fa-capture-worldwide.2921635/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:48,416 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/2026-otp-2fa-capture-worldwide.2921635/
+2026-06-11 18:59:49,673 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:59:49,940 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:59:50,754 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:50,758 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:59:50,977 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:59:50,977 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 18:59:51,399 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 18:59:52,552 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/2232-card-leak-db-by-cookiesautoshop-berner.2926495/
+2026-06-11 18:59:52,870 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/2232-card-leak-db-by-cookiesautoshop-berner.2926495/
+2026-06-11 18:59:53,729 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/2232-card-leak-db-by-cookiesautoshop-berner.2926495/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:53,783 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/2232-card-leak-db-by-cookiesautoshop-berner.2926495/
+2026-06-11 18:59:56,456 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/t.2956774/
+2026-06-11 18:59:56,775 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/t.2956774/
+2026-06-11 18:59:57,244 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/t.2956774/ "HTTP/1.1 200 OK"
+2026-06-11 18:59:57,258 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/t.2956774/
+2026-06-11 19:00:00,191 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956766/
+2026-06-11 19:00:00,517 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956766/
+2026-06-11 19:00:01,143 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956766/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:01,159 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956766/
+2026-06-11 19:00:04,646 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/klll.2956770/
+2026-06-11 19:00:04,968 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/klll.2956770/
+2026-06-11 19:00:05,511 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/klll.2956770/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:05,526 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/klll.2956770/
+2026-06-11 19:00:08,656 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956771/
+2026-06-11 19:00:08,974 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956771/
+2026-06-11 19:00:09,534 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956771/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:09,551 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956771/
+2026-06-11 19:00:12,203 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwww.2956756/
+2026-06-11 19:00:12,528 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwww.2956756/
+2026-06-11 19:00:13,078 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwww.2956756/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:13,096 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwww.2956756/
+2026-06-11 19:00:15,949 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956765/
+2026-06-11 19:00:16,268 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956765/
+2026-06-11 19:00:16,735 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956765/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:16,757 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956765/
+2026-06-11 19:00:19,886 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956764/
+2026-06-11 19:00:20,204 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956764/
+2026-06-11 19:00:20,654 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956764/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:20,672 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956764/
+2026-06-11 19:00:21,402 - app.scraper.forum_crawler - ERROR - Error fetching https://altenens.is/forums/accounts-and-database-dumps.45: 
+2026-06-11 19:00:22,691 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:00:24,129 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956763/
+2026-06-11 19:00:24,310 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #180 (trigger: date[2026-06-11 18:59:47 +0330], next run at: 2026-06-11 18:59:47 +0330)" executed successfully
+2026-06-11 19:00:24,457 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956763/
+2026-06-11 19:00:24,907 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956763/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:24,913 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956763/
+2026-06-11 19:00:28,216 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956762/
+2026-06-11 19:00:28,539 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956762/
+2026-06-11 19:00:29,004 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956762/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:29,010 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956762/
+2026-06-11 19:00:32,531 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill-it.2956761/
+2026-06-11 19:00:32,857 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill-it.2956761/
+2026-06-11 19:00:33,361 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill-it.2956761/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:33,369 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill-it.2956761/
+2026-06-11 19:00:36,578 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956750/
+2026-06-11 19:00:36,904 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956750/
+2026-06-11 19:00:37,380 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956750/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:37,390 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956750/
+2026-06-11 19:00:40,729 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956751/
+2026-06-11 19:00:41,053 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956751/
+2026-06-11 19:00:41,560 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956751/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:41,567 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956751/
+2026-06-11 19:00:44,287 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956755/
+2026-06-11 19:00:44,608 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956755/
+2026-06-11 19:00:45,171 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956755/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:45,177 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956755/
+2026-06-11 19:00:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:01:46 +0330)" (scheduled at 2026-06-11 19:00:46.219707+03:30)
+2026-06-11 19:00:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:01:46 +0330)" (scheduled at 2026-06-11 19:00:46.220217+03:30)
+2026-06-11 19:00:47,074 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #181 (check_new)
+2026-06-11 19:00:47,074 - app.scheduler.handlers - INFO - Triggering job 181
+2026-06-11 19:00:47,187 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:00:47,400 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:01:46 +0330)" executed successfully
+2026-06-11 19:00:47,500 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #181" to job store "default"
+2026-06-11 19:00:47,500 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:01:46 +0330)" executed successfully
+2026-06-11 19:00:47,500 - apscheduler.scheduler - INFO - Removed job job_181
+2026-06-11 19:00:47,500 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #181 (trigger: date[2026-06-11 19:00:47 +0330], next run at: 2026-06-11 19:00:47 +0330)" (scheduled at 2026-06-11 19:00:47.500174+03:30)
+2026-06-11 19:00:47,501 - app.scheduler.handlers - INFO - Executing job 181
+2026-06-11 19:00:49,291 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956753/
+2026-06-11 19:00:49,367 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:00:49,616 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956753/
+2026-06-11 19:00:49,628 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:00:50,431 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:50,434 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:00:50,651 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:00:50,651 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:00:50,922 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:00:51,031 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956753/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:51,055 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956753/
+2026-06-11 19:00:51,701 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:51,707 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:00:52,139 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:00:53,558 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #181 (trigger: date[2026-06-11 19:00:47 +0330], next run at: 2026-06-11 19:00:47 +0330)" executed successfully
+2026-06-11 19:00:54,707 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/1000-high-business-card.2956738/
+2026-06-11 19:00:55,026 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/1000-high-business-card.2956738/
+2026-06-11 19:00:55,589 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/1000-high-business-card.2956738/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:55,599 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/1000-high-business-card.2956738/
+2026-06-11 19:00:58,568 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956749/
+2026-06-11 19:00:58,888 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956749/
+2026-06-11 19:00:59,348 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956749/ "HTTP/1.1 200 OK"
+2026-06-11 19:00:59,355 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956749/
+2026-06-11 19:01:02,865 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwww.2956748/
+2026-06-11 19:01:03,182 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwww.2956748/
+2026-06-11 19:01:03,752 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwww.2956748/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:03,756 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwww.2956748/
+2026-06-11 19:01:06,583 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956747/
+2026-06-11 19:01:06,919 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956747/
+2026-06-11 19:01:07,357 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956747/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:07,364 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956747/
+2026-06-11 19:01:10,197 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwwwww.2956866/
+2026-06-11 19:01:10,517 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwwwww.2956866/
+2026-06-11 19:01:11,050 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwwwww.2956866/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:11,059 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwwwww.2956866/
+2026-06-11 19:01:13,723 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2956865/
+2026-06-11 19:01:14,047 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2956865/
+2026-06-11 19:01:14,531 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2956865/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:14,537 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2956865/
+2026-06-11 19:01:17,213 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mrs-marion-card.2956863/
+2026-06-11 19:01:17,529 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mrs-marion-card.2956863/
+2026-06-11 19:01:18,043 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mrs-marion-card.2956863/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:18,056 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mrs-marion-card.2956863/
+2026-06-11 19:01:21,037 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwwwwww.2956864/
+2026-06-11 19:01:21,360 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwwwwww.2956864/
+2026-06-11 19:01:21,855 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwwwwww.2956864/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:21,864 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwwwwww.2956864/
+2026-06-11 19:01:24,883 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/godmess-usa-card.2956862/
+2026-06-11 19:01:25,202 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/godmess-usa-card.2956862/
+2026-06-11 19:01:25,702 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/godmess-usa-card.2956862/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:25,710 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/godmess-usa-card.2956862/
+2026-06-11 19:01:28,584 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956859/
+2026-06-11 19:01:28,909 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956859/
+2026-06-11 19:01:29,405 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956859/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:29,413 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956859/
+2026-06-11 19:01:32,552 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cvv-work-mc.2956856/
+2026-06-11 19:01:32,879 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cvv-work-mc.2956856/
+2026-06-11 19:01:33,328 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cvv-work-mc.2956856/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:33,337 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cvv-work-mc.2956856/
+2026-06-11 19:01:35,980 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956838/
+2026-06-11 19:01:36,301 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956838/
+2026-06-11 19:01:36,774 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956838/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:36,781 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956838/
+2026-06-11 19:01:40,212 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwww.2956837/
+2026-06-11 19:01:40,531 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwww.2956837/
+2026-06-11 19:01:41,027 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwww.2956837/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:41,035 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwww.2956837/
+2026-06-11 19:01:44,081 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwww.2956831/
+2026-06-11 19:01:44,401 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwww.2956831/
+2026-06-11 19:01:44,872 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwww.2956831/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:44,879 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwww.2956831/
+2026-06-11 19:01:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:02:46 +0330)" (scheduled at 2026-06-11 19:01:46.219707+03:30)
+2026-06-11 19:01:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:02:46 +0330)" (scheduled at 2026-06-11 19:01:46.220217+03:30)
+2026-06-11 19:01:47,078 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #183 (check_new)
+2026-06-11 19:01:47,078 - app.scheduler.handlers - INFO - Triggering job 183
+2026-06-11 19:01:47,197 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:01:47,415 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:02:46 +0330)" executed successfully
+2026-06-11 19:01:47,507 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #183" to job store "default"
+2026-06-11 19:01:47,508 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:02:46 +0330)" executed successfully
+2026-06-11 19:01:47,508 - apscheduler.scheduler - INFO - Removed job job_183
+2026-06-11 19:01:47,508 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #183 (trigger: date[2026-06-11 19:01:47 +0330], next run at: 2026-06-11 19:01:47 +0330)" (scheduled at 2026-06-11 19:01:47.507741+03:30)
+2026-06-11 19:01:47,508 - app.scheduler.handlers - INFO - Executing job 183
+2026-06-11 19:01:47,861 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/www.2956810/
+2026-06-11 19:01:48,194 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/www.2956810/
+2026-06-11 19:01:48,780 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/www.2956810/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:48,833 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/www.2956810/
+2026-06-11 19:01:49,371 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:01:49,650 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:01:50,389 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:50,393 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:01:50,614 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:01:50,614 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:01:50,890 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:01:51,676 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:51,682 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:01:52,122 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:01:53,207 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956823/
+2026-06-11 19:01:53,531 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956823/
+2026-06-11 19:01:53,753 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #183 (trigger: date[2026-06-11 19:01:47 +0330], next run at: 2026-06-11 19:01:47 +0330)" executed successfully
+2026-06-11 19:01:54,051 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956823/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:54,063 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956823/
+2026-06-11 19:01:57,214 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956808/
+2026-06-11 19:01:57,541 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956808/
+2026-06-11 19:01:58,023 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956808/ "HTTP/1.1 200 OK"
+2026-06-11 19:01:58,033 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956808/
+2026-06-11 19:02:00,968 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mix.2956802/
+2026-06-11 19:02:01,292 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mix.2956802/
+2026-06-11 19:02:01,751 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mix.2956802/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:01,759 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mix.2956802/
+2026-06-11 19:02:05,187 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2956799/
+2026-06-11 19:02:05,512 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2956799/
+2026-06-11 19:02:05,958 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2956799/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:05,967 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2956799/
+2026-06-11 19:02:09,269 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956776/
+2026-06-11 19:02:09,596 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956776/
+2026-06-11 19:02:10,110 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956776/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:10,122 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956776/
+2026-06-11 19:02:13,288 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live-cc-work-for-450gbp.2956793/
+2026-06-11 19:02:13,610 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live-cc-work-for-450gbp.2956793/
+2026-06-11 19:02:14,072 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live-cc-work-for-450gbp.2956793/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:14,081 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live-cc-work-for-450gbp.2956793/
+2026-06-11 19:02:17,189 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/pls-pls-kill-it.2956794/
+2026-06-11 19:02:17,513 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/pls-pls-kill-it.2956794/
+2026-06-11 19:02:18,025 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/pls-pls-kill-it.2956794/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:18,031 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/pls-pls-kill-it.2956794/
+2026-06-11 19:02:20,994 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwww.2956786/
+2026-06-11 19:02:21,320 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwww.2956786/
+2026-06-11 19:02:21,754 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwww.2956786/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:21,764 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwww.2956786/
+2026-06-11 19:02:25,270 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/100-high-business-card-kill.2956781/
+2026-06-11 19:02:25,600 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/100-high-business-card-kill.2956781/
+2026-06-11 19:02:26,133 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/100-high-business-card-kill.2956781/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:26,144 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/100-high-business-card-kill.2956781/
+2026-06-11 19:02:29,069 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwww.2956936/
+2026-06-11 19:02:29,392 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwww.2956936/
+2026-06-11 19:02:29,867 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwww.2956936/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:29,873 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwww.2956936/
+2026-06-11 19:02:32,477 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwww.2956932/
+2026-06-11 19:02:32,805 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwww.2956932/
+2026-06-11 19:02:33,274 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwww.2956932/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:33,282 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwwwwwww.2956932/
+2026-06-11 19:02:35,927 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill-pls.2956917/
+2026-06-11 19:02:36,251 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill-pls.2956917/
+2026-06-11 19:02:36,730 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill-pls.2956917/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:36,736 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill-pls.2956917/
+2026-06-11 19:02:39,445 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/business-card-ca.2956919/
+2026-06-11 19:02:39,785 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/business-card-ca.2956919/
+2026-06-11 19:02:40,295 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/business-card-ca.2956919/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:40,300 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/business-card-ca.2956919/
+2026-06-11 19:02:42,932 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/enjoy-live-card.2956905/
+2026-06-11 19:02:43,268 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/enjoy-live-card.2956905/
+2026-06-11 19:02:43,753 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/enjoy-live-card.2956905/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:43,758 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/enjoy-live-card.2956905/
+2026-06-11 19:02:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:03:46 +0330)" (scheduled at 2026-06-11 19:02:46.219707+03:30)
+2026-06-11 19:02:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:03:46 +0330)" (scheduled at 2026-06-11 19:02:46.220217+03:30)
+2026-06-11 19:02:47,097 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #185 (check_new)
+2026-06-11 19:02:47,097 - app.scheduler.handlers - INFO - Triggering job 185
+2026-06-11 19:02:47,212 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:02:47,431 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:03:46 +0330)" executed successfully
+2026-06-11 19:02:47,532 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/2x-live-card-enjoy.2956902/
+2026-06-11 19:02:47,862 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/2x-live-card-enjoy.2956902/
+2026-06-11 19:02:47,881 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #185" to job store "default"
+2026-06-11 19:02:47,882 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:03:46 +0330)" executed successfully
+2026-06-11 19:02:47,882 - apscheduler.scheduler - INFO - Removed job job_185
+2026-06-11 19:02:47,882 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #185 (trigger: date[2026-06-11 19:02:47 +0330], next run at: 2026-06-11 19:02:47 +0330)" (scheduled at 2026-06-11 19:02:47.881833+03:30)
+2026-06-11 19:02:47,882 - app.scheduler.handlers - INFO - Executing job 185
+2026-06-11 19:02:48,354 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/2x-live-card-enjoy.2956902/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:48,359 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/2x-live-card-enjoy.2956902/
+2026-06-11 19:02:49,756 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:02:50,049 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:02:50,827 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:50,831 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:02:51,063 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:02:51,063 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:02:51,332 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:02:52,132 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:52,135 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:02:52,447 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/100-high-balance-card.2956901/
+2026-06-11 19:02:52,591 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:02:52,764 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/100-high-balance-card.2956901/
+2026-06-11 19:02:53,218 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/100-high-balance-card.2956901/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:53,223 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/100-high-balance-card.2956901/
+2026-06-11 19:02:54,036 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #185 (trigger: date[2026-06-11 19:02:47 +0330], next run at: 2026-06-11 19:02:47 +0330)" executed successfully
+2026-06-11 19:02:56,447 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956896/
+2026-06-11 19:02:56,758 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956896/
+2026-06-11 19:02:57,215 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956896/ "HTTP/1.1 200 OK"
+2026-06-11 19:02:57,221 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956896/
+2026-06-11 19:03:00,243 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2956872/
+2026-06-11 19:03:00,597 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2956872/
+2026-06-11 19:03:01,113 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2956872/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:01,119 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2956872/
+2026-06-11 19:03:04,049 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956892/
+2026-06-11 19:03:04,375 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956892/
+2026-06-11 19:03:04,856 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956892/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:04,860 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956892/
+2026-06-11 19:03:07,672 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/mc.2956888/
+2026-06-11 19:03:07,982 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/mc.2956888/
+2026-06-11 19:03:15,038 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/mc.2956888/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:15,041 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/mc.2956888/
+2026-06-11 19:03:18,358 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwww.2956879/
+2026-06-11 19:03:18,698 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwww.2956879/
+2026-06-11 19:03:19,183 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwww.2956879/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:19,187 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwww.2956879/
+2026-06-11 19:03:22,755 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2956876/
+2026-06-11 19:03:23,065 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2956876/
+2026-06-11 19:03:23,613 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2956876/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:23,618 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2956876/
+2026-06-11 19:03:26,994 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/huge-bal-cc.2956785/
+2026-06-11 19:03:27,316 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/huge-bal-cc.2956785/
+2026-06-11 19:03:27,827 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/huge-bal-cc.2956785/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:27,832 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/huge-bal-cc.2956785/
+2026-06-11 19:03:31,295 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try-me.2956875/
+2026-06-11 19:03:31,632 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try-me.2956875/
+2026-06-11 19:03:32,197 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try-me.2956875/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:32,204 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try-me.2956875/
+2026-06-11 19:03:35,408 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/sax.2956874/
+2026-06-11 19:03:35,772 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/sax.2956874/
+2026-06-11 19:03:36,466 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/sax.2956874/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:36,471 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/sax.2956874/
+2026-06-11 19:03:40,037 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cvv-work.2956858/
+2026-06-11 19:03:40,382 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cvv-work.2956858/
+2026-06-11 19:03:40,889 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cvv-work.2956858/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:40,896 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cvv-work.2956858/
+2026-06-11 19:03:43,773 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/public-bank.2956870/
+2026-06-11 19:03:44,094 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/public-bank.2956870/
+2026-06-11 19:03:44,570 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/public-bank.2956870/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:44,576 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/public-bank.2956870/
+2026-06-11 19:03:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:04:46 +0330)" (scheduled at 2026-06-11 19:03:46.219707+03:30)
+2026-06-11 19:03:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:04:46 +0330)" (scheduled at 2026-06-11 19:03:46.220217+03:30)
+2026-06-11 19:03:47,139 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #187 (check_new)
+2026-06-11 19:03:47,139 - app.scheduler.handlers - INFO - Triggering job 187
+2026-06-11 19:03:47,209 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:03:47,428 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:04:46 +0330)" executed successfully
+2026-06-11 19:03:47,556 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #187" to job store "default"
+2026-06-11 19:03:47,556 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:04:46 +0330)" executed successfully
+2026-06-11 19:03:47,556 - apscheduler.scheduler - INFO - Removed job job_187
+2026-06-11 19:03:47,556 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #187 (trigger: date[2026-06-11 19:03:47 +0330], next run at: 2026-06-11 19:03:47 +0330)" (scheduled at 2026-06-11 19:03:47.556119+03:30)
+2026-06-11 19:03:47,557 - app.scheduler.handlers - INFO - Executing job 187
+2026-06-11 19:03:47,871 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/8x-cc-checkle-live.2956579/
+2026-06-11 19:03:48,206 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/8x-cc-checkle-live.2956579/
+2026-06-11 19:03:48,731 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/8x-cc-checkle-live.2956579/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:48,741 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/8x-cc-checkle-live.2956579/
+2026-06-11 19:03:49,409 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:03:49,659 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:03:50,430 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:50,435 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:03:50,663 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:03:50,663 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:03:50,952 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:03:51,752 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:51,756 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:03:52,196 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:03:53,409 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wow.2956869/
+2026-06-11 19:03:53,673 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #187 (trigger: date[2026-06-11 19:03:47 +0330], next run at: 2026-06-11 19:03:47 +0330)" executed successfully
+2026-06-11 19:03:53,703 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wow.2956869/
+2026-06-11 19:03:54,186 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wow.2956869/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:54,190 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wow.2956869/
+2026-06-11 19:03:57,879 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/low.2956981/
+2026-06-11 19:03:58,377 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/low.2956981/
+2026-06-11 19:03:58,880 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/low.2956981/ "HTTP/1.1 200 OK"
+2026-06-11 19:03:58,884 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/low.2956981/
+2026-06-11 19:04:02,056 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/low.2956982/
+2026-06-11 19:04:02,391 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/low.2956982/
+2026-06-11 19:04:02,865 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/low.2956982/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:02,869 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/low.2956982/
+2026-06-11 19:04:06,064 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956979/
+2026-06-11 19:04:06,422 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956979/
+2026-06-11 19:04:06,845 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956979/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:06,851 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956979/
+2026-06-11 19:04:10,354 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/india.2956977/
+2026-06-11 19:04:10,696 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/india.2956977/
+2026-06-11 19:04:11,150 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/india.2956977/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:11,153 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/india.2956977/
+2026-06-11 19:04:14,336 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956976/
+2026-06-11 19:04:14,723 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956976/
+2026-06-11 19:04:15,237 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956976/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:15,246 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956976/
+2026-06-11 19:04:18,721 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956975/
+2026-06-11 19:04:19,050 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956975/
+2026-06-11 19:04:19,538 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956975/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:19,543 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956975/
+2026-06-11 19:04:22,908 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwww.2956974/
+2026-06-11 19:04:23,272 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwww.2956974/
+2026-06-11 19:04:23,736 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwww.2956974/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:23,740 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwww.2956974/
+2026-06-11 19:04:26,955 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956973/
+2026-06-11 19:04:27,311 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956973/
+2026-06-11 19:04:27,775 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956973/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:27,779 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956973/
+2026-06-11 19:04:30,788 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/w.2956972/
+2026-06-11 19:04:31,132 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/w.2956972/
+2026-06-11 19:04:31,613 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/w.2956972/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:31,618 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/w.2956972/
+2026-06-11 19:04:34,352 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/bl.2956969/
+2026-06-11 19:04:34,707 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/bl.2956969/
+2026-06-11 19:04:35,202 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/bl.2956969/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:35,206 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/bl.2956969/
+2026-06-11 19:04:38,001 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956971/
+2026-06-11 19:04:38,362 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956971/
+2026-06-11 19:04:38,891 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956971/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:38,900 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956971/
+2026-06-11 19:04:41,549 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwww.2956961/
+2026-06-11 19:04:41,882 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwww.2956961/
+2026-06-11 19:04:42,396 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwww.2956961/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:42,406 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwww.2956961/
+2026-06-11 19:04:45,609 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live-100-fast.2956941/
+2026-06-11 19:04:45,939 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live-100-fast.2956941/
+2026-06-11 19:04:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:05:46 +0330)" (scheduled at 2026-06-11 19:04:46.219707+03:30)
+2026-06-11 19:04:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:05:46 +0330)" (scheduled at 2026-06-11 19:04:46.220217+03:30)
+2026-06-11 19:04:46,524 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live-100-fast.2956941/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:46,530 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live-100-fast.2956941/
+2026-06-11 19:04:47,101 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #189 (check_new)
+2026-06-11 19:04:47,102 - app.scheduler.handlers - INFO - Triggering job 189
+2026-06-11 19:04:47,160 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:04:47,374 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:05:46 +0330)" executed successfully
+2026-06-11 19:04:47,783 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #189" to job store "default"
+2026-06-11 19:04:47,784 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:05:46 +0330)" executed successfully
+2026-06-11 19:04:47,784 - apscheduler.scheduler - INFO - Removed job job_189
+2026-06-11 19:04:47,784 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #189 (trigger: date[2026-06-11 19:04:47 +0330], next run at: 2026-06-11 19:04:47 +0330)" (scheduled at 2026-06-11 19:04:47.783737+03:30)
+2026-06-11 19:04:47,784 - app.scheduler.handlers - INFO - Executing job 189
+2026-06-11 19:04:49,708 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:04:49,981 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:04:50,352 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live-enjoy.2956962/
+2026-06-11 19:04:50,684 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live-enjoy.2956962/
+2026-06-11 19:04:50,792 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:50,795 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:04:51,023 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:04:51,023 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:04:51,278 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live-enjoy.2956962/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:51,282 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:04:51,340 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live-enjoy.2956962/
+2026-06-11 19:04:52,053 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:52,057 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:04:52,495 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:04:53,891 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #189 (trigger: date[2026-06-11 19:04:47 +0330], next run at: 2026-06-11 19:04:47 +0330)" executed successfully
+2026-06-11 19:04:55,252 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2956964/
+2026-06-11 19:04:55,561 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2956964/
+2026-06-11 19:04:56,052 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2956964/ "HTTP/1.1 200 OK"
+2026-06-11 19:04:56,057 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2956964/
+2026-06-11 19:04:59,228 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwwww.2956953/
+2026-06-11 19:04:59,536 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwwww.2956953/
+2026-06-11 19:05:00,168 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwwww.2956953/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:00,173 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwwww.2956953/
+2026-06-11 19:05:02,872 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/rouds-cc-usa-master-card.2956949/
+2026-06-11 19:05:03,205 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/rouds-cc-usa-master-card.2956949/
+2026-06-11 19:05:03,719 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/rouds-cc-usa-master-card.2956949/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:03,723 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/rouds-cc-usa-master-card.2956949/
+2026-06-11 19:05:06,731 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/rouds-cc-usa-master-card.2956948/
+2026-06-11 19:05:07,054 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/rouds-cc-usa-master-card.2956948/
+2026-06-11 19:05:07,650 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/rouds-cc-usa-master-card.2956948/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:07,657 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/rouds-cc-usa-master-card.2956948/
+2026-06-11 19:05:10,547 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/100-high-balance-card.2956897/
+2026-06-11 19:05:10,877 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/100-high-balance-card.2956897/
+2026-06-11 19:05:11,454 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/100-high-balance-card.2956897/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:11,460 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/100-high-balance-card.2956897/
+2026-06-11 19:05:14,564 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/live-100-fast.2956937/
+2026-06-11 19:05:14,882 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/live-100-fast.2956937/
+2026-06-11 19:05:15,390 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/live-100-fast.2956937/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:15,397 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/live-100-fast.2956937/
+2026-06-11 19:05:18,131 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957008/
+2026-06-11 19:05:18,437 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957008/
+2026-06-11 19:05:18,872 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957008/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:18,885 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957008/
+2026-06-11 19:05:22,440 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwww.2956957/
+2026-06-11 19:05:22,750 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwww.2956957/
+2026-06-11 19:05:23,281 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwww.2956957/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:23,288 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwww.2956957/
+2026-06-11 19:05:26,454 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957004/
+2026-06-11 19:05:26,797 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957004/
+2026-06-11 19:05:27,227 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957004/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:27,231 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957004/
+2026-06-11 19:05:30,222 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957003/
+2026-06-11 19:05:30,535 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957003/
+2026-06-11 19:05:30,989 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957003/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:30,993 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957003/
+2026-06-11 19:05:33,648 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try-low.2957001/
+2026-06-11 19:05:33,955 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try-low.2957001/
+2026-06-11 19:05:34,412 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try-low.2957001/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:34,417 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try-low.2957001/
+2026-06-11 19:05:37,586 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/japon.2957000/
+2026-06-11 19:05:37,902 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/japon.2957000/
+2026-06-11 19:05:38,380 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/japon.2957000/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:38,384 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/japon.2957000/
+2026-06-11 19:05:41,009 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwww.2956999/
+2026-06-11 19:05:41,311 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwww.2956999/
+2026-06-11 19:05:41,811 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwww.2956999/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:41,815 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwww.2956999/
+2026-06-11 19:05:44,780 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956998/
+2026-06-11 19:05:45,139 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956998/
+2026-06-11 19:05:45,894 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956998/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:06:46 +0330)" (scheduled at 2026-06-11 19:05:46.219707+03:30)
+2026-06-11 19:05:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:06:46 +0330)" (scheduled at 2026-06-11 19:05:46.220217+03:30)
+2026-06-11 19:05:47,095 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #191 (check_new)
+2026-06-11 19:05:47,096 - app.scheduler.handlers - INFO - Triggering job 191
+2026-06-11 19:05:47,175 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:05:47,390 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:06:46 +0330)" executed successfully
+2026-06-11 19:05:47,471 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956998/
+2026-06-11 19:05:47,542 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #191" to job store "default"
+2026-06-11 19:05:47,542 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:06:46 +0330)" executed successfully
+2026-06-11 19:05:47,543 - apscheduler.scheduler - INFO - Removed job job_191
+2026-06-11 19:05:47,543 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #191 (trigger: date[2026-06-11 19:05:47 +0330], next run at: 2026-06-11 19:05:47 +0330)" (scheduled at 2026-06-11 19:05:47.542562+03:30)
+2026-06-11 19:05:47,543 - app.scheduler.handlers - INFO - Executing job 191
+2026-06-11 19:05:49,494 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:05:49,790 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:05:50,664 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:50,668 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:05:50,722 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/german.2956996/
+2026-06-11 19:05:51,039 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/german.2956996/
+2026-06-11 19:05:51,504 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/german.2956996/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:51,510 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/german.2956996/
+2026-06-11 19:05:51,526 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:05:51,526 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:05:51,788 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:05:54,361 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956995/
+2026-06-11 19:05:54,676 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956995/
+2026-06-11 19:05:55,497 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:55,500 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:05:55,539 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956995/ "HTTP/1.1 200 OK"
+2026-06-11 19:05:55,556 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956995/
+2026-06-11 19:05:55,917 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:05:57,355 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #191 (trigger: date[2026-06-11 19:05:47 +0330], next run at: 2026-06-11 19:05:47 +0330)" executed successfully
+2026-06-11 19:05:59,193 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/blaquerose.2956994/
+2026-06-11 19:05:59,516 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/blaquerose.2956994/
+2026-06-11 19:06:00,024 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/blaquerose.2956994/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:00,028 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/blaquerose.2956994/
+2026-06-11 19:06:03,534 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956993/
+2026-06-11 19:06:03,884 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956993/
+2026-06-11 19:06:04,622 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956993/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:04,628 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956993/
+2026-06-11 19:06:07,452 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956992/
+2026-06-11 19:06:07,802 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956992/
+2026-06-11 19:06:08,359 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956992/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:08,362 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956992/
+2026-06-11 19:06:11,722 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/good.2956985/
+2026-06-11 19:06:12,037 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/good.2956985/
+2026-06-11 19:06:12,717 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/good.2956985/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:12,722 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/good.2956985/
+2026-06-11 19:06:16,338 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956987/
+2026-06-11 19:06:16,655 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956987/
+2026-06-11 19:06:17,220 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956987/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:17,225 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956987/
+2026-06-11 19:06:20,571 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/w.2956986/
+2026-06-11 19:06:20,878 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/w.2956986/
+2026-06-11 19:06:21,385 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/w.2956986/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:21,390 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/w.2956986/
+2026-06-11 19:06:24,162 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956988/
+2026-06-11 19:06:24,491 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956988/
+2026-06-11 19:06:24,983 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956988/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:24,988 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956988/
+2026-06-11 19:06:28,352 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2956984/
+2026-06-11 19:06:28,664 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2956984/
+2026-06-11 19:06:29,236 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2956984/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:29,240 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2956984/
+2026-06-11 19:06:32,795 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956983/
+2026-06-11 19:06:33,106 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956983/
+2026-06-11 19:06:33,792 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956983/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:33,798 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956983/
+2026-06-11 19:06:37,369 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/low.2956980/
+2026-06-11 19:06:37,701 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/low.2956980/
+2026-06-11 19:06:38,178 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/low.2956980/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:38,205 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/low.2956980/
+2026-06-11 19:06:41,128 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwww.2957051/
+2026-06-11 19:06:41,457 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwww.2957051/
+2026-06-11 19:06:42,051 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwww.2957051/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:42,055 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwww.2957051/
+2026-06-11 19:06:44,782 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2957054/
+2026-06-11 19:06:45,100 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2957054/
+2026-06-11 19:06:45,939 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2957054/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:45,944 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2957054/
+2026-06-11 19:06:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:07:46 +0330)" (scheduled at 2026-06-11 19:06:46.219707+03:30)
+2026-06-11 19:06:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:07:46 +0330)" (scheduled at 2026-06-11 19:06:46.220217+03:30)
+2026-06-11 19:06:46,892 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:06:47,102 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:07:46 +0330)" executed successfully
+2026-06-11 19:06:47,721 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #192 (check_new)
+2026-06-11 19:06:47,722 - app.scheduler.handlers - INFO - Triggering job 192
+2026-06-11 19:06:48,149 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #192" to job store "default"
+2026-06-11 19:06:48,149 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:07:46 +0330)" executed successfully
+2026-06-11 19:06:48,149 - apscheduler.scheduler - INFO - Removed job job_192
+2026-06-11 19:06:48,149 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #192 (trigger: date[2026-06-11 19:06:48 +0330], next run at: 2026-06-11 19:06:48 +0330)" (scheduled at 2026-06-11 19:06:48.149012+03:30)
+2026-06-11 19:06:48,149 - app.scheduler.handlers - INFO - Executing job 192
+2026-06-11 19:06:49,419 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2957065/
+2026-06-11 19:06:49,778 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2957065/
+2026-06-11 19:06:49,912 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:06:50,236 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2957065/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:50,241 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2957065/
+2026-06-11 19:06:50,330 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:06:51,082 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:51,085 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:06:51,299 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:06:51,299 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:06:51,576 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:06:52,341 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:52,345 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:06:52,776 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:06:54,193 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwww.2957042/
+2026-06-11 19:06:54,336 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #192 (trigger: date[2026-06-11 19:06:48 +0330], next run at: 2026-06-11 19:06:48 +0330)" executed successfully
+2026-06-11 19:06:54,523 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwww.2957042/
+2026-06-11 19:06:55,060 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwww.2957042/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:55,067 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwww.2957042/
+2026-06-11 19:06:58,463 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/fast.2957045/
+2026-06-11 19:06:58,791 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/fast.2957045/
+2026-06-11 19:06:59,272 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/fast.2957045/ "HTTP/1.1 200 OK"
+2026-06-11 19:06:59,277 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/fast.2957045/
+2026-06-11 19:07:02,686 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2957043/
+2026-06-11 19:07:03,017 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2957043/
+2026-06-11 19:07:03,570 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2957043/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:03,586 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2957043/
+2026-06-11 19:07:07,181 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/usa-live.2957038/
+2026-06-11 19:07:07,521 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/usa-live.2957038/
+2026-06-11 19:07:08,029 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/usa-live.2957038/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:08,035 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/usa-live.2957038/
+2026-06-11 19:07:10,675 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wow.2957034/
+2026-06-11 19:07:11,002 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wow.2957034/
+2026-06-11 19:07:11,509 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wow.2957034/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:11,514 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wow.2957034/
+2026-06-11 19:07:14,293 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2957036/
+2026-06-11 19:07:14,679 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2957036/
+2026-06-11 19:07:15,163 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2957036/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:15,167 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2957036/
+2026-06-11 19:07:18,355 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/pt.2957016/
+2026-06-11 19:07:18,677 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/pt.2957016/
+2026-06-11 19:07:19,179 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/pt.2957016/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:19,184 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/pt.2957016/
+2026-06-11 19:07:22,668 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/wwwwwwwwwwwwwwwwww-live-100.2956955/
+2026-06-11 19:07:22,992 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/wwwwwwwwwwwwwwwwww-live-100.2956955/
+2026-06-11 19:07:23,596 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/wwwwwwwwwwwwwwwwww-live-100.2956955/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:23,602 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/wwwwwwwwwwwwwwwwww-live-100.2956955/
+2026-06-11 19:07:26,449 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/hb.2956989/
+2026-06-11 19:07:26,775 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/hb.2956989/
+2026-06-11 19:07:27,369 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/hb.2956989/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:27,374 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/hb.2956989/
+2026-06-11 19:07:30,105 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/last-one.2957017/
+2026-06-11 19:07:30,449 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/last-one.2957017/
+2026-06-11 19:07:30,934 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/last-one.2957017/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:30,938 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/last-one.2957017/
+2026-06-11 19:07:33,844 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956954/
+2026-06-11 19:07:34,171 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956954/
+2026-06-11 19:07:34,788 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956954/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:34,795 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956954/
+2026-06-11 19:07:37,875 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/tomorrow-in-7-pm-greece-time.2957015/
+2026-06-11 19:07:38,211 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/tomorrow-in-7-pm-greece-time.2957015/
+2026-06-11 19:07:38,829 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/tomorrow-in-7-pm-greece-time.2957015/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:38,835 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/tomorrow-in-7-pm-greece-time.2957015/
+2026-06-11 19:07:42,006 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957019/
+2026-06-11 19:07:42,331 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957019/
+2026-06-11 19:07:42,879 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957019/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:42,886 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957019/
+2026-06-11 19:07:46,073 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957020/
+2026-06-11 19:07:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:08:46 +0330)" (scheduled at 2026-06-11 19:07:46.219707+03:30)
+2026-06-11 19:07:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:08:46 +0330)" (scheduled at 2026-06-11 19:07:46.220217+03:30)
+2026-06-11 19:07:46,391 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957020/
+2026-06-11 19:07:46,819 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:07:46,894 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957020/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:46,898 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957020/
+2026-06-11 19:07:47,034 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:08:46 +0330)" executed successfully
+2026-06-11 19:07:47,855 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #194 (check_new)
+2026-06-11 19:07:47,855 - app.scheduler.handlers - INFO - Triggering job 194
+2026-06-11 19:07:48,280 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #194" to job store "default"
+2026-06-11 19:07:48,280 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:08:46 +0330)" executed successfully
+2026-06-11 19:07:48,280 - apscheduler.scheduler - INFO - Removed job job_194
+2026-06-11 19:07:48,281 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #194 (trigger: date[2026-06-11 19:07:48 +0330], next run at: 2026-06-11 19:07:48 +0330)" (scheduled at 2026-06-11 19:07:48.280326+03:30)
+2026-06-11 19:07:48,281 - app.scheduler.handlers - INFO - Executing job 194
+2026-06-11 19:07:50,110 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:07:50,297 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957010/
+2026-06-11 19:07:50,398 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:07:50,587 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957010/
+2026-06-11 19:07:51,218 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957010/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:51,231 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957010/
+2026-06-11 19:07:51,341 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:51,346 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:07:52,142 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:07:52,142 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:07:52,456 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:07:53,382 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:53,387 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:07:53,781 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:07:55,058 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/ww.2957009/
+2026-06-11 19:07:55,197 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #194 (trigger: date[2026-06-11 19:07:48 +0330], next run at: 2026-06-11 19:07:48 +0330)" executed successfully
+2026-06-11 19:07:55,345 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/ww.2957009/
+2026-06-11 19:07:55,788 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/ww.2957009/ "HTTP/1.1 200 OK"
+2026-06-11 19:07:55,795 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/ww.2957009/
+2026-06-11 19:07:59,298 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/cc.2956951/
+2026-06-11 19:07:59,619 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/cc.2956951/
+2026-06-11 19:08:00,148 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/cc.2956951/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:00,156 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/cc.2956951/
+2026-06-11 19:08:03,693 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/kill.2957078/
+2026-06-11 19:08:04,014 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/kill.2957078/
+2026-06-11 19:08:04,508 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/kill.2957078/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:04,515 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/kill.2957078/
+2026-06-11 19:08:07,268 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try-fast.2957086/
+2026-06-11 19:08:07,588 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try-fast.2957086/
+2026-06-11 19:08:08,125 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try-fast.2957086/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:08,130 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try-fast.2957086/
+2026-06-11 19:08:10,753 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2957075/
+2026-06-11 19:08:11,074 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2957075/
+2026-06-11 19:08:11,614 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2957075/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:11,622 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2957075/
+2026-06-11 19:08:15,005 - app.scraper.thread_scraper - INFO - Scraping first post only from: https://altenens.is/threads/try.2957050/
+2026-06-11 19:08:15,327 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/threads/try.2957050/
+2026-06-11 19:08:15,825 - httpx - INFO - HTTP Request: GET https://altenens.is/threads/try.2957050/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:15,832 - app.scraper.thread_scraper - WARNING - No posts found on page 1 of https://altenens.is/threads/try.2957050/
+2026-06-11 19:08:19,676 - apscheduler.executors.default - INFO - Job "JobType.SCRAPE_POSTS #171 (trigger: date[2026-06-11 18:55:48 +0330], next run at: 2026-06-11 18:55:48 +0330)" executed successfully
+2026-06-11 19:08:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:09:46 +0330)" (scheduled at 2026-06-11 19:08:46.219707+03:30)
+2026-06-11 19:08:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:09:46 +0330)" (scheduled at 2026-06-11 19:08:46.220217+03:30)
+2026-06-11 19:08:47,090 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #196 (check_new)
+2026-06-11 19:08:47,090 - app.scheduler.handlers - INFO - Triggering job 196
+2026-06-11 19:08:47,198 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:08:47,417 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:09:46 +0330)" executed successfully
+2026-06-11 19:08:47,527 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #196" to job store "default"
+2026-06-11 19:08:47,527 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:09:46 +0330)" executed successfully
+2026-06-11 19:08:47,527 - apscheduler.scheduler - INFO - Removed job job_196
+2026-06-11 19:08:47,527 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #196 (trigger: date[2026-06-11 19:08:47 +0330], next run at: 2026-06-11 19:08:47 +0330)" (scheduled at 2026-06-11 19:08:47.527055+03:30)
+2026-06-11 19:08:47,528 - app.scheduler.handlers - INFO - Executing job 196
+2026-06-11 19:08:49,420 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:08:49,855 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:08:50,595 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:50,613 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:08:50,836 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:08:50,837 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:08:51,108 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:08:51,791 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:08:51,856 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:08:52,317 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:08:53,786 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #196 (trigger: date[2026-06-11 19:08:47 +0330], next run at: 2026-06-11 19:08:47 +0330)" executed successfully
+2026-06-11 19:09:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:10:46 +0330)" (scheduled at 2026-06-11 19:09:46.219707+03:30)
+2026-06-11 19:09:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:10:46 +0330)" (scheduled at 2026-06-11 19:09:46.220217+03:30)
+2026-06-11 19:09:47,090 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #198 (check_new)
+2026-06-11 19:09:47,090 - app.scheduler.handlers - INFO - Triggering job 198
+2026-06-11 19:09:47,143 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:09:47,335 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:10:46 +0330)" executed successfully
+2026-06-11 19:09:47,523 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #198" to job store "default"
+2026-06-11 19:09:47,523 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:10:46 +0330)" executed successfully
+2026-06-11 19:09:47,523 - apscheduler.scheduler - INFO - Removed job job_198
+2026-06-11 19:09:47,524 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #198 (trigger: date[2026-06-11 19:09:47 +0330], next run at: 2026-06-11 19:09:47 +0330)" (scheduled at 2026-06-11 19:09:47.523320+03:30)
+2026-06-11 19:09:47,524 - app.scheduler.handlers - INFO - Executing job 198
+2026-06-11 19:09:49,241 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:09:49,649 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:09:50,435 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:09:50,445 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:09:50,639 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:09:50,639 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:09:50,902 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:09:51,669 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:09:51,678 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:09:52,067 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:09:53,346 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #198 (trigger: date[2026-06-11 19:09:47 +0330], next run at: 2026-06-11 19:09:47 +0330)" executed successfully
+2026-06-11 19:10:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:11:46 +0330)" (scheduled at 2026-06-11 19:10:46.219707+03:30)
+2026-06-11 19:10:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:11:46 +0330)" (scheduled at 2026-06-11 19:10:46.220217+03:30)
+2026-06-11 19:10:46,998 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #200 (check_new)
+2026-06-11 19:10:46,999 - app.scheduler.handlers - INFO - Triggering job 200
+2026-06-11 19:10:47,172 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:10:47,380 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #200" to job store "default"
+2026-06-11 19:10:47,380 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:11:46 +0330)" executed successfully
+2026-06-11 19:10:47,380 - apscheduler.scheduler - INFO - Removed job job_200
+2026-06-11 19:10:47,381 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #200 (trigger: date[2026-06-11 19:10:47 +0330], next run at: 2026-06-11 19:10:47 +0330)" (scheduled at 2026-06-11 19:10:47.380276+03:30)
+2026-06-11 19:10:47,381 - app.scheduler.handlers - INFO - Executing job 200
+2026-06-11 19:10:47,386 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:11:46 +0330)" executed successfully
+2026-06-11 19:10:49,148 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:10:49,669 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:10:50,433 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:10:50,445 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:10:50,655 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:10:50,655 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:10:50,935 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:10:51,732 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:10:51,748 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:10:52,172 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:10:53,667 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #200 (trigger: date[2026-06-11 19:10:47 +0330], next run at: 2026-06-11 19:10:47 +0330)" executed successfully
+2026-06-11 19:11:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:12:46 +0330)" (scheduled at 2026-06-11 19:11:46.219707+03:30)
+2026-06-11 19:11:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:12:46 +0330)" (scheduled at 2026-06-11 19:11:46.220217+03:30)
+2026-06-11 19:11:47,073 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #202 (check_new)
+2026-06-11 19:11:47,075 - app.scheduler.handlers - INFO - Triggering job 202
+2026-06-11 19:11:47,188 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:11:47,403 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:12:46 +0330)" executed successfully
+2026-06-11 19:11:47,505 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #202" to job store "default"
+2026-06-11 19:11:47,505 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:12:46 +0330)" executed successfully
+2026-06-11 19:11:47,505 - apscheduler.scheduler - INFO - Removed job job_202
+2026-06-11 19:11:47,506 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #202 (trigger: date[2026-06-11 19:11:47 +0330], next run at: 2026-06-11 19:11:47 +0330)" (scheduled at 2026-06-11 19:11:47.505227+03:30)
+2026-06-11 19:11:47,506 - app.scheduler.handlers - INFO - Executing job 202
+2026-06-11 19:11:49,476 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:11:50,131 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:11:50,867 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:11:50,879 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:11:51,093 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:11:51,094 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:11:51,338 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:11:52,139 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:11:52,155 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:11:52,592 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:11:54,004 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #202 (trigger: date[2026-06-11 19:11:47 +0330], next run at: 2026-06-11 19:11:47 +0330)" executed successfully
+2026-06-11 19:12:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:13:46 +0330)" (scheduled at 2026-06-11 19:12:46.219707+03:30)
+2026-06-11 19:12:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:13:46 +0330)" (scheduled at 2026-06-11 19:12:46.220217+03:30)
+2026-06-11 19:12:47,085 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #204 (check_new)
+2026-06-11 19:12:47,085 - app.scheduler.handlers - INFO - Triggering job 204
+2026-06-11 19:12:47,217 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:12:47,440 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:13:46 +0330)" executed successfully
+2026-06-11 19:12:47,559 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #204" to job store "default"
+2026-06-11 19:12:47,560 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:13:46 +0330)" executed successfully
+2026-06-11 19:12:47,560 - apscheduler.scheduler - INFO - Removed job job_204
+2026-06-11 19:12:47,560 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #204 (trigger: date[2026-06-11 19:12:47 +0330], next run at: 2026-06-11 19:12:47 +0330)" (scheduled at 2026-06-11 19:12:47.559736+03:30)
+2026-06-11 19:12:47,560 - app.scheduler.handlers - INFO - Executing job 204
+2026-06-11 19:12:49,446 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:12:49,997 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:12:50,764 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:12:50,770 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:12:50,991 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:12:50,991 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:12:51,252 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:12:52,134 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:12:52,150 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:12:52,593 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:12:54,036 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #204 (trigger: date[2026-06-11 19:12:47 +0330], next run at: 2026-06-11 19:12:47 +0330)" executed successfully
+2026-06-11 19:13:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:14:46 +0330)" (scheduled at 2026-06-11 19:13:46.219707+03:30)
+2026-06-11 19:13:46,221 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:14:46 +0330)" (scheduled at 2026-06-11 19:13:46.220217+03:30)
+2026-06-11 19:13:47,117 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #206 (check_new)
+2026-06-11 19:13:47,117 - app.scheduler.handlers - INFO - Triggering job 206
+2026-06-11 19:13:47,182 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:13:47,393 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:14:46 +0330)" executed successfully
+2026-06-11 19:13:47,572 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #206" to job store "default"
+2026-06-11 19:13:47,572 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:14:46 +0330)" executed successfully
+2026-06-11 19:13:47,573 - apscheduler.scheduler - INFO - Removed job job_206
+2026-06-11 19:13:47,573 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #206 (trigger: date[2026-06-11 19:13:47 +0330], next run at: 2026-06-11 19:13:47 +0330)" (scheduled at 2026-06-11 19:13:47.572532+03:30)
+2026-06-11 19:13:47,573 - app.scheduler.handlers - INFO - Executing job 206
+2026-06-11 19:13:49,397 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:13:49,816 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:13:50,599 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:13:50,606 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:13:50,826 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:13:50,826 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:13:51,176 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:13:52,204 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:13:52,211 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:13:52,641 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:13:54,087 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #206 (trigger: date[2026-06-11 19:13:47 +0330], next run at: 2026-06-11 19:13:47 +0330)" executed successfully
+2026-06-11 19:14:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:15:46 +0330)" (scheduled at 2026-06-11 19:14:46.219707+03:30)
+2026-06-11 19:14:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:15:46 +0330)" (scheduled at 2026-06-11 19:14:46.220217+03:30)
+2026-06-11 19:14:47,109 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #208 (check_new)
+2026-06-11 19:14:47,110 - app.scheduler.handlers - INFO - Triggering job 208
+2026-06-11 19:14:47,122 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:14:47,315 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:15:46 +0330)" executed successfully
+2026-06-11 19:14:47,538 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #208" to job store "default"
+2026-06-11 19:14:47,538 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:15:46 +0330)" executed successfully
+2026-06-11 19:14:47,538 - apscheduler.scheduler - INFO - Removed job job_208
+2026-06-11 19:14:47,539 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #208 (trigger: date[2026-06-11 19:14:47 +0330], next run at: 2026-06-11 19:14:47 +0330)" (scheduled at 2026-06-11 19:14:47.538342+03:30)
+2026-06-11 19:14:47,539 - app.scheduler.handlers - INFO - Executing job 208
+2026-06-11 19:14:49,231 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:14:49,742 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:14:50,476 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:14:50,486 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:14:50,679 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:14:50,679 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:14:50,941 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:14:51,722 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:14:51,732 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:14:52,136 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:14:53,438 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #208 (trigger: date[2026-06-11 19:14:47 +0330], next run at: 2026-06-11 19:14:47 +0330)" executed successfully
+2026-06-11 19:15:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:16:46 +0330)" (scheduled at 2026-06-11 19:15:46.219707+03:30)
+2026-06-11 19:15:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:16:46 +0330)" (scheduled at 2026-06-11 19:15:46.220217+03:30)
+2026-06-11 19:15:47,048 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #210 (check_new)
+2026-06-11 19:15:47,049 - app.scheduler.handlers - INFO - Triggering job 210
+2026-06-11 19:15:47,174 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:15:47,386 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:16:46 +0330)" executed successfully
+2026-06-11 19:15:47,448 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #210" to job store "default"
+2026-06-11 19:15:47,449 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:16:46 +0330)" executed successfully
+2026-06-11 19:15:47,449 - apscheduler.scheduler - INFO - Removed job job_210
+2026-06-11 19:15:47,449 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #210 (trigger: date[2026-06-11 19:15:47 +0330], next run at: 2026-06-11 19:15:47 +0330)" (scheduled at 2026-06-11 19:15:47.448645+03:30)
+2026-06-11 19:15:47,449 - app.scheduler.handlers - INFO - Executing job 210
+2026-06-11 19:15:49,258 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:15:49,666 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:15:50,517 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:15:50,530 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:15:50,755 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:15:50,755 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:15:51,007 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:15:51,748 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:15:51,757 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:15:52,184 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:15:53,659 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #210 (trigger: date[2026-06-11 19:15:47 +0330], next run at: 2026-06-11 19:15:47 +0330)" executed successfully
+2026-06-11 19:16:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:17:46 +0330)" (scheduled at 2026-06-11 19:16:46.219707+03:30)
+2026-06-11 19:16:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:17:46 +0330)" (scheduled at 2026-06-11 19:16:46.220217+03:30)
+2026-06-11 19:16:47,081 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #212 (check_new)
+2026-06-11 19:16:47,081 - app.scheduler.handlers - INFO - Triggering job 212
+2026-06-11 19:16:47,188 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:16:47,404 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:17:46 +0330)" executed successfully
+2026-06-11 19:16:47,508 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #212" to job store "default"
+2026-06-11 19:16:47,509 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:17:46 +0330)" executed successfully
+2026-06-11 19:16:47,509 - apscheduler.scheduler - INFO - Removed job job_212
+2026-06-11 19:16:47,509 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #212 (trigger: date[2026-06-11 19:16:47 +0330], next run at: 2026-06-11 19:16:47 +0330)" (scheduled at 2026-06-11 19:16:47.508818+03:30)
+2026-06-11 19:16:47,509 - app.scheduler.handlers - INFO - Executing job 212
+2026-06-11 19:16:49,354 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:16:49,779 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:16:50,569 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:16:50,575 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:16:50,806 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:16:50,806 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:16:51,080 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:16:51,865 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:16:51,879 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:16:52,310 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:16:53,740 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #212 (trigger: date[2026-06-11 19:16:47 +0330], next run at: 2026-06-11 19:16:47 +0330)" executed successfully
+2026-06-11 19:17:46,220 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:18:46 +0330)" (scheduled at 2026-06-11 19:17:46.219707+03:30)
+2026-06-11 19:17:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:18:46 +0330)" (scheduled at 2026-06-11 19:17:46.220217+03:30)
+2026-06-11 19:17:47,079 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #214 (check_new)
+2026-06-11 19:17:47,080 - app.scheduler.handlers - INFO - Triggering job 214
+2026-06-11 19:17:47,215 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:17:47,433 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:18:46 +0330)" executed successfully
+2026-06-11 19:17:47,509 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #214" to job store "default"
+2026-06-11 19:17:47,509 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:18:46 +0330)" executed successfully
+2026-06-11 19:17:47,510 - apscheduler.scheduler - INFO - Removed job job_214
+2026-06-11 19:17:47,510 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #214 (trigger: date[2026-06-11 19:17:47 +0330], next run at: 2026-06-11 19:17:47 +0330)" (scheduled at 2026-06-11 19:17:47.509559+03:30)
+2026-06-11 19:17:47,510 - app.scheduler.handlers - INFO - Executing job 214
+2026-06-11 19:17:49,402 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:17:49,950 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:17:50,740 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:17:50,751 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:17:50,970 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:17:50,970 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:17:51,228 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:17:51,984 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:17:51,996 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:17:52,463 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:17:53,900 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #214 (trigger: date[2026-06-11 19:17:47 +0330], next run at: 2026-06-11 19:17:47 +0330)" executed successfully
+2026-06-11 19:18:46,219 - apscheduler.executors.default - INFO - Running job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:19:46 +0330)" (scheduled at 2026-06-11 19:18:46.219707+03:30)
+2026-06-11 19:18:46,220 - apscheduler.executors.default - INFO - Running job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:19:46 +0330)" (scheduled at 2026-06-11 19:18:46.220217+03:30)
+2026-06-11 19:18:47,116 - app.services.repeating_job_service - INFO - RepeatingJob 1 fired → Job #216 (check_new)
+2026-06-11 19:18:47,116 - app.scheduler.handlers - INFO - Triggering job 216
+2026-06-11 19:18:47,167 - app.services.repeating_job_service - INFO - RepeatingJob 2 skipping tick — scrape_posts/1 already active
+2026-06-11 19:18:47,392 - apscheduler.executors.default - INFO - Job "Watch #2: scrape_posts every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:19:46 +0330)" executed successfully
+2026-06-11 19:18:47,555 - apscheduler.scheduler - INFO - Added job "JobType.CHECK_NEW #216" to job store "default"
+2026-06-11 19:18:47,555 - apscheduler.executors.default - INFO - Job "Watch #1: check_new every 60s (trigger: interval[0:01:00], next run at: 2026-06-11 19:19:46 +0330)" executed successfully
+2026-06-11 19:18:47,556 - apscheduler.scheduler - INFO - Removed job job_216
+2026-06-11 19:18:47,556 - apscheduler.executors.default - INFO - Running job "JobType.CHECK_NEW #216 (trigger: date[2026-06-11 19:18:47 +0330], next run at: 2026-06-11 19:18:47 +0330)" (scheduled at 2026-06-11 19:18:47.555503+03:30)
+2026-06-11 19:18:47,556 - app.scheduler.handlers - INFO - Executing job 216
+2026-06-11 19:18:49,374 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:18:49,797 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:18:50,573 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:18:50,583 - app.scraper.forum_crawler - INFO - Starting crawl of 1 pages from https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:18:50,795 - app.scraper.forum_crawler - INFO - Crawling page 1: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:18:50,795 - app.scraper.xenforo_auth - INFO - Fetching authenticated URL: https://altenens.is/forums/accounts-and-database-dumps.45
+2026-06-11 19:18:51,056 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45 "HTTP/1.1 301 Moved Permanently"
+2026-06-11 19:18:51,848 - httpx - INFO - HTTP Request: GET https://altenens.is/forums/accounts-and-database-dumps.45/ "HTTP/1.1 200 OK"
+2026-06-11 19:18:51,857 - app.scraper.parsers - INFO - Parsed 0 threads from page
+2026-06-11 19:18:52,285 - app.scraper.forum_crawler - INFO - Crawling complete. Total threads discovered: 0
+2026-06-11 19:18:53,678 - apscheduler.executors.default - INFO - Job "JobType.CHECK_NEW #216 (trigger: date[2026-06-11 19:18:47 +0330], next run at: 2026-06-11 19:18:47 +0330)" executed successfully
+2026-06-11 19:19:02,350 - app.main - INFO - Shutting down application...
