@@ -52,3 +52,29 @@ async def get_current_user(
             detail="Inactive user",
         )
     return user
+
+
+async def verify_token_string(token: str) -> User | None:
+    """
+    Verify a raw JWT string without FastAPI dependency injection.
+    Used by WebSocket endpoints that receive the token as a query param.
+    Returns the User on success, None on any error.
+    """
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
+        user_id_raw = payload.get("sub")
+        if user_id_raw is None:
+            return None
+        user_id = int(user_id_raw)
+    except (JWTError, ValueError):
+        return None
+
+    from app.database import AsyncSessionLocal
+    async with AsyncSessionLocal() as db:
+        result = await db.execute(select(User).where(User.id == user_id))
+        user = result.scalar_one_or_none()
+
+    if user is None or not user.is_active:
+        return None
+    return user
+

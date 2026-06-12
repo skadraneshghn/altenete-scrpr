@@ -227,6 +227,23 @@ const apiService = {
     const res = await client.post('/api/cards/validate', { card_raw, email });
     return res.data;
   },
+
+  async startBulkValidate(cards, emails) {
+    const res = await client.post('/api/cards/bulk-validate', { cards, emails });
+    return res.data; // { job_id, total }
+  },
+
+  async getBulkResults(jobId) {
+    const res = await client.get(`/api/cards/bulk-validate/${jobId}/results`);
+    return res.data;
+  },
+
+  getBulkWsUrl(jobId) {
+    const token = localStorage.getItem('token') || '';
+    const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const host = window.location.host;
+    return `${proto}://${host}/api/cards/bulk-validate/${jobId}/ws?token=${encodeURIComponent(token)}`;
+  },
 };
 
 export default apiService;

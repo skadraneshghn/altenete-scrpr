@@ -8,6 +8,7 @@ from app.models.forum import ForumConfig, Thread, Post
 from app.models.repeating_job import RepeatingJob
 from app.models.telegram_settings import TelegramSettings
 from app.models.card_export_settings import CardExportSettings
+from app.models.card_validation import CardValidationResult
 
 __all__ = [
     "User",
@@ -16,4 +17,5 @@ __all__ = [
     "RepeatingJob",
     "TelegramSettings",
     "CardExportSettings",
+    "CardValidationResult",
 ]

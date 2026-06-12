@@ -19,6 +19,7 @@ class JobType(str, PyEnum):
     SCRAPE_POSTS = "scrape_posts"
     FULL_RUN = "full_run"
     CHECK_NEW = "check_new"
+    VALIDATE_CARDS = "validate_cards"
 
 
 class JobStatus(str, PyEnum):
